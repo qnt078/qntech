@@ -33,13 +33,26 @@ userSchema.methods.matchPassword = async function (enterPassword) {
 };
 
 // Register
+// This middleware runs before saving a user to hash the password
 userSchema.pre("save", async function (next) {
+  // Only hash the password if it has been modified (or is new)
   if (!this.isModified("password")) {
-    next();
+    return next();
   }
-  const salt = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(this.password, salt);
-  next();
+
+  try {
+    // Generate a salt
+    const salt = await bcrypt.genSalt(10);
+
+    // Hash the password along with our new salt
+    this.password = await bcrypt.hash(this.password, salt);
+
+    // Go to the next middleware
+    next();
+  } catch (error) {
+    // If an error occurred, pass it to the next middleware
+    next(error);
+  }
 });
 
 const User = mongoose.model("users", userSchema);

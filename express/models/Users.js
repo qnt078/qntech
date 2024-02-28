@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 
+
 const userSchema = mongoose.Schema(
   {
     name: {
@@ -17,6 +18,16 @@ const userSchema = mongoose.Schema(
       required: true,
     },
     isAdmin: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
+    isSeller: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
+    isVerify: {
       type: Boolean,
       required: true,
       default: false,
@@ -46,6 +57,7 @@ userSchema.pre("save", async function (next) {
 
     // Hash the password along with our new salt
     this.password = await bcrypt.hash(this.password, salt);
+
 
     // Go to the next middleware
     next();

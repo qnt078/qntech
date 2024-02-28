@@ -36,4 +36,23 @@ const admin = (req, res, next) => {
     throw new Error("Not authorized as an Admin");
   }
 };
-export { protect, admin };
+
+const seller = (req, res, next) => {
+  if (req.user && req.user.isSeller) {
+    next();
+  } else {
+    res.status(401);
+    throw new Error("Not authorized as a Seller");
+  }
+};
+
+// Admin can access all the role of user and seller can access only their role
+// Seller can access only their role
+// Protect middleware is used to protect the route
+// Admin middleware is used to check if the user is admin or not
+// Seller middleware is used to check if the user is seller or not
+// Protect middleware is used to protect the route
+// Admin middleware is used to check if the user is admin or not
+
+
+export { protect, admin , seller};

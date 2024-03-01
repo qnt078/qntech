@@ -4,7 +4,7 @@
       <v-row>
         <v-col cols="12">
           <div class="card">
-            <div class="card-span">
+            <div class="card-span animate__animated animate__fadeInLeft">
               <div class="card-content">
                 <h4>Best deals <span>Crispy Sandwiches</span></h4>
                 <p>
@@ -24,7 +24,7 @@
 
         <v-col cols="12">
           <div class="card">
-            <div class="card-span-2">
+            <div class="card-span-2 animate__animated animate__fadeInRight">
               <div class="card-image"></div>
               <div class="card-content">
                 <h4>Best deals <span>Crispy Sandwiches</span></h4>
@@ -143,6 +143,294 @@
       .v-btn {
         margin-top: 10px;
         width: 100%;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 1440px) and (max-width: 1920px) {
+  .card {
+    padding: 0;
+  }
+}
+@media screen and (max-width: 1440px) {
+  .card {
+    padding: 0;
+  }
+  /* .card-span {
+    flex-direction: column;
+    height: 100%;
+    .card-content {
+      width: 100%;
+      padding: 2rem;
+      h4 {
+        font-size: 24px;
+      }
+      p {
+        font-size: 14px;
+      }
+      .v-btn {
+        margin-top: 10px;
+        width: 100%;
+      }
+    }
+    .card-image {
+      width: 100%;
+      border-radius: 0 0 10px 10px;
+    }
+  }
+  .card-span-2 {
+    flex-direction: column;
+    margin-top: 2rem;
+    height: 100%;
+    .card-image {
+      width: 100%;
+      border-radius: 10px 10px 0 0;
+    }
+    .card-content {
+      width: 100%;
+      padding: 2rem;
+      h4 {
+        font-size: 24px;
+      }
+      p {
+        font-size: 14px;
+      }
+      .v-btn {
+        margin-top: 10px;
+        width: 100%;
+      }
+    }
+  } */
+}
+
+@media screen and (max-width: 1280px) {
+  .card {
+    padding: 0;
+    .card-span {
+      .card-content {
+        width: 60%;
+      }
+
+      .card-image {
+        width: 40%;
+      }
+    }
+
+    .card-span-2 {
+      .card-content {
+        width: 60%;
+      }
+
+      .card-image {
+        width: 40%;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .card {
+    padding: 0;
+  }
+  .card-span {
+    flex-direction: column;
+    height: 100%;
+    .card-content {
+      width: 100%;
+      padding: 2rem;
+      h4 {
+        font-size: 24px;
+      }
+      p {
+        font-size: 14px;
+      }
+      .v-btn {
+        margin-top: 10px;
+        width: 100%;
+      }
+    }
+    .card-image {
+      width: 100%;
+      border-radius: 0 0 10px 10px;
+    }
+  }
+  .card-span-2 {
+    flex-direction: column;
+    margin-top: 2rem;
+    height: 100%;
+    .card-image {
+      width: 100%;
+      border-radius: 10px 10px 0 0;
+    }
+    .card-content {
+      width: 100%;
+      padding: 2rem;
+      h4 {
+        font-size: 24px;
+      }
+      p {
+        font-size: 14px;
+      }
+      .v-btn {
+        margin-top: 10px;
+        width: 100%;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .card {
+    padding: 0;
+    height: auto;
+    .card-span {
+      display: flex;
+      flex-direction: column-reverse;
+
+      .card-content {
+        width: 100%;
+        height: 60%;
+        padding: 2rem;
+        gap: 1rem;
+        h4 {
+          font-size: 24px;
+        }
+        p {
+          font-size: 14px;
+        }
+      }
+      .card-image {
+        width: 100%;
+        height: 40%;
+        border-radius: 0 0 10px 10px;
+      }
+    }
+    .card-span-2 {
+      display: flex;
+      flex-direction: column-reverse;
+      margin-top: 2rem;
+
+      .card-content {
+        width: 100%;
+        height: 60%;
+        padding: 2rem;
+        gap: 1rem;
+        h4 {
+          font-size: 24px;
+        }
+        p {
+          font-size: 14px;
+        }
+      }
+      .card-image {
+        width: 100%;
+        height: 40%;
+        border-radius: 10px 10px 0 0;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .card {
+    padding: 0;
+    height: auto;
+    .card-span {
+      display: flex;
+      flex-direction: column-reverse;
+
+      .card-content {
+        width: 100%;
+        height: 60%;
+        padding: 2rem;
+        gap: 1rem;
+        h4 {
+          font-size: 24px;
+        }
+        p {
+          font-size: 14px;
+        }
+      }
+      .card-image {
+        width: 100%;
+        height: 40%;
+        border-radius: 0 0 10px 10px;
+      }
+    }
+    .card-span-2 {
+      display: flex;
+      flex-direction: column-reverse;
+      margin-top: 2rem;
+
+      .card-content {
+        width: 100%;
+        height: 60%;
+        padding: 2rem;
+        gap: 1rem;
+        h4 {
+          font-size: 24px;
+        }
+        p {
+          font-size: 14px;
+        }
+      }
+      .card-image {
+        width: 100%;
+        height: 40%;
+        border-radius: 10px 10px 0 0;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .card {
+    padding: 0;
+    height: auto;
+    .card-span {
+      display: flex;
+      flex-direction: column-reverse;
+
+      .card-content {
+        width: 100%;
+        height: 60%;
+        padding: 2rem;
+        gap: 1rem;
+        h4 {
+          font-size: 16px;
+        }
+        p {
+          font-size: 12px;
+        }
+      }
+      .card-image {
+        width: 100%;
+        height: 40%;
+        border-radius: 0 0 10px 10px;
+      }
+    }
+    .card-span-2 {
+      display: flex;
+      flex-direction: column-reverse;
+      margin-top: 2rem;
+
+      .card-content {
+        width: 100%;
+        height: 60%;
+        padding: 2rem;
+        gap: 1rem;
+        h4 {
+          font-size: 16px;
+        }
+        p {
+          font-size: 12px;
+        }
+      }
+      .card-image {
+        width: 100%;
+        height: 40%;
+        border-radius: 10px 10px 0 0;
       }
     }
   }

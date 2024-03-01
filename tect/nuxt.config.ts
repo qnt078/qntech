@@ -2,7 +2,7 @@
 import vuetify, { transformAssetUrls } from "vite-plugin-vuetify";
 export default defineNuxtConfig({
   app: {
-    pageTransition: { name: "page", mode: "out-in" },
+
   },
   devtools: {
     enabled: true,
@@ -37,7 +37,7 @@ export default defineNuxtConfig({
     },
   },
   plugins: ["./plugins/api.ts"],
-  css: ["~/assets/css/main.css", "animate.css/animate.min.css"],
+  css: ["~/assets/css/main.css", "~/assets/css/responsive.css","animate.css/animate.min.css"],
   runtimeConfig: {
     apiSecret: "",
     public: {

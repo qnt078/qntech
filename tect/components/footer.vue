@@ -3,7 +3,7 @@
     <div class="new_footer_top">
       <v-container class="container">
         <v-row class="row">
-          <v-col cols="3" class="col-lg-3 col-md-6">
+          <v-col cols="auto" lg="3" md="3" sm="12">
             <div
               class="f_widget company_widget wow fadeInLeft"
               data-wow-delay="0.2s"
@@ -19,7 +19,7 @@
               </p>
             </div>
           </v-col>
-          <v-col cols="3" class="col-lg-3 col-md-6">
+          <v-col cols="auto" lg="3" md="3" sm="4">
             <div
               class="f_widget about-widget pl_70 wow fadeInLeft"
               data-wow-delay="0.4s"
@@ -39,7 +39,7 @@
               </ul>
             </div>
           </v-col>
-          <v-col cols="3" class="col-lg-3 col-md-6">
+          <v-col cols="auto" lg="3" md="3" sm="4">
             <div
               class="f_widget about-widget pl_70 wow fadeInLeft"
               data-wow-delay="0.6s"
@@ -60,7 +60,7 @@
               </ul>
             </div>
           </v-col>
-          <v-col cols="3" class="col-lg-3 col-md-6">
+          <v-col cols="auto" lg="3" md="3" sm="4">
             <div
               class="f_widget social-widget pl_70 wow fadeInLeft"
               data-wow-delay="0.8s"
@@ -90,9 +90,7 @@
       <v-container class="container">
         <v-row class="row align-items-center">
           <v-col cols="6" class="col-lg-6 col-sm-7">
-            <p class="mb-0 f_400">
-              ©  Inc.. 2024 All rights reserved.
-            </p>
+            <p class="mb-0 f_400">© Inc.. 2024 All rights reserved.</p>
           </v-col>
           <v-col cols="6" class="col-lg-6 col-sm-5 text-right">
             <p>

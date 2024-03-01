@@ -1,12 +1,12 @@
 <template>
-  <div class="mt-2" style="background-color: #ffb30e">
+  <div class="main" style="background-color: #ffb30e">
     <v-container>
       <v-row>
-        <v-col cols="7">
-          <div class="content">
+        <v-col cols="auto" lg="7" md="7" sm="12">
+          <div class="content animate__animated animate__bounceInLeft">
             <span class="text-white">Are you starving?</span>
             <p>Within a few clicks, find meals that are accessible near you</p>
-            <v-card class="mt-4 pa-2" rounded="lg" width="80%">
+            <v-card class="mt-4 pa-2" rounded="lg">
               <v-tabs v-model="tab">
                 <v-tab value="one">
                   <v-icon class="mr-2">mdi-hand-cycle</v-icon>
@@ -60,8 +60,8 @@
             </v-card>
           </div>
         </v-col>
-        <v-col cols="5">
-          <div class="image">
+        <v-col cols="auto" lg="5" md="5" sm="12">
+          <div class="image animate__animated animate__bounceInRight">
             <img
               src="https://themewagon.github.io/foodwagon/v1.0.0/assets/img/gallery/hero-header.png"
               alt="noodles"
@@ -88,9 +88,9 @@
           <div class="content">
             <span class="text-gradient">How does it work</span>
           </div>
-          <div class="card">
+          <div class="card animate__animated animate__fadeInDown">
             <v-row>
-              <v-col cols="3">
+              <v-col cols="auto" lg="3" md="6" sm="6" xs="12">
                 <div class="item">
                   <v-img
                     class="shadow-icon"
@@ -100,7 +100,7 @@
                   <p>Choose your location and find the best food near you</p>
                 </div>
               </v-col>
-              <v-col cols="3">
+              <v-col cols="auto" lg="3" md="6" sm="6" xs="12">
                 <div class="item">
                   <v-img
                     class="shadow-icon"
@@ -110,7 +110,7 @@
                   <p>Check over hundreds of menus to pick your favorite food</p>
                 </div></v-col
               >
-              <v-col cols="3">
+              <v-col cols="auto" lg="3" md="6" sm="6" xs="12">
                 <div class="item">
                   <v-img
                     class="shadow-icon"
@@ -123,7 +123,7 @@
                   </p>
                 </div></v-col
               >
-              <v-col cols="3">
+              <v-col cols="auto" lg="3" md="6" sm="6" xs="12">
                 <div class="item">
                   <v-img
                     class="shadow-icon"
@@ -205,32 +205,46 @@ import Slide from "~/components/slide.vue";
 import Feature from "~/components/feature.vue";
 import Review from "~/components/review2.vue";
 import footer from "~/components/footer.vue";
+
+onMounted(() => {
+  useHead({
+    title: "foodWaNGon",
+  });
+});
 const tab = ref<string | null>(null);
 </script>
 <style lang="scss" scoped>
-.content {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-
-  gap: 1rem;
-  padding: 5rem 10rem 0 10rem;
-  span {
-    font-size: 3.5rem;
-    font-weight: 700;
-  }
-  p {
-    font-size: 30px;
-    line-height: 40px;
-    color: #616161;
-    font-weight: 700;
-    text-align: left;
-    max-width: 80%;
-  }
-
-  .tabItem {
+.main {
+  .content {
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+
     gap: 1rem;
+
+    span {
+      font-size: 3.5rem;
+      font-weight: 700;
+      text-align: center;
+    }
+    p {
+      font-size: 30px;
+      line-height: 40px;
+      color: #616161;
+      font-weight: 700;
+      text-align: center;
+      width: 80%;
+      margin: 0 auto;
+    }
+
+    .tabItem {
+      display: flex;
+      gap: 1rem;
+    }
+    .v-card {
+      width: 50%;
+      margin: 0 auto;
+    }
   }
 }
 .image {
@@ -247,10 +261,10 @@ const tab = ref<string | null>(null);
 
   .content {
     margin-bottom: 2rem;
+    text-align: center;
     span {
       font-size: 2.4rem;
       font-weight: 700;
-      text-align: center;
     }
   }
   .card {
@@ -293,10 +307,11 @@ const tab = ref<string | null>(null);
 
   .content {
     margin-bottom: 2rem;
+    text-align: center;
     span {
       font-size: 2.4rem;
       font-weight: 700;
-      text-align: center;
+      /* text-align: center; */
     }
   }
 }
@@ -328,6 +343,7 @@ const tab = ref<string | null>(null);
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 0 5rem;
 
     span {
       font-size: 2.5rem;
@@ -336,7 +352,6 @@ const tab = ref<string | null>(null);
       text-align: center;
     }
     .v-btn {
-      margin-top: 2rem;
       width: 50%;
     }
   }
@@ -347,6 +362,223 @@ const tab = ref<string | null>(null);
   }
   to {
     transform: rotate(360deg);
+  }
+}
+@media screen and (max-width: 1920px) {
+  .main .content {
+    padding: 7rem 0 0 0;
+  }
+  .main .image {
+    width: 650px;
+  }
+}
+@media screen and (max-width: 1440px) {
+  .main .content {
+    padding: 5rem 0 0 0;
+    span {
+      font-size: 3rem;
+    }
+    p {
+      font-size: 24px;
+      line-height: 30px;
+      max-width: 100%;
+    }
+  }
+  .main .image {
+    width: 650px;
+  }
+  .main .content .v-card {
+    width: 80%;
+  }
+}
+@media screen and (max-width: 1280px) {
+  .main .content {
+    padding: 2rem 0 0 0;
+    span {
+      font-size: 2.5rem;
+    }
+    p {
+      font-size: 20px;
+      line-height: 30px;
+      max-width: 100%;
+    }
+  }
+  .main .image {
+    width: 500px;
+  }
+  .main .content .v-card {
+    width: 80%;
+  }
+}
+@media screen and (max-width: 1024px) {
+  .main .content {
+    padding: 2rem 0 0 0;
+    span {
+      font-size: 2.5rem;
+    }
+    p {
+      font-size: 20px;
+      line-height: 30px;
+      max-width: 100%;
+    }
+  }
+  .main .image {
+    width: 500px;
+  }
+  .main .content .v-card {
+    width: 80%;
+  }
+}
+@media screen and (max-width: 768px) {
+  .main .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 0 0 0;
+    span {
+      font-size: 3.5rem;
+    }
+    p {
+      font-size: 28px;
+      line-height: 40px;
+      text-align: center;
+    }
+    .v-card {
+      display: none;
+    }
+  }
+  .main .image {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    img {
+      width: 50%;
+    }
+  }
+
+  .poster {
+    background-position: left;
+    .content {
+      padding: 0;
+    }
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .main .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 2rem 0 0 0;
+    span {
+      font-size: 2.5rem;
+    }
+    p {
+      font-size: 20px;
+      line-height: 40px;
+      text-align: center;
+    }
+    .v-card {
+      display: none;
+    }
+  }
+  .main .image {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    img {
+      width: 50%;
+    }
+  }
+  .mota {
+    .card {
+      padding: 1rem 5rem 0 5rem;
+    }
+  }
+  .poster {
+    background-position: right;
+    .content {
+      padding: 0;
+      span {
+        font-size: 28px;
+      
+      }
+      .v-btn {
+        width: 100%;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .main .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 2rem 0 0 0;
+    span {
+      font-size: 1.8rem;
+    }
+    p {
+      font-size: 20px;
+      line-height: 40px;
+      text-align: center;
+    }
+    .v-card {
+      display: none;
+    }
+  }
+  .main .image {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    img {
+      width: 50%;
+    }
+  }
+  .poster {
+    background-position: right;
+    .content {
+      padding: 0;
+      span {
+        font-size: 24px;
+      
+      }
+      .v-btn {
+        width: 100%;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .mota {
+    .content {
+      span {
+        font-size: 2.5rem;
+      }
+    }
+    .card {
+      padding: 0;
+    }
+  }
+  .poster {
+    background-position: right;
+    .content {
+      padding: 0;
+      span {
+        font-size: 20px;
+      
+      }
+      .v-btn {
+        width: 100%;
+      }
+    }
   }
 }
 </style>

@@ -6,7 +6,7 @@
         :key="n"
         v-slot="{ isSelected, toggle }"
       >
-        <div class="ma-4">
+        <div class="popular-card ma-4">
           <div class="card" @click="toggle">
             <div class="img">
               <v-img
@@ -20,22 +20,17 @@
             </v-card-title>
             <v-card-text>
               <div class="des">
-                <p>
-                
-
-                  6 days Remaining
-                </p>
+                <p>6 days Remaining</p>
               </div>
               <div class="price">
                 <p>3.88$</p>
               </div>
             </v-card-text>
 
-            <v-btn color="primary" 
-            class="text-white"
-            >Buy Now
-          <v-icon class="ml-2">mdi-cart-plus</v-icon>
-          </v-btn>
+            <v-btn color="primary" class="text-white"
+              >Buy Now
+              <v-icon class="ml-2">mdi-cart-plus</v-icon>
+            </v-btn>
           </div>
         </div>
       </v-slide-group-item>
@@ -57,36 +52,40 @@
 const model = ref(null);
 </script>
 
-<style lang="scss" scoped>
-.card {
-  width: 300px;
-  cursor: pointer;
+<style lang="scss">
+.popular-card {
+  display: grid;
+  grid-template-columns: repeat(5, auto);
+  .card {
+    width: 300px;
+    cursor: pointer;
 
-  h4 {
-    font-size: 16px;
-    font-weight: 700;
-    margin: 0;
-    text-align: left;
-  }
-  .des {
-    color: #ffb30e;
-    font-size: 14px;
-    font-weight: 600;
-    margin: 0;
-    text-align: left;
-  }
-  .price {
-    margin-top: 10px;
-    p {
+    h4 {
       font-size: 16px;
+      font-weight: 700;
+      margin: 0;
+      text-align: left;
+    }
+    .des {
+      color: #ffb30e;
+      font-size: 14px;
       font-weight: 600;
       margin: 0;
       text-align: left;
     }
-  }
-  .v-btn {
-    margin-top: 10px;
-    width: 100%;
+    .price {
+      margin-top: 10px;
+      p {
+        font-size: 16px;
+        font-weight: 600;
+        margin: 0;
+        text-align: left;
+      }
+    }
+    .v-btn {
+      margin-top: 10px;
+      width: 100%;
+    }
   }
 }
 .next-icon {
@@ -128,5 +127,40 @@ const model = ref(null);
 .prev-icon:hover {
   margin-bottom: 10px;
   transition: 0.5s;
+}
+
+@media screen and (max-width: 425px) {
+  .popular-card {
+    display: grid;
+    grid-template-columns: repeat(1, auto);
+    margin: 0;
+    .card {
+      width: 350px;
+    }
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .popular-card {
+    display: grid;
+    grid-template-columns: repeat(1, auto);
+    margin: 0;
+    .card {
+      width: 290px;
+    }
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .popular-card {
+    display: grid;
+    grid-template-columns: repeat(1, auto);
+    margin: 0;
+
+    .card {
+      width: 230px;
+    }
+  }
+
 }
 </style>

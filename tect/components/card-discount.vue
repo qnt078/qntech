@@ -1,11 +1,21 @@
 <template>
   <div v-if="test" class="mt-4">
     <v-row class="pa-12">
-      <v-col v-for="(item, index) in test" :key="index" cols="3">
-        <div class="card">
+      <v-col
+        v-for="(item, index) in test"
+        :key="index"
+        cols="auto"
+        lg="3"
+        md="6"
+        sm="6"
+        xs="12"
+      >
+        <div class="card animate__animated animate__fadeInDown">
           <div class="img">
             <v-img :src="item.image" width="100%"></v-img>
-            <p class="discount">{{ item.discount }}</p>
+            <p class="discount">{{ item.discount }}
+            <v-icon>mdi-clock-fast</v-icon>
+            </p>
           </div>
           <v-card-title>
             <h4>{{ item.title }}</h4>
@@ -37,28 +47,28 @@ const test = [
     description: "6 days Remaining",
     image:
       "https://themewagon.github.io/foodwagon/v1.0.0/assets/img/gallery/discount-item-1.png",
-    discount: "20% Off",
+    discount: "Fast",
   },
   {
     title: "Flat Hill Slingback",
     description: "6 days Remaining",
     image:
       "https://themewagon.github.io/foodwagon/v1.0.0/assets/img/gallery/discount-item-1.png",
-    discount: "20% Off",
+    discount: "Fast",
   },
   {
     title: "Flat Hill Slingback",
     description: "6 days Remaining",
     image:
       "https://themewagon.github.io/foodwagon/v1.0.0/assets/img/gallery/discount-item-1.png",
-    discount: "20% Off",
+    discount: "Fast",
   },
   {
     title: "Flat Hill Slingback",
     description: "6 days Remaining",
     image:
       "https://themewagon.github.io/foodwagon/v1.0.0/assets/img/gallery/discount-item-1.png",
-    discount: "20% Off",
+    discount: "Fast",
   },
 ];
 </script>
@@ -113,6 +123,31 @@ const test = [
 
   p {
     padding: 10px;
+  }
+}
+
+@media (max-width: 425px) {
+  .v-row {
+    padding: 0 !important;
+  }
+  .img {
+    width: 180%;
+  }
+}
+@media (max-width: 375px) {
+  .v-row {
+    padding: 0 !important;
+  }
+  .img {
+    width: 160%;
+  }
+}
+@media (max-width: 320px) {
+  .v-row {
+    padding: 0 !important;
+  }
+  .img {
+    width: 130%;
   }
 }
 </style>

@@ -29,9 +29,9 @@ export default defineNuxtPlugin((app) => {
       VCard: {
         outlined: true,
       },
-      VContainer: {
-        maxWidth: "lg",
-      },
+     
+
+
       
     },
     theme: {

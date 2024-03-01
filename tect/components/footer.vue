@@ -1,25 +1,9 @@
 <template>
   <footer class="new_footer_area bg_color">
     <div class="new_footer_top">
-      <v-container class="container">
-        <v-row class="row">
+      <v-container >
+        <v-row >
           <v-col cols="auto" lg="3" md="3" sm="12">
-            <div
-              class="f_widget company_widget wow fadeInLeft"
-              data-wow-delay="0.2s"
-              style="
-                visibility: visible;
-                animation-delay: 0.2s;
-                animation-name: fadeInLeft;
-              "
-            >
-              <h3 class="f-title f_600 t_color f_size_18">Get in Touch</h3>
-              <p>
-                Don’t miss any updates of our new templates and extensions.!
-              </p>
-            </div>
-          </v-col>
-          <v-col cols="auto" lg="3" md="3" sm="4">
             <div
               class="f_widget about-widget pl_70 wow fadeInLeft"
               data-wow-delay="0.4s"
@@ -29,13 +13,40 @@
                 animation-name: fadeInLeft;
               "
             >
-              <h3 class="f-title f_600 t_color f_size_18">Download</h3>
+              <h3 class="f-title f_600 t_color f_size_18">Information</h3>
               <ul class="list-unstyled f_list">
-                <li><a href="#">Company</a></li>
+                <li>
+                  <v-img src="../public/favicon.ico" width="20%" alt="">
+                  </v-img>
+                </li>
+                <li>
+                  <a href="#">
+                    <v-icon class="mt-1 mr-2">mdi-map-marker</v-icon>
+                    <span> Dong Hoa District, Phu Yen Province </span>
+                  </a>
+                </li>
 
-                <li><a href="#">Desktop</a></li>
-                <li><a href="#">Projects</a></li>
-                <li><a href="#">My tasks</a></li>
+                <li>
+                  <a href="#">
+                    <v-icon class="mt-1 mr-2">mdi-phone</v-icon>
+                    <span> 0339955620 </span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    <v-icon class="mt-1 mr-2">mdi-mail</v-icon>
+                    <span> ntquoc.work@gmail.com </span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#">
+                    <v-icon class="mt-1 mr-2">mdi-clock-check</v-icon>
+                    <span> Monday - Sunday </span>
+                  </a>
+                </li>
+                <li>
+                  <v-img src="../assets/img/logo_bct.jpg" width="40%"></v-img>
+                </li>
               </ul>
             </div>
           </v-col>
@@ -60,6 +71,28 @@
               </ul>
             </div>
           </v-col>
+          <v-col cols="auto" lg="3" md="3" sm="4">
+            <div
+              class="f_widget about-widget pl_70 wow fadeInLeft"
+              data-wow-delay="0.4s"
+              style="
+                visibility: visible;
+                animation-delay: 0.4s;
+                animation-name: fadeInLeft;
+              "
+            >
+              <h3 class="f-title f_600 t_color f_size_18">Payment</h3>
+              <div class="payment">
+                <v-img src="../assets/img/payment1.jpg"></v-img>
+                <v-img src="../assets/img/payment2.jpg"></v-img>
+                <v-img src="../assets/img/payment3.jpg"></v-img>
+                <v-img src="../assets/img/payment4.jpg"></v-img>
+                <v-img src="../assets/img/payment5.jpg"></v-img>
+                <v-img src="../assets/img/payment6.jpg"></v-img>
+              </div>
+            </div>
+          </v-col>
+
           <v-col cols="auto" lg="3" md="3" sm="4">
             <div
               class="f_widget social-widget pl_70 wow fadeInLeft"
@@ -296,6 +329,15 @@ h6 {
   position: absolute;
   -webkit-animation: myfirst 30s linear infinite;
   animation: myfirst 30s linear infinite;
+}
+.payment {
+  display: grid;
+  grid-template-columns: repeat(3, 3rem);
+  gap: 5px;
+
+  .v-img {
+    width: 50px;
+  }
 }
 
 @-moz-keyframes myfirst {

@@ -200,6 +200,7 @@
   </footer>
 </template>
 <script lang="ts" setup>
+
 import CardDiscount from "~/components/card-discount.vue";
 import Slide from "~/components/slide.vue";
 import Feature from "~/components/feature.vue";

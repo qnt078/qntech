@@ -136,8 +136,12 @@ const model = ref(null);
     margin: 0;
     .card {
       width: 350px;
+
     }
   }
+  .v-slide-group > .v-slide-group__next, .v-slide-group > .v-slide-group__prev{
+  display: none;
+}
 }
 
 @media screen and (max-width: 375px) {

@@ -23,7 +23,6 @@
     "@formkit/auto-animate": "^0.8.1",
     "@mdi/font": "^7.4.47",
     "@nuxt/kit": "^3.9.0",
-    "@nuxtjs/composition-api": "^0.33.1",
     "@pinia/nuxt": "^0.5.1",
     "animate.css": "^4.1.1",
     "pinia": "^2.1.7",

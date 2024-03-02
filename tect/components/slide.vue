@@ -48,8 +48,24 @@
   </v-sheet>
 </template>
 
-<script setup>
-const model = ref(null);
+<script lang="ts" setup>
+let model = ref(0);
+let autoSlideInterval = <number | null>null;
+const totalSlides = 10; // replace with the number of slides
+const startAutoSlide = () => {
+  autoSlideInterval = window.setInterval(() => {
+    model.value = (model.value + 1) % totalSlides;
+  }, 3000);
+};
+
+const stopAutoSlide = () => {
+  if (autoSlideInterval) {
+    window.clearInterval(autoSlideInterval);
+  }
+};
+
+onMounted(startAutoSlide);
+onBeforeUnmount(stopAutoSlide);
 </script>
 
 <style lang="scss">
@@ -136,12 +152,12 @@ const model = ref(null);
     margin: 0;
     .card {
       width: 350px;
-
     }
   }
-  .v-slide-group > .v-slide-group__next, .v-slide-group > .v-slide-group__prev{
-  display: none;
-}
+  .v-slide-group > .v-slide-group__next,
+  .v-slide-group > .v-slide-group__prev {
+    display: none;
+  }
 }
 
 @media screen and (max-width: 375px) {
@@ -165,6 +181,5 @@ const model = ref(null);
       width: 230px;
     }
   }
-
 }
 </style>

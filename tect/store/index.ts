@@ -16,6 +16,7 @@ export const useCartStore = defineStore("cart", {
       if (window) {
         state.rawItems = JSON.parse(localStorage.getItem("cartItems") || "[]");
       }
+      console.log("totalQuantity", state.rawItems.length);
       return state.rawItems.length;
     },
     totalPrice: (state) => {
@@ -26,8 +27,9 @@ export const useCartStore = defineStore("cart", {
         ).forEach((item: { price: number; quantity: number }) => {
           total += item.quantity * item.price;
         });
-
+        
         return total;
+
       }
     },
   },

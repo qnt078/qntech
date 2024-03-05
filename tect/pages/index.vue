@@ -199,20 +199,18 @@
     <component :is="footer"></component>
   </footer>
 </template>
-<script lang="ts" setup>
-
+<script setup>
 import CardDiscount from "~/components/card-discount.vue";
 import Slide from "~/components/slide.vue";
 import Feature from "~/components/feature.vue";
 import Review from "~/components/review2.vue";
 import footer from "~/components/footer.vue";
-
+const tab = ref(null);
 onMounted(() => {
   useHead({
     title: "foodWaNGon",
   });
 });
-const tab = ref<string | null>(null);
 </script>
 <style lang="scss" scoped>
 .main {
@@ -505,7 +503,6 @@ const tab = ref<string | null>(null);
       padding: 0;
       span {
         font-size: 28px;
-      
       }
       .v-btn {
         width: 100%;
@@ -548,7 +545,6 @@ const tab = ref<string | null>(null);
       padding: 0;
       span {
         font-size: 24px;
-      
       }
       .v-btn {
         width: 100%;
@@ -574,7 +570,6 @@ const tab = ref<string | null>(null);
       padding: 0;
       span {
         font-size: 20px;
-      
       }
       .v-btn {
         width: 100%;

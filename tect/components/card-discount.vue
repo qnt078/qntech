@@ -131,7 +131,7 @@ const test = [
     padding: 0 !important;
   }
   .img {
-    width: 180%;
+    width: 163%;
   }
 }
 @media (max-width: 375px) {
@@ -139,7 +139,7 @@ const test = [
     padding: 0 !important;
   }
   .img {
-    width: 160%;
+    width: 153%;
   }
 }
 @media (max-width: 320px) {
@@ -147,7 +147,7 @@ const test = [
     padding: 0 !important;
   }
   .img {
-    width: 130%;
+    width: 125%;
   }
 }
 </style>

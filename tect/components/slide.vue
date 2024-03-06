@@ -24,7 +24,7 @@
                   <p>{{ item.description }}</p>
                 </div>
                 <div class="price">
-                  <p>{{ item.price }}</p>
+                  <p>{{ vndong.format(item.price) }}</p>
                 </div>
               </v-card-text>
 
@@ -73,7 +73,7 @@
               <p>{{ item.description }}</p>
             </div>
             <div class="price">
-              <p>{{ item.price }}</p>
+              <p>{{ vndong.format(item.price) }}</p>
             </div>
           </v-card-text>
 
@@ -96,7 +96,7 @@
 <script lang="ts" setup>
 const nuxtApp = useNuxtApp();
 const cart = nuxtApp.$store;
-
+const vndong = nuxtApp.$vietnamdong as any;
 let model = ref(0);
 const items = [
   {

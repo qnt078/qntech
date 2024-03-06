@@ -195,16 +195,14 @@
     </div>
   </div>
 
-  <footer>
-    <component :is="footer"></component>
-  </footer>
+
 </template>
 <script setup>
 import CardDiscount from "~/components/card-discount.vue";
 import Slide from "~/components/slide.vue";
 import Feature from "~/components/feature.vue";
 import Review from "~/components/review2.vue";
-import footer from "~/components/footer.vue";
+
 const tab = ref(null);
 onMounted(() => {
   useHead({

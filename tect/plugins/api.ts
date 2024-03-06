@@ -1,6 +1,6 @@
 
 
-export default defineNuxtPlugin((nuxtApp) => {
+export default defineNuxtPlugin((nuxtApp : any) => {
   const baseUrl = nuxtApp.$config.public.apiBase
   const apiClient = {
     async post(resource: string, data: any) {

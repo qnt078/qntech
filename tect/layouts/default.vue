@@ -146,81 +146,34 @@
         <v-icon color="error" @click="closeCart">mdi-close-circle</v-icon>
       </div>
       <div class="cart-items">
-        <div class="items">
-          <div class="item">
+        <div v-if="cart?.length > 0" class="items animate__animated animate__backInRight">
+          <div v-for="(item, index) in cart" :key="index" class="item">
             <v-img
               src="https://themewagon.github.io/foodwagon/v1.0.0/assets/img/gallery/discount-item-1.png"
             >
               <div class="cancle">
-                <v-icon>mdi-close-circle</v-icon>
+                <v-icon @click="removeItem(item.id)">mdi-close-circle</v-icon>
               </div>
             </v-img>
             <div class="item-info">
-              <h4>Flat Hill Slingback</h4>
+              <h4>{{ item.title }}</h4>
               <div class="info">
-                <p>Price: 30000đ</p>
-                <p>Quantity : 5</p>
-              </div>
-            </div>
-          </div>
-          <div class="item">
-            <v-img
-              src="https://themewagon.github.io/foodwagon/v1.0.0/assets/img/gallery/discount-item-1.png"
-            >
-              <div class="cancle">
-                <v-icon>mdi-close-circle</v-icon>
-              </div>
-            </v-img>
-            <div class="item-info">
-              <h4>Flat Hill Slingback</h4>
-              <div class="info">
-                <p>Price: 30000đ</p>
-                <p>Quantity : 5</p>
-              </div>
-            </div>
-          </div>
-          <div class="item">
-            <v-img
-              src="https://themewagon.github.io/foodwagon/v1.0.0/assets/img/gallery/discount-item-1.png"
-            >
-              <div class="cancle">
-                <v-icon>mdi-close-circle</v-icon>
-              </div>
-            </v-img>
-            <div class="item-info">
-              <h4>Flat Hill Slingback</h4>
-              <div class="info">
-                <p>Price: 30000đ</p>
-                <p>Quantity : 5</p>
-              </div>
-            </div>
-          </div>
-          <div class="item">
-            <v-img
-              src="https://themewagon.github.io/foodwagon/v1.0.0/assets/img/gallery/discount-item-1.png"
-            >
-              <div class="cancle">
-                <v-icon>mdi-close-circle</v-icon>
-              </div>
-            </v-img>
-            <div class="item-info">
-              <h4>Flat Hill Slingback</h4>
-              <div class="info">
-                <p>Price: 30000đ</p>
-                <p>Quantity : 5</p>
+                <p>Price: {{ vndong.format(item.price) }}</p>
+                <p>Quantity : {{ item?.quantity }}</p>
               </div>
             </div>
           </div>
         </div>
 
         <div
-          class="sub-total d-flex flex-column justify-space-between align-center"
+          v-if="cart.length > 0"
+          class="sub-total mt-2 d-flex flex-column justify-space-between align-center"
         >
           <div
             class="title w-100 d-flex flex-row justify-space-between align-center"
           >
             <p>Sub Total</p>
-            <p>10.000000 đ</p>
+            <p>{{ vndong.format(totalPrice) }}</p>
           </div>
           <div class="button d-flex flex-row" style="gap: 1rem">
             <v-btn color="secondary" class="rounded-lg text-white"
@@ -236,34 +189,46 @@
             <span>Terms & Conditions</span>
           </p>
         </div>
+        <div v-else class="empty animate__animated animate__bounceIn">
+          <img src="../assets/img/preview.png"
+          
+          />
+        </div>
       </div>
     </div>
-    <v-main>
+    <v-main class="pb-0">
       <slot />
     </v-main>
+    <footer>
+    <component :is="footer"></component>
+  </footer>
   </v-app>
 </template>
 
-<script setup lang="ts">
-import { ref } from "vue";
-import { useRouter } from "vue-router";
+<script lang="ts" setup>
+interface Item {
+  id?: number;
+  title?: string;
+  price?: number;
+  quantity?: number;
+}
 
+import footer from "~/components/footer.vue";
 const router = useRouter();
 const drawer = ref(false);
 const selectedIcon = ref("home");
 const isLogin = ref(false);
 const nuxtApp = useNuxtApp();
 const quantity = ref(0);
+const vndong = nuxtApp.$vietnamdong as any;
+let cart = nuxtApp.$store.rawItems as unknown as Item[];
 
+const totalPrice = ref(0);
 onMounted(() => {
   quantity.value = nuxtApp.$store.totalQuantity;
+  cart = nuxtApp.$store.rawItems as unknown as Item[];
+  setTotalPrice();
 });
-watch(
-  () => nuxtApp.$store.totalQuantity,
-  (newTotalQuantity) => {
-    quantity.value = newTotalQuantity;
-  }
-);
 
 const login = () => {
   router.push("/login");
@@ -289,6 +254,38 @@ const closeCart = () => {
   sidecart?.classList.add("close");
   sidecart?.classList.remove("open");
 };
+
+const setTotalPrice = () => {
+  let total = 0;
+  cart.forEach((item: any) => {
+    total += item.price * item.quantity;
+  });
+  totalPrice.value = total;
+};
+const removeItem = (id: any) => {
+  cart.forEach((item, index) => {
+    if (item.id === id) {
+      cart.splice(index, 1);
+    }
+  });
+  nuxtApp.$store.removeItem(id);
+};
+watch(
+  () => nuxtApp.$store.totalQuantity,
+  (newTotalQuantity: any) => {
+    quantity.value = newTotalQuantity;
+  }
+);
+watch(cart, setTotalPrice, { immediate: true });
+watch(
+  () => nuxtApp.$store.rawItems,
+  (newCart: any) => {
+    cart = newCart as unknown as Item[];
+    setTotalPrice();
+  }
+);
+
+// watch(cart, setTotalPrice, { immediate: true });
 </script>
 
 <style lang="scss" scoped>
@@ -366,7 +363,7 @@ const closeCart = () => {
 
 .cart {
   position: fixed;
-  top: 50%;
+  top: 40%;
   right: 2%;
   z-index: 1000;
   .cart-icon {
@@ -536,6 +533,12 @@ const closeCart = () => {
         }
       }
     }
+    .empty {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+    }
   }
 }
 .sidecart.open {
@@ -565,4 +568,10 @@ const closeCart = () => {
     box-shadow: 0 0 10px 0 rgb(226, 213, 28);
   }
 }
+@media screen and (max-width: 425px) {
+  .cart {
+    display: none;
+  }
+}
 </style>
+../plugins/vietnamdong

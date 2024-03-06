@@ -20,7 +20,7 @@ const myCustomLightTheme: ThemeDefinition = {
     warning: "#FB8C00",
   },
 };
-export default defineNuxtPlugin((app) => {
+export default defineNuxtPlugin((app : any) => {
   const vuetify = createVuetify({
     defaults: {
       VBtn: {

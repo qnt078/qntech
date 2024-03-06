@@ -1,7 +1,7 @@
 // create a plugin to save the state of the store in the localStorage
 //  and restore it when the app is loaded
 
-export default defineNuxtPlugin((nuxtApp) => {
+export default defineNuxtPlugin((nuxtApp : any) => {
   if (process.client) {
     const localStore = {
       get(key: string) {

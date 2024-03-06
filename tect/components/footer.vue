@@ -2,7 +2,7 @@
   <footer class="new_footer_area bg_color">
     <div class="new_footer_top">
       <v-container >
-        <v-row >
+        <v-row>
           <v-col cols="auto" lg="3" md="3" sm="12">
             <div
               class="f_widget about-widget pl_70 wow fadeInLeft"
@@ -163,14 +163,14 @@ body {
 }
 .new_footer_area .footer_bottom {
   padding-top: 5px;
-  padding-bottom: 50px;
+
 }
 .footer_bottom {
   font-size: 14px;
   font-weight: 300;
   line-height: 20px;
   color: #7f88a6;
-  padding: 27px 0px;
+  /* padding: 27px 0px; */
 }
 .new_footer_top .company_widget p {
   font-size: 16px;

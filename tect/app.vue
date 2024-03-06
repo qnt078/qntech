@@ -6,7 +6,13 @@
   </NuxtLayout>
 </template>
 
-<script></script>
+<script setup>
+onMounted(() => {
+  useHead({
+    title: "foodWaNGon",
+  });
+});
+</script>
 <style>
 
 </style>

@@ -204,11 +204,7 @@ import Feature from "~/components/feature.vue";
 import Review from "~/components/review2.vue";
 
 const tab = ref(null);
-onMounted(() => {
-  useHead({
-    title: "foodWaNGon",
-  });
-});
+
 </script>
 <style lang="scss" scoped>
 .main {

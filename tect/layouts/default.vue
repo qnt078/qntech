@@ -176,7 +176,7 @@
             <p>{{ vndong.format(totalPrice) }}</p>
           </div>
           <div class="button d-flex flex-row" style="gap: 1rem">
-            <v-btn color="secondary" class="rounded-lg text-white"
+            <v-btn to="/cart" color="secondary" class="rounded-lg text-white"
               >Continue</v-btn
             >
             <v-btn color="primary" class="text-white rounded-lg"

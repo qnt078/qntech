@@ -3,8 +3,8 @@
     <v-container>
       <v-row>
         <v-col cols="12">
-          <div class="card">
-            <div class="card-span animate__animated animate__fadeInLeft">
+          <div class="card animate__animated animate__fadeInLeft">
+            <div class="card-span ">
               <div class="card-content">
                 <h4>Best deals <span>Crispy Sandwiches</span></h4>
                 <p>
@@ -23,8 +23,8 @@
         </v-col>
 
         <v-col cols="12">
-          <div class="card">
-            <div class="card-span-2 animate__animated animate__fadeInRight">
+          <div class="card animate__animated animate__fadeInRight">
+            <div class="card-span-2 ">
               <div class="card-image"></div>
               <div class="card-content">
                 <h4>Best deals <span>Crispy Sandwiches</span></h4>

@@ -290,9 +290,9 @@ const addToCart = (item: any) => {
     justify-content: center;
     flex-wrap: wrap;
     .card {
-      width: 160px;
+      width: 147px;
       h4 {
-        font-size: 14px;
+        font-size: 12px;
       }
       .des {
         font-size: 12px;
@@ -335,12 +335,12 @@ const addToCart = (item: any) => {
     justify-content: center;
     flex-wrap: wrap;
     .card {
-      width: 138px;
+      width: 132px;
       h4 {
-        font-size: 12px;
+        font-size: 10px;
       }
       .des {
-        font-size: 10px;
+        font-size: 9px;
       }
       .price {
         p {
@@ -377,7 +377,7 @@ const addToCart = (item: any) => {
     justify-content: center;
     flex-wrap: wrap;
     .card {
-      width: 110px;
+      width: 112px;
       h4 {
         font-size: 8px;
       }

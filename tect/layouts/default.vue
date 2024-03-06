@@ -19,13 +19,13 @@
         <v-container>
           <v-row>
             <v-col cols="4">
-              <div class="logo" style="cursor: pointer" @click="goToHome()">
+              <NuxtLink to="/" class="logo" style="cursor: pointer" >
                 <img
                   class="inline-block"
                   src="https://themewagon.github.io/foodwagon/v1.0.0/assets/img/gallery/logo.svg"
                 />
                 <span class="text-gradient">foodwaNGon</span>
-              </div>
+              </NuxtLink>
             </v-col>
             <v-col cols="4">
               <div class="location">

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-container>
     <div class="main-cart">
       <div class="cart-items">
         <div v-if="cart.length > 0" class="">
@@ -112,7 +112,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </v-container>
 </template>
 
 <script setup lang="ts">
@@ -129,10 +129,7 @@ const vndong = nuxtApp.$vietnamdong as any;
 const totalPrice = ref(0);
 
 onMounted(() => {
-  useHead({
-    title: "foodWaNGon",
-  });
-  cart = nuxtApp.$store.items as any[];
+  cart = nuxtApp.$store.items as unknown as Item[] | [];
   setTotalPrice();
 });
 

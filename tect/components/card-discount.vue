@@ -34,12 +34,7 @@
 </template>
 
 <script setup>
-const props = defineProps({
-  info: {
-    type: Array,
-    required: true,
-  },
-});
+
 
 const test = [
   {

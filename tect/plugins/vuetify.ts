@@ -24,7 +24,7 @@ export default defineNuxtPlugin((app : any) => {
   const vuetify = createVuetify({
     defaults: {
       VBtn: {
-        color: "primary",
+        color: "#ffb30e",
       },
       VCard: {
         outlined: true,

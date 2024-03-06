@@ -1,8 +1,8 @@
 <template>
   <v-container>
     <div class="main-cart">
-      <div class="cart-items">
-        <div v-if="cart.length > 0" class="">
+      <div v-if="cart.length > 0" class="cart-items">
+        <div class="">
           <v-row>
             <v-col cols="auto" lg="8" md="8" sm="12">
               <div class="cart-left">
@@ -65,7 +65,11 @@
                     <div
                       class="under-button d-flex flex-row justify-space-between align-center mt-6"
                     >
-                      <v-btn color="black" variant="outlined">
+                      <v-btn
+                        color="black"
+                        variant="outlined"
+                        @click="clearItems()"
+                      >
                         Remove All
                       </v-btn>
                       <v-btn color="black" variant="outlined">
@@ -179,26 +183,23 @@
             </v-col>
           </v-row>
         </div>
-        <div v-else>
-          <div class="cart-empty">
-            <v-row>
-              <v-col cols="12">
-                <h1>Your cart is empty</h1>
-              </v-col>
-              <v-col cols="12" class="px-10">
-                <v-divider
-                  :thickness="2"
-                  class="border-opacity-100"
-                ></v-divider>
-              </v-col>
-              <v-col cols="12" class="px-10">
-                <p>Looks like you haven't added any items to your cart yet.</p>
-              </v-col>
-              <v-col cols="12">
-                <v-btn to="/" class="text-white">Go to shop</v-btn>
-              </v-col>
-            </v-row>
-          </div>
+      </div>
+      <div v-else>
+        <div class="cart-empty">
+          <v-row>
+            <v-col cols="12">
+              <h1>Your cart is empty</h1>
+            </v-col>
+            <v-col cols="12" class="px-10">
+              <v-divider :thickness="2" class="border-opacity-100"></v-divider>
+            </v-col>
+            <v-col cols="12" class="px-10">
+              <p>Looks like you haven't added any items to your cart yet.</p>
+            </v-col>
+            <v-col cols="12">
+              <v-btn to="/" class="text-white">Go to shop</v-btn>
+            </v-col>
+          </v-row>
         </div>
       </div>
     </div>
@@ -214,45 +215,46 @@ interface Item {
 }
 
 const nuxtApp = useNuxtApp();
-let cart = nuxtApp.$store.rawItems as unknown as Item[] | [];
+const cart = ref(
+   nuxtApp.$store.rawItems as unknown as Item[]
+);
 const vndong = nuxtApp.$vietnamdong as any;
-const totalPrice = ref(0);
+const totalPrice = ref(nuxtApp.$store.totalPrice as number);
 
-onMounted(() => {
-  cart = nuxtApp.$store.rawItems as unknown as Item[] | [];
-  setTotalPrice();
+watchEffect(() => {
+
 });
 
 const addQuantity = (item: Item) => {
   nuxtApp.$store.updateItem(item as any);
 };
+
 const setTotalPrice = () => {
   let total = 0;
-  cart.forEach((item) => {
+  cart.value.forEach((item) => {
     total += item.price * item.quantity;
   });
   totalPrice.value = total;
 };
-const removeItem = (id: any) => {
-  cart.forEach((item, index) => {
-    if (item.id === id) {
-      cart.splice(index, 1);
-    }
-  });
-  nuxtApp.$store.removeItem(id);
+
+const removeItem = (id: number) => {
+  cart.value = cart.value.filter((item) => item.id !== id);
+  nuxtApp.$store.removeItem(id as any);
 };
 
-// change total price when quantity changes
-// watch(cart, setTotalPrice, { immediate: true });
+const clearItems = () => {
+  nuxtApp.$store.clearItems();
+  cart.value = [];
+};
+
 watch(
-  () => nuxtApp.$store.rawItems,
-  (newCart: any) => {
-    cart = newCart as unknown as Item[];
+  () => nuxtApp.$store.rawItems as unknown as Item[],
+  (newCart: Item[]) => {
+    cart.value = newCart;
     setTotalPrice();
   }
 );
 </script>
-
 <style lang="scss" scoped>
 .main-cart {
   margin: 5rem auto;
@@ -603,13 +605,12 @@ watch(
               font-size: 14px;
             }
           }
-          
         }
         .under-button {
-            .v-btn {
-              padding: 0 30px;
-            }
+          .v-btn {
+            padding: 0 30px;
           }
+        }
         .media-right {
           .price {
             display: none;
@@ -645,10 +646,10 @@ watch(
           }
         }
         .under-button {
-            .v-btn {
-              padding: 0 20px;
-            }
+          .v-btn {
+            padding: 0 20px;
           }
+        }
         .media-right {
           .price {
             display: none;
@@ -684,10 +685,10 @@ watch(
           }
         }
         .under-button {
-            .v-btn {
-              padding: 0;
-            }
+          .v-btn {
+            padding: 0;
           }
+        }
         .media-right {
           .price {
             display: none;

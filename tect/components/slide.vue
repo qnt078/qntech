@@ -30,7 +30,7 @@
 
               <div class="button">
                 <v-btn
-                  color="primary"
+                 
                   class="text-white"
                   rounded="lg"
                   @click="addToCart(item)"
@@ -79,7 +79,7 @@
 
           <div class="button">
             <v-btn
-              color="primary"
+         
               class="text-white"
               rounded="lg"
               @click="addToCart(item)"

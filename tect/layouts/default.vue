@@ -276,7 +276,7 @@ watch(
     quantity.value = newTotalQuantity;
   }
 );
-watch(cart, setTotalPrice, { immediate: true });
+
 watch(
   () => nuxtApp.$store.rawItems,
   (newCart: any) => {
@@ -285,7 +285,7 @@ watch(
   }
 );
 
-// watch(cart, setTotalPrice, { immediate: true });
+
 </script>
 
 <style lang="scss" scoped>

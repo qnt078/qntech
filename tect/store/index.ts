@@ -22,11 +22,13 @@ export const useCartStore = defineStore("cart", {
     totalPrice: (state) => {
       if (window) {
         let total = 0;
+       if (state.rawItems.length > 0) {
         state.rawItems = JSON.parse(
-          localStorage.getItem("cartItems") as string
+          localStorage.getItem("cartItems" ) as string
         ).forEach((item: { price: number; quantity: number }) => {
           total += item.quantity * item.price;
         });
+       }
         
         return total;
 
@@ -77,8 +79,10 @@ export const useCartStore = defineStore("cart", {
       );
 
       if (foundItem) {
-        // Item exists, increment quantity
-        cartItems.splice(cartItems.indexOf(foundItem), 1);
+        // Item exists, delete item
+        cartItems = cartItems.filter(
+          (item: { id: string; quantity: number }) => item.id !== id
+        );
       }
 
       localStorage.setItem("cartItems", JSON.stringify(cartItems));
@@ -89,6 +93,8 @@ export const useCartStore = defineStore("cart", {
     clearItems() {
       localStorage.removeItem("cartItems");
       this.rawItems = [];
+
+      
     },
   },
 });

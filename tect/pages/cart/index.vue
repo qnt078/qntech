@@ -72,7 +72,7 @@
                       >
                         Remove All
                       </v-btn>
-                      <v-btn color="black" variant="outlined">
+                      <v-btn to="/" color="black" variant="outlined">
                         Back to shop
                       </v-btn>
                     </div>

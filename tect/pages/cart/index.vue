@@ -175,6 +175,7 @@
 
                   <li class="list-group-item">
                     <v-btn color="secondary" class="text-white w-100"
+                    @click="checkOut()"
                       >Checkout</v-btn
                     >
                   </li>
@@ -246,7 +247,9 @@ const clearItems = () => {
   nuxtApp.$store.clearItems();
   cart.value = [];
 };
-
+const checkOut = () =>{
+  console.log(cart.value, totalPrice.value)
+}
 watch(
   () => nuxtApp.$store.rawItems as unknown as Item[],
   (newCart: Item[]) => {

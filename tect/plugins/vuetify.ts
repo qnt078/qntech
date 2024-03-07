@@ -29,10 +29,6 @@ export default defineNuxtPlugin((app : any) => {
       VCard: {
         outlined: true,
       },
-     
-
-
-      
     },
     theme: {
       defaultTheme: "myCustomLightTheme",

@@ -3,8 +3,8 @@
     <v-sheet class="mx-auto">
       <v-slide-group v-model="model" class="pa-4" center-active show-arrows>
         <v-slide-group-item
-          v-for="item in items"
-          :key="item.id"
+          v-for="(item, index) in items"
+          :key="index"
           v-slot="{ isSelected, toggle }"
         >
           <div class="popular-card ma-4">
@@ -17,7 +17,7 @@
                 ></v-img>
               </div>
               <v-card-title class="mt-4">
-                <h4>{{ item.title }}</h4>
+                <h4>{{ item.name }}</h4>
               </v-card-title>
               <v-card-text>
                 <div class="des">
@@ -29,11 +29,7 @@
               </v-card-text>
 
               <div class="button">
-                <v-btn
-                 
-                  class="text-white"
-                  rounded="lg"
-                  @click="addToCart(item)"
+                <v-btn class="text-white" rounded="lg" @click="addToCart(item)"
                   >Buy Now
                   <v-icon class="ml-2">mdi-cart-plus</v-icon>
                 </v-btn>
@@ -55,7 +51,7 @@
     </v-sheet>
   </div>
   <div class="mobile">
-    <div v-for="item in items" :key="item.id">
+    <div v-for="(item, index) in items" :key="index">
       <div class="popular-card ma-4">
         <div class="card">
           <div class="img">
@@ -66,7 +62,7 @@
             ></v-img>
           </div>
           <v-card-title class="mt-4">
-            <h4>{{ item.title }}</h4>
+            <h4>{{ item.name}}</h4>
           </v-card-title>
           <v-card-text>
             <div class="des">
@@ -78,11 +74,7 @@
           </v-card-text>
 
           <div class="button">
-            <v-btn
-         
-              class="text-white"
-              rounded="lg"
-              @click="addToCart(item)"
+            <v-btn class="text-white" rounded="lg" @click="addToCart(item)"
               >Buy Now
               <v-icon class="ml-2">mdi-cart-plus</v-icon>
             </v-btn>
@@ -94,73 +86,30 @@
 </template>
 
 <script lang="ts" setup>
+interface Product {
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+  image: string;
+}
+
+
 const nuxtApp = useNuxtApp();
 const cart = nuxtApp.$store;
 const vndong = nuxtApp.$vietnamdong as any;
+const api = nuxtApp.$api;
+const items = ref([] as Product[]) ;
 let model = ref(0);
-const items = [
-  {
-    id: 1,
-    title: "Flat Hill Slingback",
-
-    description: "Noodles",
-    price: "10000",
-  },
-  {
-    id: 2,
-    title: "Flat Hill Slingback",
-    description: "Noodles",
-    price: "15000",
-  },
-  {
-    id: 3,
-    title: "Flat Hill Slingback",
-    description: "Noodles",
-    price: "12000",
-  },
-  {
-    id: 4,
-    title: "Flat Hill Slingback",
-    description: "Noodles",
-    price: "13000",
-  },
-  {
-    id: 5,
-    title: "Flat Hill Slingback",
-    description: "Noodles",
-    price: "5000",
-  },
-  {
-    id: 6,
-    title: "Flat Hill Slingback",
-    description: "Noodles",
-    price: "20000",
-  },
-  {
-    id: 7,
-    title: "Flat Hill Slingback",
-    description: "Noodles",
-    price: "17000",
-  },
-  {
-    id: 8,
-    title: "Flat Hill Slingback",
-    description: "Noodles",
-    price: "16000",
-  },
-  {
-    id: 9,
-    title: "Flat Hill Slingback",
-    description: "Noodles",
-    price: "14000",
-  },
-  {
-    id: 10,
-    title: "Flat Hill Slingback",
-    description: "Noodles",
-    price: "35000",
-  },
-];
+const fetchProduct = async () => {
+  try {
+    const data = await api.get(`/product`);
+    items.value = data;
+    console.log(items.value);
+  } catch (err: any) {
+    console.log(err);
+  }
+};
 
 const addToCart = (item: any) => {
   const items: any = {
@@ -171,22 +120,9 @@ const addToCart = (item: any) => {
   };
   cart.addItem(items);
 };
-// let autoSlideInterval = <number | null>null;
-// const totalSlides = 10; // replace with the number of slides
-// const startAutoSlide = () => {
-//   autoSlideInterval = window.setInterval(() => {
-//     model.value = (model.value + 1) % totalSlides;
-//   }, 3000);
-// };
 
-// const stopAutoSlide = () => {
-//   if (autoSlideInterval) {
-//     window.clearInterval(autoSlideInterval);
-//   }
-// };
+onMounted(fetchProduct);
 
-// onMounted(startAutoSlide);
-// onBeforeUnmount(stopAutoSlide);
 </script>
 
 <style lang="scss">

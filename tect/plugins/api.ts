@@ -1,7 +1,7 @@
 
 
 export default defineNuxtPlugin((nuxtApp : any) => {
-  const baseUrl = nuxtApp.$config.public.apiBase
+  const baseUrl = `${nuxtApp.$config.public.apiBase}/api/v1`
   const apiClient = {
     async post(resource: string, data: any) {
       const response = await fetch(`${baseUrl}${resource}`, {

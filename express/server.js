@@ -1,6 +1,8 @@
 import express from "express";
 import dotenv from "dotenv";
 import connectDB from "./config/mongodb.js";
+import cors from "cors";
+
 import userRouter from "./routes/user.js";
 import routerProduct from "./routes/product.js";
 import orderRouter from "./routes/order.js";
@@ -9,10 +11,17 @@ import { notFound, errorHandler } from "./middleware/errors.js";
 dotenv.config();
 connectDB();
 
+
+
 const app = express();
+app.use(cors());
 const port = process.env.PORT;
 
+// const specs = swaggerJsdoc(swaggerDocument);
+
 app.use(express.json());
+// app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
+
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/otp", otpRouter);
 app.use("/api/v1/product", routerProduct);

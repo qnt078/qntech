@@ -7,7 +7,26 @@ import { protect, admin, seller } from "../middleware/auth.js";
 
 const userRouter = express.Router();
 
-//GET ALL PRODUCT WITH SEARCH AND PEGINATION
+/**
+ * @openapi
+ * /api/v1/user:
+ *   get:
+ *     summary: Get all user
+ *     tags: [User]
+ *     description: Get all user
+ *     responses:
+ *      200:
+ *       description: Success
+ *
+ * /api/v1/user/all:
+ *  get:
+ *    summary: Get all user with admin
+ *    tags: [User]
+ *    description: Get all user
+ *    responses:
+ *      200:
+ *        description: Success
+ */
 userRouter.get(
   "/",
   asyncHandler(async (req, res) => {
@@ -31,7 +50,6 @@ userRouter.get(
   })
 );
 
-//GET ALL USER WITHOUT SEARCH AND PEGINATION BY ADMIN
 userRouter.get(
   "/all",
   protect,
@@ -43,6 +61,20 @@ userRouter.get(
 );
 
 // LOGIN
+
+/**
+ * @openapi
+ * /api/v1/user/login:
+ *  post:
+ *    summary: Login user
+ *    tags: [User]
+ *    description: Login user
+ *    requestBody:
+ *    required: true
+ *   
+ *  
+
+ */
 userRouter.post(
   "/login",
   asyncHandler(async (req, res) => {
@@ -50,7 +82,6 @@ userRouter.post(
     const user = await User.findOne({ email });
 
     if (user && (await user.matchPassword(password))) {
-    
       res.status(200).json({
         message: "User logged in successfully 🎄",
         _id: user._id,
@@ -116,7 +147,6 @@ userRouter.post(
   })
 );
 
-
 // VERIFY EMAIL
 userRouter.post(
   "/verify",
@@ -137,7 +167,6 @@ userRouter.post(
       await user.save();
       res.status(200).json({
         message: "Email verified successfully",
-        
       });
     } else {
       res.status(404);
@@ -145,7 +174,6 @@ userRouter.post(
     }
   })
 );
-
 
 // PROFILE
 userRouter.get(

@@ -12,7 +12,7 @@
               <div class="img">
                 <v-img
                   class="rounded-xl"
-                  src="https://themewagon.github.io/foodwagon/v1.0.0/assets/img/gallery/discount-item-1.png"
+                  :src="item.image"
                   width="100%"
                 ></v-img>
               </div>
@@ -62,7 +62,7 @@
             ></v-img>
           </div>
           <v-card-title class="mt-4">
-            <h4>{{ item.name}}</h4>
+            <h4>{{ item.name }}</h4>
           </v-card-title>
           <v-card-text>
             <div class="des">
@@ -94,12 +94,11 @@ interface Product {
   image: string;
 }
 
-
 const nuxtApp = useNuxtApp();
 const cart = nuxtApp.$store;
 const vndong = nuxtApp.$vietnamdong as any;
 const api = nuxtApp.$api;
-const items = ref([] as Product[]) ;
+const items = ref([] as Product[]);
 let model = ref(0);
 const fetchProduct = async () => {
   try {
@@ -122,7 +121,6 @@ const addToCart = (item: any) => {
 };
 
 onMounted(fetchProduct);
-
 </script>
 
 <style lang="scss">
@@ -146,6 +144,10 @@ onMounted(fetchProduct);
     &:hover {
       box-shadow: 0 0 10px #ffb30e;
       transition: 0.5s;
+    }
+    .img {
+      width: 100%;
+      height: 300px;
     }
     h4 {
       font-size: 16px;

@@ -22,13 +22,9 @@ const uploadImage = async (req, res, next) => {
       res.status(400);
       throw new Error("No file uploaded");
     }
-    // const result = await cloudinary.uploader.upload(req.file.path);
    
-    const result = await cloudinary.uploader.upload(req.file.path, {
-      width: 300,
-      height: 253,
-      crop: "fill",
-    });
+   
+    const result = await cloudinary.uploader.upload(req.file.path);
     req.file.path = result.secure_url;
 
     console.log(req.file.path);

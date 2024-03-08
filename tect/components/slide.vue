@@ -14,6 +14,8 @@
                   class="rounded-xl"
                   :src="item.image"
                   width="100%"
+                  max-height="300"
+               
                 ></v-img>
               </div>
               <v-card-title class="mt-4">
@@ -55,11 +57,7 @@
       <div class="popular-card ma-4">
         <div class="card">
           <div class="img">
-            <v-img
-              class="rounded-xl"
-              src="https://themewagon.github.io/foodwagon/v1.0.0/assets/img/gallery/discount-item-1.png"
-              width="100%"
-            ></v-img>
+            <v-img class="rounded-xl" :src="item.image" width="100%" max-height="300"></v-img>
           </div>
           <v-card-title class="mt-4">
             <h4>{{ item.name }}</h4>
@@ -87,7 +85,7 @@
 
 <script lang="ts" setup>
 interface Product {
-  id: number;
+  _id: number;
   name: string;
   description: string;
   price: number;
@@ -112,11 +110,13 @@ const fetchProduct = async () => {
 
 const addToCart = (item: any) => {
   const items: any = {
-    id: item.id,
-    title: item.title,
+    _id: item._id,
+    name: item.name,
     price: item.price,
     quantity: 1,
+    image: item.image,
   };
+
   cart.addItem(items);
 };
 
@@ -145,10 +145,7 @@ onMounted(fetchProduct);
       box-shadow: 0 0 10px #ffb30e;
       transition: 0.5s;
     }
-    .img {
-      width: 100%;
-      height: 300px;
-    }
+   
     h4 {
       font-size: 16px;
       font-weight: 700;

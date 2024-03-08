@@ -1,12 +1,14 @@
 // cloudinaryConfig.mjs
 import cloudinary from "cloudinary";
 // import { CloudinaryStorage } from '@cloudinary/storage';
+import dotenv from "dotenv";
 import multer from "multer";
 
+dotenv.config();
 cloudinary.config({
-  cloud_name: "decqocjtv",
-  api_key: "525239764147953",
-  api_secret: "6HeHjsPj1uiyP60fmfx-xQifIko",
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY ,
+  api_secret: process.env.CLOUD_API_SECRET,
 });
 
 const storage = multer.diskStorage({
@@ -27,9 +29,10 @@ const uploadImage = async (req, res, next) => {
     const result = await cloudinary.uploader.upload(req.file.path);
     req.file.path = result.secure_url;
 
-    console.log(req.file.path);
+    
     next();
   } catch (error) {
+   
     res.status(500).json({ error: error.message });
   }
 };

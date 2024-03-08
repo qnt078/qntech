@@ -13,10 +13,10 @@
                     <v-col cols="auto" lg="9" md="9" sm="9" xs="12">
                       <div class="media-left">
                         <img
-                          src="https://themewagon.github.io/foodwagon/v1.0.0/assets/img/gallery/discount-item-1.png"
+                          :src="item.image"
                         />
                         <div class="media-body">
-                          <div class="media-title mt-0">{{ item.title }}</div>
+                          <div class="media-title mt-0">{{ item.name }}</div>
                           <div class="media-price">
                             <span>Price:</span> {{ vndong.format(item.price) }}
                           </div>
@@ -45,7 +45,7 @@
                           <v-btn color="black" variant="outlined">
                             <v-icon color="primary">mdi-heart</v-icon>
                           </v-btn>
-                          <v-btn color="secondary" @click="removeItem(item.id)">
+                          <v-btn color="secondary" @click="removeItem(item._id)">
                             <v-icon color="white">mdi-delete</v-icon>
                           </v-btn>
                         </div>
@@ -209,10 +209,11 @@
 
 <script setup lang="ts">
 interface Item {
-  id: number;
-  title: string;
+  _id: number;
+  name: string;
   price: number;
   quantity: number;
+  image: string;
 }
 
 const nuxtApp = useNuxtApp();
@@ -238,9 +239,10 @@ const setTotalPrice = () => {
   totalPrice.value = total;
 };
 
-const removeItem = (id: number) => {
-  cart.value = cart.value.filter((item) => item.id !== id);
-  nuxtApp.$store.removeItem(id as any);
+const removeItem = (_id: number) => {
+  cart.value = cart.value.filter((item) => item._id !== _id);
+  console.log(_id);
+  nuxtApp.$store.removeItem(_id as any);
 };
 
 const clearItems = () => {

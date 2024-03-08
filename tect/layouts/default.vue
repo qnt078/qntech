@@ -149,14 +149,15 @@
         <div v-if="cart?.length > 0" class="items animate__animated animate__backInRight">
           <div v-for="(item, index) in cart" :key="index" class="item">
             <v-img
-              src="https://themewagon.github.io/foodwagon/v1.0.0/assets/img/gallery/discount-item-1.png"
+              :src="item.image"
+              rounded="lg"
             >
               <div class="cancle">
-                <v-icon @click="removeItem(item.id)">mdi-close-circle</v-icon>
+                <v-icon @click="removeItem(item._id)">mdi-close-circle</v-icon>
               </div>
             </v-img>
             <div class="item-info">
-              <h4>{{ item.title }}</h4>
+              <h4>{{ item.name }}</h4>
               <div class="info">
                 <p>Price: {{ vndong.format(item.price) }}</p>
                 <p>Quantity : {{ item?.quantity }}</p>
@@ -190,8 +191,7 @@
           </p>
         </div>
         <div v-else class="empty animate__animated animate__bounceIn">
-          <img src="../assets/img/preview.png"
-          
+          <img src="../assets/img/preview.png"  
           />
         </div>
       </div>
@@ -207,10 +207,11 @@
 
 <script lang="ts" setup>
 interface Item {
-  id?: number;
-  title?: string;
+  _id?: number;
+  name?: string;
   price?: number;
   quantity?: number;
+  image?: string;
 }
 
 import footer from "~/components/footer.vue";
@@ -262,13 +263,13 @@ const setTotalPrice = () => {
   });
   totalPrice.value = total;
 };
-const removeItem = (id: any) => {
+const removeItem = (_id: any) => {
   cart.forEach((item, index) => {
-    if (item.id === id) {
+    if (item._id === _id) {
       cart.splice(index, 1);
     }
   });
-  nuxtApp.$store.removeItem(id);
+  nuxtApp.$store.removeItem(_id);
 };
 watch(
   () => nuxtApp.$store.totalQuantity,

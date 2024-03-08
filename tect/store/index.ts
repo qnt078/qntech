@@ -36,29 +36,29 @@ export const useCartStore = defineStore("cart", {
     },
   },
   actions: {
-    addItem(name: { id: string; quantity: number }) {
+    addItem(items: { _id: string; quantity: number }) {
       let cartItems = JSON.parse(localStorage.getItem("cartItems") || "[]");
 
       let foundItem = cartItems.find(
-        (item: { id: string; quantity: number }) => item.id === name.id
+        (item: { _id: string; quantity: number }) => item._id === items._id
       );
 
       if (foundItem) {
         // Item exists, increment quantity
-        foundItem.quantity += name.quantity;
+        foundItem.quantity += items.quantity;
       } else {
         // Item does not exist, add to cart
-        cartItems.push(name);
+        cartItems.push(items);
       }
 
       localStorage.setItem("cartItems", JSON.stringify(cartItems));
       this.rawItems = cartItems;
     },
-    updateItem(name: { id: string; quantity: number }) {
+    updateItem(name: { _id: string; quantity: number }) {
       let cartItems = JSON.parse(localStorage.getItem("cartItems") || "[]");
 
       let foundItem = cartItems.find(
-        (item: { id: string; quantity: number }) => item.id === name.id
+        (item: { _id: string; quantity: number }) => item._id === name._id
       );
 
       if (foundItem) {
@@ -72,16 +72,16 @@ export const useCartStore = defineStore("cart", {
       localStorage.setItem("cartItems", JSON.stringify(cartItems));
       this.rawItems = cartItems;
     },
-    removeItem(id: string) {
+    removeItem(_id: string) {
       let cartItems = JSON.parse(localStorage.getItem("cartItems") || "[]");
       let foundItem = cartItems.find(
-        (item: { id: string; quantity: number }) => item.id === id
+        (item: { _id: string; quantity: number }) => item._id === _id
       );
 
       if (foundItem) {
         // Item exists, delete item
         cartItems = cartItems.filter(
-          (item: { id: string; quantity: number }) => item.id !== id
+          (item: { _id: string; quantity: number }) => item._id !== _id
         );
       }
 

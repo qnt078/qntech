@@ -97,7 +97,7 @@ const cart = nuxtApp.$store;
 const vndong = nuxtApp.$vietnamdong as any;
 const api = nuxtApp.$api;
 const items = ref([] as Product[]);
-let model = ref(0);
+const model = ref(0);
 const fetchProduct = async () => {
   try {
     const data = await api.get(`/product`);

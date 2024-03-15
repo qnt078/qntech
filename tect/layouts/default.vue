@@ -222,10 +222,10 @@ const isLogin = ref(false);
 const nuxtApp = useNuxtApp();
 const quantity = ref(0);
 const vndong = nuxtApp.$vietnamdong as any;
-let cart = nuxtApp.$store.rawItems as unknown as Item[];
+var cart = nuxtApp.$store.rawItems as unknown as Item[];
 
 const totalPrice = ref(0);
-onMounted(() => {
+onBeforeMount(() => {
   quantity.value = nuxtApp.$store.totalQuantity;
   cart = nuxtApp.$store.rawItems as unknown as Item[];
   setTotalPrice();
@@ -252,6 +252,7 @@ const showCart = () => {
 
 const closeCart = () => {
   const sidecart = document.querySelector(".sidecart");
+  console.log(sidecart);
   sidecart?.classList.add("close");
   sidecart?.classList.remove("open");
 };

@@ -60,7 +60,7 @@
           <div class="img">
             <v-img class="rounded-xl"
              :src="item.image"
-             
+             lazy-src="../assets/img/loading.gif"
              width="100%" max-height="300"></v-img>
           </div>
           <v-card-title class="mt-4">

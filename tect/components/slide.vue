@@ -13,6 +13,7 @@
                 <v-img
                   class="rounded-xl"
                   :src="item.image"
+                  lazy-src="../assets/img/loading.gif"
                   width="100%"
                   max-height="300"
                
@@ -57,7 +58,10 @@
       <div class="popular-card ma-4">
         <div class="card">
           <div class="img">
-            <v-img class="rounded-xl" :src="item.image" width="100%" max-height="300"></v-img>
+            <v-img class="rounded-xl"
+             :src="item.image"
+             
+             width="100%" max-height="300"></v-img>
           </div>
           <v-card-title class="mt-4">
             <h4>{{ item.name }}</h4>

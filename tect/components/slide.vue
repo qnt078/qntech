@@ -96,11 +96,12 @@ const nuxtApp = useNuxtApp();
 const cart = nuxtApp.$store;
 const vndong = nuxtApp.$vietnamdong as any;
 const api = nuxtApp.$api;
+
 const items = ref([] as Product[]);
 const model = ref(0);
 const fetchProduct = async () => {
   try {
-    const data = await api.get(`/product`);
+    const data = await api.get('/product');
     items.value = data;
     console.log(items.value);
   } catch (err: any) {

@@ -19,9 +19,7 @@ export default defineNuxtPlugin((nuxtApp : any) => {
     async get(resource: string) {
       const response = await fetch(`${baseUrl}${resource}`, {
         method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
+      
       })
       if (!response.ok) {
         throw new Error(`API request failed: ${response.status}`)

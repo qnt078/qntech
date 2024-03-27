@@ -1,9 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import vuetify, { transformAssetUrls } from "vite-plugin-vuetify";
 export default defineNuxtConfig({
-  app: {
-
-  },
+  app: {},
   ssr: false,
   devtools: {
     enabled: true,
@@ -26,10 +24,33 @@ export default defineNuxtConfig({
         config.plugins.push(vuetify({ autoImport: true }));
       });
     },
-    // import '@pinia/nuxt'
     "@pinia/nuxt",
     "@formkit/auto-animate/nuxt",
+    "@sidebase/nuxt-auth",
+
   ],
+  auth: {
+    baseURL: process.env.API_BASE_URL,
+    isEnabled: true,
+    provider: {
+      type: "local",
+     
+      endpoints: {
+        signIn: { path: "/user/login", method: "post" },
+        signOut: { path: "/user/logout", method: "post" },
+        signUp: { path: "/user/register", method: "post" },
+        getSession: { path: "/user/profile", method: "get" },
+      },
+      token: { signInResponseTokenPointer: '/token' },
+      pages: {
+       login: "/",
+      },
+
+    },
+
+   
+  
+  },
   vite: {
     vue: {
       template: {
@@ -38,12 +59,15 @@ export default defineNuxtConfig({
     },
   },
   plugins: ["./plugins/api.ts"],
-  css: ["~/assets/css/main.css", "~/assets/css/responsive.css","animate.css/animate.min.css"],
+  css: [
+    "~/assets/css/main.css",
+    "~/assets/css/responsive.css",
+    "animate.css/animate.min.css",
+  ],
   runtimeConfig: {
     apiSecret: "",
     public: {
       apiBase: process.env.API_BASE_URL,
     },
   },
-  
 });

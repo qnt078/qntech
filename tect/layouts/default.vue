@@ -19,7 +19,7 @@
         <v-container>
           <v-row>
             <v-col cols="4">
-              <NuxtLink to="/" class="logo" style="cursor: pointer" >
+              <NuxtLink to="/" class="logo" style="cursor: pointer">
                 <img
                   class="inline-block"
                   src="https://themewagon.github.io/foodwagon/v1.0.0/assets/img/gallery/logo.svg"
@@ -54,10 +54,37 @@
                     >mdi-cart-heart</v-icon
                   >
                 </v-badge>
-                <v-btn color="primary" variant="tonal" @click="login()">
-                  <v-icon>mdi-account</v-icon>
-                  Login
-                </v-btn>
+
+                <v-menu transition="fade-transition">
+                  <template v-slot:activator="{ props }">
+                    <v-btn
+                      v-if="isLogin"
+                      color="primary"
+                      variant="tonal"
+                      v-bind="props"
+                    >
+                      <v-icon>mdi-account</v-icon>
+                      {{ user?.name }}
+                    </v-btn>
+                    <v-btn
+                      v-else
+                      color="primary"
+                      variant="tonal"
+                      @click="login"
+                    >
+                      <v-icon>mdi-account</v-icon>
+                      Login
+                    </v-btn>
+                  </template>
+                  <v-list base-color="primary">
+                    <v-list-item prepend-icon="mdi-hamburger" link>
+                      <v-list-item-title v-text="'Order'"></v-list-item-title>
+                    </v-list-item>
+                    <v-list-item prepend-icon="mdi-logout" link @click="logout()">
+                      <v-list-item-title  v-text="'Logout'"></v-list-item-title>
+                    </v-list-item>
+                  </v-list>
+                </v-menu>
               </div>
             </v-col>
           </v-row>
@@ -146,12 +173,12 @@
         <v-icon color="error" @click="closeCart">mdi-close-circle</v-icon>
       </div>
       <div class="cart-items">
-        <div v-if="cart?.length > 0" class="items animate__animated animate__backInRight">
+        <div
+          v-if="cart?.length > 0"
+          class="items animate__animated animate__backInRight"
+        >
           <div v-for="(item, index) in cart" :key="index" class="item">
-            <v-img
-              :src="item.image"
-              rounded="lg"
-            >
+            <v-img :src="item.image" rounded="lg">
               <div class="cancle">
                 <v-icon @click="removeItem(item._id)">mdi-close-circle</v-icon>
               </div>
@@ -191,8 +218,7 @@
           </p>
         </div>
         <div v-else class="empty animate__animated animate__bounceIn">
-          <img src="../assets/img/preview.png"  
-          />
+          <img src="../assets/img/preview.png" />
         </div>
       </div>
     </div>
@@ -200,8 +226,8 @@
       <slot />
     </v-main>
     <footer>
-    <component :is="footer"></component>
-  </footer>
+      <component :is="footer"></component>
+    </footer>
   </v-app>
 </template>
 
@@ -213,19 +239,43 @@ interface Item {
   quantity?: number;
   image?: string;
 }
+interface User {
+  _id: string;
+  email: string;
+  password: string;
+  isAdmin: boolean;
+  name: string;
+  createdAt: string;
+}
 
 import footer from "~/components/footer.vue";
 const router = useRouter();
+const { getSession, signOut } = useAuth();
 const drawer = ref(false);
 const selectedIcon = ref("home");
 const isLogin = ref(false);
 const nuxtApp = useNuxtApp();
 const quantity = ref(0);
 const vndong = nuxtApp.$vietnamdong as any;
+const user = ref({} as unknown as User);
 var cart = nuxtApp.$store.rawItems as unknown as Item[];
 
 const totalPrice = ref(0);
+
+// FUNCTIONS
+const getSessionData = async () => {
+  try {
+    const session: any = await getSession();
+    if (session) {
+      isLogin.value = true;
+      user.value = session;
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
 onBeforeMount(() => {
+  getSessionData();
   quantity.value = nuxtApp.$store.totalQuantity;
   cart = nuxtApp.$store.rawItems as unknown as Item[];
   setTotalPrice();
@@ -233,6 +283,14 @@ onBeforeMount(() => {
 
 const login = () => {
   router.push("/login");
+};
+const logout = async () => {
+  try {
+    await signOut({ callbackUrl: "/" });
+    isLogin.value = false;
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 const goToHome = () => {
@@ -272,6 +330,10 @@ const removeItem = (_id: any) => {
   });
   nuxtApp.$store.removeItem(_id);
 };
+// WATCHERS
+watchEffect(() => {
+  
+});
 watch(
   () => nuxtApp.$store.totalQuantity,
   (newTotalQuantity: any) => {
@@ -286,8 +348,6 @@ watch(
     setTotalPrice();
   }
 );
-
-
 </script>
 
 <style lang="scss" scoped>

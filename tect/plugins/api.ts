@@ -1,57 +1,132 @@
+import Swal from "sweetalert2";
 
+export default defineNuxtPlugin((nuxtApp: any) => {
+  const { token } = useAuth();
+  const baseUrl = `${nuxtApp.$config.public.apiBase}`;
 
-export default defineNuxtPlugin((nuxtApp : any) => {
-  const baseUrl = `${nuxtApp.$config.public.apiBase}/api/v1`
+  const authToken = token.value;
+
   const apiClient = {
-    async post(resource: string, data: any) {
-      const response = await fetch(`${baseUrl}${resource}`, {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      if (!response.ok) {
-        throw new Error(`API request failed: ${response.status}`)
+    async post(resource: string, params: any) {
+      const { pending, error, status }: any = await useFetch(
+        `${baseUrl}${resource}`,
+        {
+          method: "POST",
+          body: JSON.stringify(params),
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `${authToken}`,
+          },
+        }
+      );
+      if (pending.value) {
+        throw new Error("API request is pending");
       }
-      return response.json()
+      if (error.value) {
+        Swal.fire({
+          toast: true,
+          title: "Error",
+          text: "An error occurred while processing your request.",
+          icon: "error",
+          position: "top-end",
+          showConfirmButton: false,
+        });
+        throw new Error(`API request failed: ${error.value}`);
+     
+      }
+
+      return Swal.fire({
+        toast: true,
+        title: "Your order has been placed!",
+        text: "You will receive an email confirmation shortly.",
+        icon: "success",
+        position: "top-end",
+        showConfirmButton: false,
+      });
     },
     async get(resource: string) {
-      const response = await fetch(`${baseUrl}${resource}`, {
-        method: "GET",
-      
-      })
-      if (!response.ok) {
-        throw new Error(`API request failed: ${response.status}`)
+      const { data, pending, error, status }: any = await useFetch(
+        `${baseUrl}${resource}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `${authToken}`,
+          },
+        }
+      );
+      if (pending.value) {
+        throw new Error("API request is pending");
       }
-      return response.json()
+      if (error.value) {
+        throw new Error(
+          `API request failed: ${error.value.statusCode} ${error.value.message}`
+        );
+      }
+      return data.value;
     },
-    async put(resource: string, data: any) {
-      const response = await fetch(`${baseUrl}${resource}`, {
-        method: "PUT",
-        body: JSON.stringify(data),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      if (!response.ok) {
-        throw new Error(`API request failed: ${response.status}`)
+    async put(resource: string, params: any) {
+      const { data, pending, error, status }: any = await useFetch(
+        `${baseUrl}${resource}`,
+        {
+          method: "PUT",
+          body: JSON.stringify(params),
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `${authToken}`,
+          },
+        }
+      );
+      if (pending.value) {
+        throw new Error("API request is pending");
       }
-      return response.json()
+      if (error.value) {
+          Swal.fire({
+          toast: true,
+          title: "Error",
+          text: "An error occurred while processing your request.",
+          icon: "error",
+          position: "top-end",
+          showConfirmButton: false,
+        });
+        throw new Error(`API request failed: ${status.value}`);
+      }
+      return Swal.fire({
+        toast: true,
+        title: "Your order has been updated!",
+        text: "You will receive an email confirmation shortly.",
+        icon: "success",
+        position: "top-end",
+        showConfirmButton: false,
+        });
     },
     async delete(resource: string) {
-      const response = await fetch(`${baseUrl}${resource}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      if (!response.ok) {
-        throw new Error(`API request failed: ${response.status}`)
+      const { data, pending, error, status }: any = await useFetch(
+        `${baseUrl}${resource}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `${authToken}`,
+          },
+        }
+      );
+      if (pending.value) {
+        throw new Error("API request is pending");
       }
-      return response.json()
+      if (error.value) {
+        throw new Error(`API request failed: ${status.value}`);
+      }
+      return Swal.fire({
+        toast: true,
+        title: "Your order has been deleted!",
+        text: "You will receive an email confirmation shortly.",
+        icon: "success",
+        position: "top-end",
+        showConfirmButton: false,
+        });
     },
-  }
+  };
   return {
     provide: {
       api: apiClient,

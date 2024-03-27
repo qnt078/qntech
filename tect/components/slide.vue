@@ -106,8 +106,9 @@ const model = ref(0);
 const fetchProduct = async () => {
   try {
     const data = await api.get('/product');
+
     items.value = data;
-    console.log(items.value);
+ 
   } catch (err: any) {
     console.log(err);
   }

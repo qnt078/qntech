@@ -12,13 +12,18 @@
       >
         <div class="card animate__animated animate__fadeInDown">
           <div class="img">
-            <v-img :src="item.image" width="100%"></v-img>
+           
+            <v-img :src="item?.image" width="350"  max-height="300" cover
+            
+            ></v-img>
             <p class="discount">{{ item.discount }}
+           
             <v-icon>mdi-clock-fast</v-icon>
             </p>
           </div>
           <v-card-title>
             <h4>{{ item.title }}</h4>
+        
           </v-card-title>
           <v-card-text>
             <div class="des">
@@ -38,31 +43,31 @@
 
 const test = [
   {
-    title: "Flat Hill Slingback",
-    description: "6 days Remaining",
+    title: "Hu Tieu Viet Nam",
+    description: "20 Minuts Remaining",
     image:
-      "https://themewagon.github.io/foodwagon/v1.0.0/assets/img/gallery/discount-item-1.png",
+      "_nuxt/assets/img/mi5.jpg",
     discount: "Fast",
   },
   {
-    title: "Flat Hill Slingback",
-    description: "6 days Remaining",
+    title: "Mi Goi Bo Vien",
+    description: "30 Seconds Remaining",
     image:
-      "https://themewagon.github.io/foodwagon/v1.0.0/assets/img/gallery/discount-item-1.png",
+      "_nuxt/assets/img/mi2.jpg",
     discount: "Fast",
   },
   {
-    title: "Flat Hill Slingback",
-    description: "6 days Remaining",
+    title: "Nuoc Cham Co Ot",
+    description: "15 Minuts Remaining",
     image:
-      "https://themewagon.github.io/foodwagon/v1.0.0/assets/img/gallery/discount-item-1.png",
+      "_nuxt/assets/img/mi3.jpg",
     discount: "Fast",
   },
   {
-    title: "Flat Hill Slingback",
+    title: "To Mi Co Thit",
     description: "6 days Remaining",
     image:
-      "https://themewagon.github.io/foodwagon/v1.0.0/assets/img/gallery/discount-item-1.png",
+      "_nuxt/assets/img/mi4.jpg",
     discount: "Fast",
   },
 ];

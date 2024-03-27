@@ -25,17 +25,27 @@
 </template>
 
 <script setup>
+const test = useAuth();
 const loginForm = ref({ email: "", password: "" });
 const registerForm = ref({ email: "", password: "" });
 
-const login = () => {
+const login = async () => {
   // handle login
-  console.log("Login", loginForm.value);
+  try {
+    await test.signIn(loginForm.value, { callbackUrl: "/", external: true });
+  } catch (err) {
+    console.log(err);
+  }
 };
 
-const register = () => {
-  // handle register
-  console.log("Register", registerForm.value);
+const register =async () => {
+ try {
+    await test.signOut({ callbackUrl: '/' });
+
+  } catch (err) {
+    console.log(err);
+ }
+
 };
 </script>
 

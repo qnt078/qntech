@@ -4,11 +4,29 @@ import Order from "../models/Orders.js";
 import { admin, protect } from "../middleware/auth.js";
 const orderRouter = express.Router();
 
+// GET ORDER WITH USER
 orderRouter.get(
   "/",
+  protect,
+
   asyncHandler(async (req, res) => {
-    const orders = await Order.find({});
+    const orders = await Order.find({ user: req.user._id }).sort({ _id: -1 });
     res.json(orders);
+  })
+);
+
+// GET ORDER BY ID
+orderRouter.get(
+  "/:id",
+  protect,
+  asyncHandler(async (req, res) => {
+    const order = await Order.findById(req.params.id);
+    if (order) {
+      res.json(order);
+    } else {
+      res.status(404);
+      throw new Error("Order not found");
+    }
   })
 );
 
@@ -19,7 +37,10 @@ orderRouter.post(
   asyncHandler(async (req, res) => {
     const {
       orderItems,
-    
+      shippingAddress,
+      paymentMethod,
+      itemsPrice,
+      totalPrice,
     } = req.body;
 
     if (orderItems && orderItems.length === 0) {
@@ -30,6 +51,10 @@ orderRouter.post(
       const order = new Order({
         orderItems,
         user: req.user._id,
+        shippingAddress,
+        paymentMethod,
+        itemsPrice,
+        totalPrice,
       });
 
       const createOrder = await order.save();

@@ -12,9 +12,7 @@
                   <v-row>
                     <v-col cols="auto" lg="9" md="9" sm="9" xs="12">
                       <div class="media-left">
-                        <img
-                          :src="item.image"
-                        />
+                        <img :src="item.image" />
                         <div class="media-body">
                           <div class="media-title mt-0">{{ item.name }}</div>
                           <div class="media-price">
@@ -45,7 +43,10 @@
                           <v-btn color="black" variant="outlined">
                             <v-icon color="primary">mdi-heart</v-icon>
                           </v-btn>
-                          <v-btn color="secondary" @click="removeItem(item._id)">
+                          <v-btn
+                            color="secondary"
+                            @click="removeItem(item._id)"
+                          >
                             <v-icon color="white">mdi-delete</v-icon>
                           </v-btn>
                         </div>
@@ -128,6 +129,7 @@
                   <li class="list-group-item">
                     <div class="input-group-1">
                       <input
+                        v-model="Information.name"
                         type="text"
                         placeholder="Name"
                         class="form-control"
@@ -137,6 +139,7 @@
                   <li class="list-group-item">
                     <div class="input-group-1">
                       <input
+                        v-model="Information.phone"
                         type="text"
                         placeholder="Phone"
                         class="form-control"
@@ -146,8 +149,19 @@
                   <li class="list-group-item">
                     <div class="input-group-1">
                       <input
+                        v-model="Information.address"
                         type="text"
                         placeholder="Address"
+                        class="form-control"
+                      />
+                    </div>
+                  </li>
+                  <li class="list-group-item">
+                    <div class="input-group-1">
+                      <input
+                        v-model="Information.note"
+                        type="text"
+                        placeholder="Note"
                         class="form-control"
                       />
                     </div>
@@ -157,7 +171,7 @@
 
                   <li class="list-group-item text-1">
                     <span class="title-3">
-                      <v-radio-group>
+                      <v-radio-group v-model="Information.payment">
                         <v-radio
                           color="#000"
                           label="CASH ON DELIVERY"
@@ -174,8 +188,10 @@
                   <li class="list-group-item divider-1"></li>
 
                   <li class="list-group-item">
-                    <v-btn color="secondary" class="text-white w-100"
-                    @click="checkOut()"
+                    <v-btn
+                      color="secondary"
+                      class="text-white w-100"
+                      @click="checkOut"
                       >Checkout</v-btn
                     >
                   </li>
@@ -184,7 +200,25 @@
             </v-col>
           </v-row>
         </div>
+
+        <!-- <v-dialog v-model="dialog" max-width="500">
+          <div>
+            <v-card title="Your Order">
+              <v-card-text>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              </v-card-text>
+
+              <v-card-actions>
+                <v-spacer></v-spacer>
+
+                <v-btn text="Close Dialog" @click="dialog = false"></v-btn>
+              </v-card-actions>
+            </v-card>
+          </div>
+        </v-dialog> -->
       </div>
+
       <div v-else>
         <div class="cart-empty">
           <v-row>
@@ -208,6 +242,8 @@
 </template>
 
 <script setup lang="ts">
+import Swal from "sweetalert2";
+
 interface Item {
   _id: number;
   name: string;
@@ -217,15 +253,20 @@ interface Item {
 }
 
 const nuxtApp = useNuxtApp();
-const cart = ref(
-   nuxtApp.$store.rawItems as unknown as Item[]
-);
+const api = nuxtApp.$api;
+const cart = ref(nuxtApp.$store.rawItems as unknown as Item[]);
 const vndong = nuxtApp.$vietnamdong as any;
 const totalPrice = ref(nuxtApp.$store.totalPrice as number);
-
-watchEffect(() => {
-
+const dialog = ref(false);
+const Information = ref({
+  name: "",
+  phone: "",
+  address: "",
+  note: "",
+  payment: "one",
 });
+
+watchEffect(() => {});
 
 const addQuantity = (item: Item) => {
   nuxtApp.$store.updateItem(item as any);
@@ -249,9 +290,53 @@ const clearItems = () => {
   nuxtApp.$store.clearItems();
   cart.value = [];
 };
-const checkOut = () =>{
-  console.log(cart.value, totalPrice.value)
-}
+const checkOut = () => {
+  Swal.fire({
+    title: "Please check your information before checkout",
+    text: "Are you sure you want to checkout?",
+
+    showCancelButton: true,
+    confirmButtonText: "CHECKOUT",
+
+    customClass: {
+      actions: "my-actions",
+      cancelButton: "order-1 right-gap",
+      confirmButton: "order-2 left-gap bg-success ",
+    },
+  }).then((result) => {
+    if (result.isConfirmed) {
+      order();
+    }
+  });
+};
+const order = async () => {
+  try {
+    const order = {
+      orderItems: cart.value.map((item) => ({
+        name: item.name,
+        price: item.price,
+        qty: item.quantity,
+        image: item.image,
+        product: item._id,
+      })),
+      shippingAddress: {
+        address: Information.value.address,
+        phone: Information.value.phone,
+        name: Information.value.name,
+        note: Information.value.note,
+      },
+      paymentMethod:
+        Information.value.payment === "one" ? "COD" : "Internet Banking",
+      totalPrice: totalPrice.value,
+    };
+
+    const res = await api.post("/order", order);
+    console.log(res);
+  } catch (err: any) {
+    console.log(err);
+  }
+};
+
 watch(
   () => nuxtApp.$store.rawItems as unknown as Item[],
   (newCart: Item[]) => {

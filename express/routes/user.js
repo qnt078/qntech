@@ -62,19 +62,6 @@ userRouter.get(
 
 // LOGIN
 
-/**
- * @openapi
- * /api/v1/user/login:
- *  post:
- *    summary: Login user
- *    tags: [User]
- *    description: Login user
- *    requestBody:
- *    required: true
- *   
- *  
-
- */
 userRouter.post(
   "/login",
   asyncHandler(async (req, res) => {
@@ -144,6 +131,14 @@ userRouter.post(
     } else {
       res.status(400).json({ message: "Invalid user data" });
     }
+  })
+);
+
+// Logout
+userRouter.post(
+  "/logout",
+  asyncHandler(async (req, res) => {
+    res.json({ message: "User logged out successfully" });
   })
 );
 

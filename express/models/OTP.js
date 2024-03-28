@@ -1,5 +1,5 @@
-import mongoose from 'mongoose';
-import mailSender from '../utils/mailSender.js';
+import mongoose from "mongoose";
+import mailSender from "../utils/mailSender.js";
 
 const otpSchema = mongoose.Schema(
   {
@@ -22,6 +22,7 @@ async function sendEmail(email, otp) {
   try {
     const subject = "OTP for Email Verification";
     const message = `Your OTP for Email Verification is ${otp}`;
+    console.log(message);
     await mailSender(email, subject, message);
   } catch (error) {
     console.log(error.message);
@@ -31,6 +32,7 @@ async function sendEmail(email, otp) {
 // This middleware runs before saving an otp to send the email
 otpSchema.pre("save", async function (next) {
   try {
+  
     await sendEmail(this.email, this.otp);
     next();
   } catch (error) {

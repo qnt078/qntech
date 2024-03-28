@@ -30,6 +30,21 @@ orderRouter.get(
   })
 );
 
+// GET ORDER BY PHONE NUMBER
+orderRouter.get(
+  "/phone/:phone",
+  asyncHandler(async (req, res) => {
+    const order = await Order.find({ "shippingAddress.phone": req.params.phone });
+
+    if (order) {
+      res.json(order);
+    } else {
+      res.status(404);
+      throw new Error("Order not found");
+    }
+  })
+);
+
 // CREATE ORDER
 orderRouter.post(
   "/",
@@ -51,6 +66,37 @@ orderRouter.post(
       const order = new Order({
         orderItems,
         user: req.user._id,
+        shippingAddress,
+        paymentMethod,
+        itemsPrice,
+        totalPrice,
+      });
+
+      const createOrder = await order.save();
+      res.status(201).json(createOrder);
+    }
+  })
+);
+
+// CREATE ORDER WITHOUT USER
+orderRouter.post(
+  "/create",
+  asyncHandler(async (req, res) => {
+    const {
+      orderItems,
+      shippingAddress,
+      paymentMethod,
+      itemsPrice,
+      totalPrice,
+    } = req.body;
+
+    if (orderItems && orderItems.length === 0) {
+      res.status(400);
+      throw new Error("No order items");
+      return;
+    } else {
+      const order = new Order({
+        orderItems,
         shippingAddress,
         paymentMethod,
         itemsPrice,

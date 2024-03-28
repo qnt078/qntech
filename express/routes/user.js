@@ -7,26 +7,7 @@ import { protect, admin, seller } from "../middleware/auth.js";
 
 const userRouter = express.Router();
 
-/**
- * @openapi
- * /api/v1/user:
- *   get:
- *     summary: Get all user
- *     tags: [User]
- *     description: Get all user
- *     responses:
- *      200:
- *       description: Success
- *
- * /api/v1/user/all:
- *  get:
- *    summary: Get all user with admin
- *    tags: [User]
- *    description: Get all user
- *    responses:
- *      200:
- *        description: Success
- */
+
 userRouter.get(
   "/",
   asyncHandler(async (req, res) => {
@@ -90,8 +71,8 @@ userRouter.post(
 userRouter.post(
   "/register",
   asyncHandler(async (req, res) => {
-    const { name, email, password, isAdmin, isSeller, otp } = req.body;
-    if (!name || !email || !password || !otp) {
+    const { name, email, password, isAdmin, isSeller } = req.body;
+    if (!name || !email || !password ) {
       res.status(400).json({ message: "Please fill all the fields" });
     }
 
@@ -101,16 +82,6 @@ userRouter.post(
     if (userExists) {
       res.status(500).json({ message: "User already exists" });
     }
-    const otpExists = await OTP.find({ email, otp })
-      .sort({ createdAt: -1 })
-      .limit(1);
-    if (otpExists.length === 0 || otp !== otpExists[0].otp) {
-      return res.status(400).json({
-        success: false,
-        message: "The OTP is not valid",
-      });
-    }
-
     const user = await User.create({
       name,
       email,
@@ -147,10 +118,12 @@ userRouter.post(
   "/verify",
   asyncHandler(async (req, res) => {
     const { email, otp } = req.body;
+   
     const otpExists = await OTP.find({ email, otp })
       .sort({ createdAt: -1 })
       .limit(1);
-    if (otpExists.length === 0 || otp !== otpExists[0].otp) {
+    
+     if (otpExists.length === 0 || otp !== otpExists[0].otp) {
       return res.status(400).json({
         success: false,
         message: "The OTP is not valid",

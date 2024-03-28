@@ -253,11 +253,13 @@ interface Item {
 }
 
 const nuxtApp = useNuxtApp();
+const { getSession } = useAuth();
 const api = nuxtApp.$api;
 const cart = ref(nuxtApp.$store.rawItems as unknown as Item[]);
 const vndong = nuxtApp.$vietnamdong as any;
 const totalPrice = ref(nuxtApp.$store.totalPrice as number);
 const dialog = ref(false);
+
 const Information = ref({
   name: "",
   phone: "",
@@ -330,8 +332,11 @@ const order = async () => {
       totalPrice: totalPrice.value,
     };
 
-    const res = await api.post("/order", order);
-    console.log(res);
+    if (await getSession()) {
+      await api.post("/order", order);
+    } else {
+      await api.post("/order/create", order);
+    }
   } catch (err: any) {
     console.log(err);
   }

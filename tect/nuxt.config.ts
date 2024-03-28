@@ -27,29 +27,27 @@ export default defineNuxtConfig({
     "@pinia/nuxt",
     "@formkit/auto-animate/nuxt",
     "@sidebase/nuxt-auth",
-
   ],
   auth: {
     baseURL: process.env.API_BASE_URL,
     isEnabled: true,
     provider: {
       type: "local",
-     
+
       endpoints: {
         signIn: { path: "/user/login", method: "post" },
         signOut: { path: "/user/logout", method: "post" },
         signUp: { path: "/user/register", method: "post" },
         getSession: { path: "/user/profile", method: "get" },
       },
-      token: { signInResponseTokenPointer: '/token' },
-      pages: {
-       login: "/",
+      token: {
+        signInResponseTokenPointer: "/token",
+        maxAgeInSeconds: 60 * 60 * 24 * 30, // 30 days
       },
-
+      pages: {
+        login: "/",
+      },
     },
-
-   
-  
   },
   vite: {
     vue: {

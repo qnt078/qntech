@@ -25,21 +25,32 @@ export default defineNuxtPlugin((nuxtApp: any) => {
       if (error.value) {
         Swal.fire({
           toast: true,
-          title: "Error",
-          text: "An error occurred while processing your request.",
+          title: "Oops!",
+          text: "Please try again later.",
           icon: "error",
+          iconColor: 'white',
+          customClass: {
+            popup: "colored-toast",
+          },
+          timer: 3000,
+          timerProgressBar: true,
           position: "top-end",
           showConfirmButton: false,
         });
         throw new Error(`API request failed: ${error.value}`);
-     
       }
 
       return Swal.fire({
         toast: true,
-        title: "Your order has been placed!",
+        title: "Yeay!",
         text: "You will receive an email confirmation shortly.",
         icon: "success",
+        iconColor: 'white',
+        customClass: {
+          popup: "colored-toast",
+        },
+        timer: 3000,
+        timerProgressBar: true,
         position: "top-end",
         showConfirmButton: false,
       });
@@ -81,13 +92,20 @@ export default defineNuxtPlugin((nuxtApp: any) => {
         throw new Error("API request is pending");
       }
       if (error.value) {
-          Swal.fire({
+        Swal.fire({
           toast: true,
           title: "Error",
           text: "An error occurred while processing your request.",
           icon: "error",
           position: "top-end",
           showConfirmButton: false,
+          iconColor: 'white',
+          customClass: {
+            popup: "colored-toast",
+          },
+          timer: 3000,
+          timerProgressBar: true,
+
         });
         throw new Error(`API request failed: ${status.value}`);
       }
@@ -98,7 +116,13 @@ export default defineNuxtPlugin((nuxtApp: any) => {
         icon: "success",
         position: "top-end",
         showConfirmButton: false,
-        });
+        iconColor: 'white',
+        customClass: {
+          popup: "colored-toast",
+        },
+        timer: 3000,
+        timerProgressBar: true,
+      });
     },
     async delete(resource: string) {
       const { data, pending, error, status }: any = await useFetch(
@@ -124,7 +148,13 @@ export default defineNuxtPlugin((nuxtApp: any) => {
         icon: "success",
         position: "top-end",
         showConfirmButton: false,
-        });
+        iconColor: 'white',
+        customClass: {
+          popup: "colored-toast",
+        },
+        timer: 3000,
+        timerProgressBar: true,
+      });
     },
   };
   return {

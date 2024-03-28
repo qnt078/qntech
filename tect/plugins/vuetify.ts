@@ -25,6 +25,7 @@ export default defineNuxtPlugin((app : any) => {
     defaults: {
       VBtn: {
         color: "#ffb30e",
+        
       },
       VCard: {
         outlined: true,

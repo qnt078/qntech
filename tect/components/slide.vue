@@ -106,9 +106,7 @@ const model = ref(0);
 const fetchProduct = async () => {
   try {
     const data = await api.get('/product');
-
     items.value = data;
- 
   } catch (err: any) {
     console.log(err);
   }
@@ -151,7 +149,6 @@ onMounted(fetchProduct);
       box-shadow: 0 0 10px #ffb30e;
       transition: 0.5s;
     }
-   
     h4 {
       font-size: 16px;
       font-weight: 700;

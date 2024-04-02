@@ -77,8 +77,10 @@
                     </v-btn>
                   </template>
                   <v-list base-color="primary">
-                    <v-list-item prepend-icon="mdi-hamburger" link>
-                      <v-list-item-title v-text="'Order'"></v-list-item-title>
+                    <v-list-item prepend-icon="mdi-hamburger" link @click="() => {
+                      $router.push('/order')
+                    }">
+                      <v-list-item-title v-text="'Order'" ></v-list-item-title>
                     </v-list-item>
                     <v-list-item prepend-icon="mdi-logout" link @click="logout()">
                       <v-list-item-title  v-text="'Logout'"></v-list-item-title>
@@ -332,7 +334,6 @@ const removeItem = (_id: any) => {
 };
 // WATCHERS
 watchEffect(() => {
-  
 });
 watch(
   () => nuxtApp.$store.totalQuantity,

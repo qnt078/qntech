@@ -16,7 +16,7 @@
               <h3 class="f-title f_600 t_color f_size_18">Information</h3>
               <ul class="list-unstyled f_list">
                 <li>
-                  <v-img src="../public/favicon.ico" width="20%" alt="">
+                  <v-img src="../favicon.ico" width="20%" alt="">
                   </v-img>
                 </li>
                 <li>

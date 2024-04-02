@@ -201,22 +201,7 @@
           </v-row>
         </div>
 
-        <!-- <v-dialog v-model="dialog" max-width="500">
-          <div>
-            <v-card title="Your Order">
-              <v-card-text>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
-              </v-card-text>
-
-              <v-card-actions>
-                <v-spacer></v-spacer>
-
-                <v-btn text="Close Dialog" @click="dialog = false"></v-btn>
-              </v-card-actions>
-            </v-card>
-          </div>
-        </v-dialog> -->
+    
       </div>
 
       <div v-else>

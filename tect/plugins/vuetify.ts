@@ -30,6 +30,10 @@ export default defineNuxtPlugin((app : any) => {
       VCard: {
         outlined: true,
       },
+      VImg: {
+      
+        cover: true,
+      }
     },
     theme: {
       defaultTheme: "myCustomLightTheme",

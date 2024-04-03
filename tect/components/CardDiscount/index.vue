@@ -13,7 +13,9 @@
         <div class="card animate__animated animate__fadeInDown">
           <div class="img">
            
-            <v-img :src="item?.image" width="350"  max-height="300" cover
+            <v-img :src="item?.image"
+            lazy-src="@/assets/img/loading.gif"
+            width="350"  max-height="300" cover
             
             ></v-img>
             <p class="discount">{{ item.discount }}

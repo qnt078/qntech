@@ -76,7 +76,7 @@
     <v-container>
       <v-row>
         <v-col cols="12">
-          <component :is="CardDiscount"></component>
+     <CardDiscount />
         </v-col>
       </v-row>
     </v-container>
@@ -149,7 +149,8 @@
           </div>
         </v-col>
         <v-col cols="12">
-          <component :is="Slide"></component>
+      
+          <Slide />
         </v-col>
       </v-row>
     </v-container>
@@ -164,7 +165,7 @@
           </div>
         </v-col> -->
         <v-col cols="12">
-          <component :is="Feature"></component>
+          <Feature />
         </v-col>
       </v-row>
     </v-container>
@@ -179,7 +180,7 @@
       </v-col>
       <v-col cols="12">
         <div class="carousel">
-          <component :is="Review"></component>
+        <Review />
         </div>
       </v-col>
     </v-row>
@@ -198,10 +199,10 @@
 
 </template>
 <script setup>
-import CardDiscount from "~/components/card-discount.vue";
-import Slide from "~/components/slide.vue";
-import Feature from "~/components/feature.vue";
-import Review from "~/components/review2.vue";
+
+
+
+
 
 const tab = ref(null);
 

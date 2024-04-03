@@ -1,12 +1,12 @@
 <template>
   <v-container>
     <div class="main-cart">
-      <div v-if="cart.length > 0" class="cart-items">
+      <div class="cart-items">
         <div class="">
           <v-row>
             <v-col cols="auto" lg="8" md="8" sm="12">
               <div class="cart-left">
-                <div class="title-1">Your cart</div>
+                <div class="title-1">Your order</div>
 
                 <div v-for="(item, index) in cart" :key="index">
                   <v-row>
@@ -22,13 +22,12 @@
                             <span>Quantity:</span>
                           </div>
                           <v-text-field
-                            v-model="item.quantity"
+                            v-model="item.qty"
                             class="media-quantity"
                             type="number"
                             variant="outlined"
                             dense
                             min="1"
-                            @change="addQuantity(item)"
                           >
                           </v-text-field>
                         </div>
@@ -42,12 +41,6 @@
                         <div class="button">
                           <v-btn color="black" variant="outlined">
                             <v-icon color="primary">mdi-heart</v-icon>
-                          </v-btn>
-                          <v-btn
-                            color="secondary"
-                            @click="removeItem(item._id)"
-                          >
-                            <v-icon color="white">mdi-delete</v-icon>
                           </v-btn>
                         </div>
                       </div>
@@ -66,13 +59,6 @@
                     <div
                       class="under-button d-flex flex-row justify-space-between align-center mt-6"
                     >
-                      <v-btn
-                        color="black"
-                        variant="outlined"
-                        @click="clearItems()"
-                      >
-                        Remove All
-                      </v-btn>
                       <v-btn to="/" color="black" variant="outlined">
                         Back to shop
                       </v-btn>
@@ -99,7 +85,7 @@
                   <li class="list-group-item text-1">
                     <span class="title-3"> Your order </span>
                     <span class="title-3-1">
-                      {{ vndong.format(totalPrice) }}
+                      {{ vndong.format(order?.totalPrice) }}
                     </span>
                   </li>
                   <li class="list-group-item text-2">
@@ -113,7 +99,7 @@
                   <li class="list-group-item text-3">
                     <span class="title-5"> Total </span>
                     <span class="title-5-1">
-                      {{ vndong.format(totalPrice) }}
+                      {{ vndong.format(order?.totalPrice) }}
                     </span>
                   </li>
                   <!-- <li class="list-group-item">
@@ -166,59 +152,13 @@
                       />
                     </div>
                   </li>
-                  <li class="list-group-item title">Payment Methods</li>
-                  <li class="list-group-item divider"></li>
+         
 
-                  <li class="list-group-item text-1">
-                    <span class="title-3">
-                      <v-radio-group v-model="Information.payment">
-                        <v-radio
-                          color="#000"
-                          label="CASH ON DELIVERY"
-                          value="one"
-                        ></v-radio>
-                        <v-radio
-                          color="#000"
-                          label="INTERNET BANKING"
-                          value="two"
-                          disabled
-                        ></v-radio> </v-radio-group
-                    ></span>
-                  </li>
+                 
 
-                  <li class="list-group-item divider-1"></li>
-
-                  <li class="list-group-item">
-                    <v-btn
-                      color="secondary"
-                      class="text-white w-100"
-                      @click="checkOut"
-                      >Checkout</v-btn
-                    >
-                  </li>
+             
                 </ul>
               </div>
-            </v-col>
-          </v-row>
-        </div>
-
-    
-      </div>
-
-      <div v-else>
-        <div class="cart-empty">
-          <v-row>
-            <v-col cols="12">
-              <h1>Your cart is empty</h1>
-            </v-col>
-            <v-col cols="12" class="px-10">
-              <v-divider :thickness="2" class="border-opacity-100"></v-divider>
-            </v-col>
-            <v-col cols="12" class="px-10">
-              <p>Looks like you haven't added any items to your cart yet.</p>
-            </v-col>
-            <v-col cols="12">
-              <v-btn to="/" class="text-white">Go to shop</v-btn>
             </v-col>
           </v-row>
         </div>
@@ -228,114 +168,53 @@
 </template>
 
 <script setup lang="ts">
-import Swal from "sweetalert2";
-
-interface Item {
-  _id: number;
-  name: string;
-  price: number;
-  quantity: number;
-  image: string;
+interface Order {
+  _id: string;
+  createdAt: string;
+  updatedAt: string;
+  shippingAddress: {
+    name: string;
+    phone: string;
+    address: string;
+  };
+  isPaid: boolean;
+  isDelivered: boolean;
+  totalPrice: number;
+  orderItems: {
+    _id: string;
+    product: {
+      _id: string | number;
+      title: string | any;
+      image: string | any;
+      price: number | any;
+    };
+    quantity: number;
+  }[];
 }
 
+const id = ref(useRoute().params.id as string);
+
 const nuxtApp = useNuxtApp();
-const { getSession } = useAuth();
 const api = nuxtApp.$api;
-const cart = ref(nuxtApp.$store.rawItems as unknown as Item[]);
 const vndong = nuxtApp.$vietnamdong as any;
-const totalPrice = ref(nuxtApp.$store.totalPrice as number);
-const dialog = ref(false);
+const order = ref<Order | null>(null);
+const cart = ref([] as any);
+const Information = ref([] as any);
 
-const Information = ref({
-  name: "",
-  phone: "",
-  address: "",
-  note: "",
-  payment: "one",
-});
-
-watchEffect(() => {});
-
-const addQuantity = (item: Item) => {
-  nuxtApp.$store.updateItem(item as any);
-};
-
-const setTotalPrice = () => {
-  let total = 0;
-  cart.value.forEach((item) => {
-    total += item.price * item.quantity;
-  });
-  totalPrice.value = total;
-};
-
-const removeItem = (_id: number) => {
-  cart.value = cart.value.filter((item) => item._id !== _id);
-  console.log(_id);
-  nuxtApp.$store.removeItem(_id as any);
-};
-
-const clearItems = () => {
-  nuxtApp.$store.clearItems();
-  cart.value = [];
-};
-const checkOut = () => {
-  Swal.fire({
-    title: "Please check your information before checkout",
-    text: "Are you sure you want to checkout?",
-
-    showCancelButton: true,
-    confirmButtonText: "CHECKOUT",
-
-    customClass: {
-      actions: "my-actions",
-      cancelButton: "order-1 right-gap",
-      confirmButton: "order-2 left-gap bg-success ",
-    },
-  }).then((result) => {
-    if (result.isConfirmed) {
-      order();
-    }
-  });
-};
-const order = async () => {
+const fetchProduct = async () => {
   try {
-    const order = {
-      orderItems: cart.value.map((item) => ({
-        name: item.name,
-        price: item.price,
-        qty: item.quantity,
-        image: item.image,
-        product: item._id,
-      })),
-      shippingAddress: {
-        address: Information.value.address,
-        phone: Information.value.phone,
-        name: Information.value.name,
-        note: Information.value.note,
-      },
-      paymentMethod:
-        Information.value.payment === "one" ? "COD" : "Internet Banking",
-      totalPrice: totalPrice.value,
-    };
-
-    if (await getSession()) {
-      await api.post("/order", order);
-    } else {
-      await api.post("/order/create", order);
-    }
+    const data = await api.get(`/order/${id.value}`);
+    order.value = data;
+    cart.value = data.orderItems;
+    Information.value = data.shippingAddress;
+    console.log(order.value);
   } catch (err: any) {
-    console.log(err);
+    order.value = null;
   }
 };
-
-watch(
-  () => nuxtApp.$store.rawItems as unknown as Item[],
-  (newCart: Item[]) => {
-    cart.value = newCart;
-    setTotalPrice();
-  }
-);
+fetchProduct();
 </script>
+
 <style lang="scss" scoped>
 .main-cart {
   margin: 5rem auto;

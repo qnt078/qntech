@@ -92,7 +92,7 @@
       }
     }
     .card-image {
-      background-image: url("../assets/img/Image.png");
+      background-image: url("_nuxt/assets/img/Image.png");
       background-size: cover;
       background-position: center;
       border-radius: 0 10px 10px 0;
@@ -110,7 +110,7 @@
     box-shadow: 0px 10px 10px 10px #ccc;
 
     .card-image {
-      background-image: url("../assets/img/Image.png");
+      background-image: url("_nuxt/assets/img/Image.png");
       background-size: cover;
       background-position: center;
       border-radius: 10px 0 0 10px;

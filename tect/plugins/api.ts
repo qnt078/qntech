@@ -8,7 +8,7 @@ export default defineNuxtPlugin((nuxtApp: any) => {
 
   const apiClient = {
     async post(resource: string, params: any) {
-      const { pending, error, status }: any = await useFetch(
+      const { pending, error, status, data }: any = await useFetch(
         `${baseUrl}${resource}`,
         {
           method: "POST",
@@ -19,6 +19,9 @@ export default defineNuxtPlugin((nuxtApp: any) => {
           },
         }
       );
+
+
+
       if (pending.value) {
         throw new Error("API request is pending");
       }
@@ -40,10 +43,13 @@ export default defineNuxtPlugin((nuxtApp: any) => {
         throw new Error(`API request failed: ${error.value}`);
       }
 
+           // log response 
+           
+
       return Swal.fire({
         toast: true,
         title: "Yeay!",
-        text: "You will receive an email confirmation shortly.",
+        text: "You will receive an email confirmation shortly.`",
         icon: "success",
         iconColor: 'white',
         customClass: {

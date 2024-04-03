@@ -1,18 +1,18 @@
 <template>
   <div>
     <v-data-table
+    v-model:page="page"
       :headers="headers"
       :items="items"
       item-key="name"
-      items-per-page="-1"
+      items-per-page="10"
       class="elevation-1"
       hover
     >
       <template #item.createdAt="{ item }">
         {{
           new Date(item.createdAt).toLocaleDateString(
-            "en-GB",
-
+            "en-US",
             {
               year: "numeric",
               month: "long",
@@ -56,6 +56,7 @@
           class="mr-2"
         >
           {{ item.isPaid ? "Paid" : "Not Paid" }}
+        
         </v-chip>
       </template>
 
@@ -74,9 +75,12 @@
           class="d-flex flex-row align-center justify-center"
           style="gap: 5px"
         >
-          <v-chip :href="`/order/${item._id}`" color="primary" size="small">
+        <nuxt-link :to="`/order/${item._id}`">
+          <v-chip  color="primary" size="small">
             <v-icon>mdi-eye</v-icon>
           </v-chip>
+        </nuxt-link>
+         
 
           <v-chip
             v-if="!item.isDelivered"
@@ -88,6 +92,14 @@
           </v-chip>
         </div>
       </template>
+      <template v-slot:bottom>
+      <div class="text-center pt-2">
+        <v-pagination
+          v-model="page"
+          :length="pageCount"
+        ></v-pagination>
+      </div>
+    </template>
     </v-data-table>
   </div>
 </template>
@@ -109,6 +121,7 @@ const vndong = nuxtApp.$vietnamdong as any;
 const props = defineProps({
   items: Array<Order>,
 });
+const page = ref(1);
 
 const headers: any = [
   {
@@ -124,6 +137,11 @@ const headers: any = [
   { title: "Delivered", align: "center", key: "isDelivered" },
   { title: "Actions", align: "center", key: "actions" },
 ];
+
+const pageCount = () => {
+  return Math.ceil((props.items?.length ?? 0) / 10);
+
+};
 
 const deleteItem = (id: string) => {
   // remove item from the list prop items

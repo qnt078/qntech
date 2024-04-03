@@ -4,7 +4,7 @@
       <v-carousel-item>
         <div class="item">
           <div class="image">
-            <img src="../assets/img/avatar.jpg" alt="" />
+            <img :src="image" alt="" />
           </div>
           <div class="review">
             <h3>👋 John Doe</h3>
@@ -18,7 +18,7 @@
       <v-carousel-item>
         <div class="item">
           <div class="image">
-            <img src="../assets/img/avatar.jpg" alt="" />
+            <img :src="image" alt="" />
           </div>
           <div class="review">
             <h3>👋 John Doe</h3>
@@ -32,7 +32,7 @@
       <v-carousel-item>
         <div class="item">
           <div class="image">
-            <img src="../assets/img/avatar.jpg" alt="" />
+            <img :src="image" alt="" />
           </div>
           <div class="review">
             <h3>👋 John Doe</h3>
@@ -46,7 +46,7 @@
       <v-carousel-item>
         <div class="item">
           <div class="image">
-            <img src="../assets/img/avatar.jpg" alt="" />
+            <img :src="image" alt="" />
           </div>
           <div class="review">
             <h3>👋 John Doe</h3>
@@ -61,7 +61,9 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const image = '_nuxt/assets/img/avatar.jpg'
+</script>
 
 <style lang="scss" scoped>
 .carousel {
@@ -149,7 +151,6 @@
   }
 }
 @media screen and (max-width: 425px) {
-
   .item {
     display: flex;
     flex-direction: column;
@@ -171,11 +172,9 @@
       p {
         font-size: 16px;
         text-align: center;
-        width:auto;
-
+        width: auto;
       }
     }
   }
 }
-
 </style>

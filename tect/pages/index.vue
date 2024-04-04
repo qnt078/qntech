@@ -76,7 +76,7 @@
     <v-container>
       <v-row>
         <v-col cols="12">
-     <CardDiscount />
+          <CardDiscount />
         </v-col>
       </v-row>
     </v-container>
@@ -149,7 +149,6 @@
           </div>
         </v-col>
         <v-col cols="12">
-      
           <Slide />
         </v-col>
       </v-row>
@@ -180,7 +179,7 @@
       </v-col>
       <v-col cols="12">
         <div class="carousel">
-        <Review />
+          <Review />
         </div>
       </v-col>
     </v-row>
@@ -196,16 +195,29 @@
     </div>
   </div>
 
-
+  <div>
+    <loading
+      v-model:active="isLoading"
+      :can-cancel="true"
+      color="#FFB30E"
+      :is-full-page="fullPage"
+    />
+  </div>
 </template>
-<script setup>
-
-
-
-
-
+<script setup lang="ts">
+import Loading from "vue-loading-overlay";
+import "vue-loading-overlay/dist/css/index.css";
 const tab = ref(null);
+const isLoading = ref(false);
+const fullPage = ref(true);
 
+onBeforeMount(() => {
+  isLoading.value = true;
+
+  setTimeout(() => {
+    isLoading.value = false;
+  }, 1000);
+});
 </script>
 <style lang="scss" scoped>
 .main {

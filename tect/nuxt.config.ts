@@ -27,6 +27,7 @@ export default defineNuxtConfig({
     "@pinia/nuxt",
     "@formkit/auto-animate/nuxt",
     "@sidebase/nuxt-auth",
+    
   ],
   auth: {
     baseURL: process.env.API_BASE_URL,

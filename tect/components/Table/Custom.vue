@@ -92,7 +92,7 @@
           </v-chip>
         </div>
       </template>
-      <template v-slot:bottom>
+      <template #bottom>
       <div class="text-center pt-2">
         <v-pagination
           v-model="page"

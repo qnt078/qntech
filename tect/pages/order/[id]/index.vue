@@ -152,11 +152,6 @@
                       />
                     </div>
                   </li>
-         
-
-                 
-
-             
                 </ul>
               </div>
             </v-col>
@@ -164,10 +159,21 @@
         </div>
       </div>
     </div>
+    <div>
+      <loading
+        v-model:active="isLoading"
+        :can-cancel="true"
+        color="#FFB30E"
+        :is-full-page="fullPage"
+      />
+    </div>
   </v-container>
 </template>
 
 <script setup lang="ts">
+import Loading from "vue-loading-overlay";
+import "vue-loading-overlay/dist/css/index.css";
+
 interface Order {
   _id: string;
   createdAt: string;
@@ -201,6 +207,9 @@ const order = ref<Order | null>(null);
 const cart = ref([] as any);
 const Information = ref([] as any);
 
+const isLoading = ref(false);
+const fullPage = ref(true);
+
 const fetchProduct = async () => {
   try {
     const data = await api.get(`/order/${id.value}`);
@@ -212,7 +221,15 @@ const fetchProduct = async () => {
     order.value = null;
   }
 };
-fetchProduct();
+
+onBeforeMount(() => {
+  isLoading.value = true;
+  fetchProduct();
+  setTimeout(() => {
+    isLoading.value = false;
+  }, 1000);
+}
+);
 </script>
 
 <style lang="scss" scoped>

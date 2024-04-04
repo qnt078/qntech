@@ -201,8 +201,6 @@
             </v-col>
           </v-row>
         </div>
-
-    
       </div>
 
       <div v-else>
@@ -224,11 +222,22 @@
         </div>
       </div>
     </div>
+
+    <div>
+      <loading
+        v-model:active="isLoading"
+        :can-cancel="true"
+        color="#FFB30E"
+        :is-full-page="fullPage"
+      />
+    </div>
   </v-container>
 </template>
 
 <script setup lang="ts">
 import Swal from "sweetalert2";
+import Loading from "vue-loading-overlay";
+import "vue-loading-overlay/dist/css/index.css";
 
 interface Item {
   _id: number;
@@ -245,6 +254,8 @@ const cart = ref(nuxtApp.$store.rawItems as unknown as Item[]);
 const vndong = nuxtApp.$vietnamdong as any;
 const totalPrice = ref(nuxtApp.$store.totalPrice as number);
 const dialog = ref(false);
+const isLoading = ref(false);
+const fullPage = ref(true);
 
 const Information = ref({
   name: "",
@@ -252,6 +263,13 @@ const Information = ref({
   address: "",
   note: "",
   payment: "one",
+});
+onBeforeMount(() => {
+  isLoading.value = true;
+
+  setTimeout(() => {
+    isLoading.value = false;
+  }, 2000);
 });
 
 watchEffect(() => {});

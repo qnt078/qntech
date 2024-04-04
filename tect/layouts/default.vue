@@ -225,6 +225,7 @@
       </div>
     </div>
     <v-main class="pb-0">
+     
       <slot />
     </v-main>
     <footer>

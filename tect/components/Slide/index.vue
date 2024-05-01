@@ -61,7 +61,7 @@
             <v-img class="rounded-xl"
              :src="item.image"
              lazy-src="../assets/img/loading.gif"
-             width="100%" max-height="300"></v-img>
+             width="100%" max-height="150"></v-img>
           </div>
           <v-card-title class="mt-4">
             <h4>{{ item.name }}</h4>
@@ -120,7 +120,6 @@ const addToCart = (item: any) => {
     quantity: 1,
     image: item.image,
   };
-
   cart.addItem(items);
 };
 

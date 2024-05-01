@@ -28,19 +28,20 @@
 <script setup>
 import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/css/index.css";
+
 const nuxtApp = useNuxtApp();
-const { getSession } = useAuth();
+// const { getSession } = useAuth();
 const api = nuxtApp.$api;
-const user = getSession();
+// const user = getSession();
 const item = ref([]);
 const isLoading = ref(false);
 const fullPage = ref(true);
 
 onBeforeMount(async () => {
+  
   isLoading.value = true;
   try {
-    const res = await api.get("/order");
-    item.value = res;
+    item.value = await api.get("/order");
     isLoading.value = false;
   } catch (error) {
     console.log(error);

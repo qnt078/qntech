@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+
 import Swal from "sweetalert2";
 const { signUp } = useAuth();
 
@@ -27,11 +27,11 @@ const register = async () => {
       timerProgressBar: true,
     });
   } catch (err : any) {
-    console.log(err);
+  
     Swal.fire({
       toast: true,
       position: "top-end",
-      title: "Registration Failed",
+      title: `${err.message}`,
       icon: "error",
       iconColor: "white",
       customClass: {

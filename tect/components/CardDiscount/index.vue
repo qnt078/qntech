@@ -45,28 +45,28 @@
 
 const test = [
   {
-    title: "Hu Tieu Viet Nam",
+    title: "Noodles",
     description: "20 Minuts Remaining",
     image:
       "_nuxt/assets/img/mi5.jpg",
     discount: "Fast",
   },
   {
-    title: "Mi Goi Bo Vien",
+    title: "Beef noodle",
     description: "30 Seconds Remaining",
     image:
       "_nuxt/assets/img/mi2.jpg",
     discount: "Fast",
   },
   {
-    title: "Nuoc Cham Co Ot",
+    title: "Sauce",
     description: "15 Minuts Remaining",
     image:
       "_nuxt/assets/img/mi3.jpg",
     discount: "Fast",
   },
   {
-    title: "To Mi Co Thit",
+    title: "Instant noodles",
     description: "6 days Remaining",
     image:
       "_nuxt/assets/img/mi4.jpg",
@@ -95,16 +95,16 @@ const test = [
   background-color: #f44336;
   color: white;
   padding: 30px 5px;
-  border-radius: 10%;
+  border-radius: 0% 10% 0 0;
   font-size: 14px;
   font-weight: 700;
   text-align: center;
 }
 .discount:hover {
-  padding: 40px 30px;
-  font-size: 32px;
+  padding: 1.5rem 1.7rem;
+  font-size: 1.5rem;
   border-radius: 0 10% 0 0;
-  transition: 0.5s;
+  transition: 0.3s;
   background-color: #ffb30e;
 }
 

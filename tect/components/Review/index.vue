@@ -18,7 +18,7 @@
       <v-carousel-item>
         <div class="item">
           <div class="image">
-            <img :src="image" alt="" />
+            <img :src="image1" alt="" />
           </div>
           <div class="review">
             <h3>👋 John Doe</h3>
@@ -32,7 +32,7 @@
       <v-carousel-item>
         <div class="item">
           <div class="image">
-            <img :src="image" alt="" />
+            <img :src="image2" alt="" />
           </div>
           <div class="review">
             <h3>👋 John Doe</h3>
@@ -43,26 +43,16 @@
           </div>
         </div>
       </v-carousel-item>
-      <v-carousel-item>
-        <div class="item">
-          <div class="image">
-            <img :src="image" alt="" />
-          </div>
-          <div class="review">
-            <h3>👋 John Doe</h3>
-            <p>
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua."
-            </p>
-          </div>
-        </div>
-      </v-carousel-item>
+     
     </v-carousel>
   </div>
 </template>
 
 <script setup lang="ts">
 const image = '_nuxt/assets/img/avatar.jpg'
+const image1 = '_nuxt/assets/img/avatar1.jpg'
+const image2 = '_nuxt/assets/img/avatar2.jpg'
+
 </script>
 
 <style lang="scss" scoped>

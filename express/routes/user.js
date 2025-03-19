@@ -114,34 +114,34 @@ userRouter.post(
 );
 
 // VERIFY EMAIL
-// userRouter.post(
-//   "/verify",
-//   asyncHandler(async (req, res) => {
-//     const { email, otp } = req.body;
+userRouter.post(
+  "/verify",
+  asyncHandler(async (req, res) => {
+    const { email, otp } = req.body;
    
-//     const otpExists = await OTP.find({ email, otp })
-//       .sort({ createdAt: -1 })
-//       .limit(1);
+    const otpExists = await OTP.find({ email, otp })
+      .sort({ createdAt: -1 })
+      .limit(1);
     
-//      if (otpExists.length === 0 || otp !== otpExists[0].otp) {
-//       return res.status(400).json({
-//         success: false,
-//         message: "The OTP is not valid",
-//       });
-//     }
-//     const user = await User.findOne({ email });
-//     if (user) {
-//       user.isVerify = true;
-//       await user.save();
-//       res.status(200).json({
-//         message: "Email verified successfully",
-//       });
-//     } else {
-//       res.status(404);
-//       throw new Error("User not found");
-//     }
-//   })
-// );
+     if (otpExists.length === 0 || otp !== otpExists[0].otp) {
+      return res.status(400).json({
+        success: false,
+        message: "The OTP is not valid",
+      });
+    }
+    const user = await User.findOne({ email });
+    if (user) {
+      user.isVerify = true;
+      await user.save();
+      res.status(200).json({
+        message: "Email verified successfully",
+      });
+    } else {
+      res.status(404);
+      throw new Error("User not found");
+    }
+  })
+);
 
 // PROFILE
 userRouter.get(

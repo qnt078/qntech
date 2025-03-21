@@ -65,7 +65,7 @@
               <v-img
                 class="rounded-xl"
                 :src="item.image"
-                lazy-src="../assets/img/loading.gif"
+                lazy-src="@/assets/img/loading.gif"
                 width="100%"
                 max-height="150"
                 cover

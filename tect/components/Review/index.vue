@@ -27,10 +27,9 @@ interface Review {
   review: string
 }
 
-const image = '_nuxt/assets/img/avatar.jpg'
-const image1 = '_nuxt/assets/img/avatar1.jpg'
-const image2 = '_nuxt/assets/img/avatar2.jpg'
-
+import image from '@/assets/img/avatar.jpg'
+import image1 from '@/assets/img/avatar1.jpg'
+import image2 from '@/assets/img/avatar2.jpg'
 const items: Review[] = [
   {
     image: image,

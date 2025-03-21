@@ -43,13 +43,16 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-
+import image1 from '@/assets/img/mi5.jpg'
+import image2 from '@/assets/img/mi2.jpg'
+import image3 from '@/assets/img/mi3.jpg'
+import image4 from '@/assets/img/mi4.jpg'
 const test = ref([
   {
     title: 'Noodles - Spicy Delight',
     description:
       'Savor the spice! Only 20 minutes remaining to grab this fiery deal.',
-    image: '@/assets/img/mi5.jpg',
+    image: image1,
     discount: 'Fast Delivery',
     originalPrice: 25000,
     salePrice: 18000,
@@ -60,7 +63,7 @@ const test = ref([
     title: 'Beef Noodle Soup - Authentic Flavor',
     description:
       'Hurry! Only 30 seconds left to experience the rich, authentic taste of our beef noodle soup.',
-    image: '@/assets/img/mi2.jpg',
+    image: image2,
     discount: 'Flash Sale',
     originalPrice: 35000,
     salePrice: 25000,
@@ -71,7 +74,7 @@ const test = ref([
     title: 'Special Sauce Noodles - Secret Recipe',
     description:
       "Don't miss out! 15 minutes remaining to discover the secret behind our special sauce.",
-    image: '@/assets/img/mi3.jpg',
+    image: image3,
     discount: 'Limited Time',
     originalPrice: 28000,
     salePrice: 20000,
@@ -82,7 +85,7 @@ const test = ref([
     title: 'Gourmet Instant Noodles - Premium',
     description:
       'Indulge in premium quality! 6 days remaining to enjoy our gourmet instant noodles.',
-    image: '@/assets/img/mi4.jpg',
+    image: image4,
     discount: 'Weekly Special',
     originalPrice: 40000,
     salePrice: 32000,

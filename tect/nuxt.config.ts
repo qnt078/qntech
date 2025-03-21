@@ -1,11 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import vuetify, { transformAssetUrls } from "vite-plugin-vuetify";
+import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
 export default defineNuxtConfig({
   app: {},
   ssr: false,
-  alias: {
-    "assets": "/<srcDir>/assets",
-  },
+
   devtools: {
     enabled: false,
 
@@ -18,38 +16,37 @@ export default defineNuxtConfig({
     strict: true,
   },
   build: {
-    transpile: ["vuetify"],
+    transpile: ['vuetify'],
   },
   modules: [
     (_options, nuxt) => {
-      nuxt.hooks.hook("vite:extendConfig", (config) => {
+      nuxt.hooks.hook('vite:extendConfig', (config) => {
         // @ts-expect-error
-        config.plugins.push(vuetify({ autoImport: true }));
-      });
+        config.plugins.push(vuetify({ autoImport: true }))
+      })
     },
-    "@pinia/nuxt",
-    "@formkit/auto-animate/nuxt",
-    "@sidebase/nuxt-auth",
-    
+    '@pinia/nuxt',
+    '@formkit/auto-animate/nuxt',
+    '@sidebase/nuxt-auth',
   ],
   auth: {
     baseURL: process.env.API_BASE_URL,
     isEnabled: true,
     provider: {
-      type: "local",
+      type: 'local',
 
       endpoints: {
-        signIn: { path: "/user/login", method: "post" },
-        signOut: { path: "/user/logout", method: "post" },
-        signUp: { path: "/user/register", method: "post" },
-        getSession: { path: "/user/profile", method: "get" },
+        signIn: { path: '/user/login', method: 'post' },
+        signOut: { path: '/user/logout', method: 'post' },
+        signUp: { path: '/user/register', method: 'post' },
+        getSession: { path: '/user/profile', method: 'get' },
       },
       token: {
-        signInResponseTokenPointer: "/token",
+        signInResponseTokenPointer: '/token',
         maxAgeInSeconds: 60 * 60 * 24 * 30, // 30 days
       },
       pages: {
-        login: "/",
+        login: '/',
       },
     },
   },
@@ -60,18 +57,18 @@ export default defineNuxtConfig({
       },
     },
   },
-  plugins: ["./plugins/api.ts"],
+  plugins: ['./plugins/api.ts'],
   css: [
-    "~/assets/css/main.css",
-    "~/assets/css/responsive.css",
-    "animate.css/animate.min.css",
+    '~/assets/css/main.css',
+    '~/assets/css/responsive.css',
+    'animate.css/animate.min.css',
   ],
   runtimeConfig: {
-    apiSecret: "",
+    apiSecret: '',
     stripeSecretKey: process.env.STRIPE_SECRET_KEY,
     public: {
       apiBase: process.env.API_BASE_URL,
       stripePublicKey: process.env.STRIPE_PUBLISHABLE_KEY,
     },
   },
-});
+})

@@ -1,25 +1,79 @@
 <template>
-  <div class="desktop">
-    <v-sheet class="mx-auto">
-      <v-slide-group v-model="model" class="pa-4" center-active show-arrows>
-        <v-slide-group-item
-          v-for="(item, index) in items"
-          :key="index"
-          v-slot="{ isSelected, toggle }"
-        >
-          <div class="popular-card ma-4">
-            <div class="card" @click="toggle">
-              <div class="img">
-                <v-img
-                  class="rounded-xl"
-                  :src="item.image"
-                  lazy-src="@/assets/img/loading.gif"
-                  width="100%"
-                  max-height="300"
-               
-                ></v-img>
+  <div class="">
+    <div class="desktop">
+      <v-sheet class="mx-auto">
+        <v-slide-group v-model="model" class="pa-4" center-active show-arrows>
+          <v-slide-group-item
+            v-for="(item, index) in items"
+            :key="index"
+            v-slot="{ isSelected, toggle }"
+          >
+            <div class="popular-card ma-4">
+              <div class="card" @click="toggle">
+                <div class="img">
+                  <v-img
+                    class="rounded-xl"
+                    :src="item.image"
+                    lazy-src="@/assets/img/loading.gif"
+                    width="100%"
+                    max-height="300"
+                  ></v-img>
+                </div>
+                <div class="information">
+                  <v-card-title class="mt-4">
+                    <h4>{{ item.name }}</h4>
+                  </v-card-title>
+                  <v-card-text>
+                    <div class="des">
+                      <p>{{ item.description }}</p>
+                    </div>
+                    <div class="price">
+                      <p>{{ vndong.format(item.price) }}</p>
+                    </div>
+                  </v-card-text>
+                </div>
+                <div class="button">
+                  <v-btn
+                    class="text-white"
+                    rounded="lg"
+                    @click="addToCart(item)"
+                    >Buy Now
+                    <v-icon class="ml-2">mdi-cart-plus</v-icon>
+                  </v-btn>
+                </div>
               </div>
-              <v-card-title class="mt-4">
+            </div>
+          </v-slide-group-item>
+          <template #next>
+            <div class="next-icon">
+              <v-icon>mdi-chevron-right</v-icon>
+            </div>
+          </template>
+          <template #prev>
+            <div class="prev-icon">
+              <v-icon>mdi-chevron-left</v-icon>
+            </div>
+          </template>
+        </v-slide-group>
+      </v-sheet>
+    </div>
+    <div class="mobile">
+      <div v-for="(item, index) in items" :key="index">
+        <div class="pa-2">
+          <div class="card">
+            <div class="img">
+              <v-img
+                class="rounded-xl"
+                :src="item.image"
+                lazy-src="../assets/img/loading.gif"
+                width="100%"
+                max-height="150"
+                cover
+              >
+              </v-img>
+            </div>
+            <div class="information">
+              <v-card-title class="">
                 <h4>{{ item.name }}</h4>
               </v-card-title>
               <v-card-text>
@@ -30,56 +84,13 @@
                   <p>{{ vndong.format(item.price) }}</p>
                 </div>
               </v-card-text>
-
-              <div class="button">
-                <v-btn class="text-white" rounded="lg" @click="addToCart(item)"
-                  >Buy Now
-                  <v-icon class="ml-2">mdi-cart-plus</v-icon>
-                </v-btn>
-              </div>
             </div>
-          </div>
-        </v-slide-group-item>
-        <template #next>
-          <div class="next-icon">
-            <v-icon>mdi-chevron-right</v-icon>
-          </div>
-        </template>
-        <template #prev>
-          <div class="prev-icon">
-            <v-icon>mdi-chevron-left</v-icon>
-          </div>
-        </template>
-      </v-slide-group>
-    </v-sheet>
-  </div>
-  <div class="mobile">
-    <div v-for="(item, index) in items" :key="index">
-      <div class="popular-card ma-4">
-        <div class="card">
-          <div class="img">
-            <v-img class="rounded-xl"
-             :src="item.image"
-             lazy-src="../assets/img/loading.gif"
-             width="100%" max-height="150"></v-img>
-          </div>
-          <v-card-title class="mt-4">
-            <h4>{{ item.name }}</h4>
-          </v-card-title>
-          <v-card-text>
-            <div class="des">
-              <p>{{ item.description }}</p>
+            <div class="button">
+              <v-btn class="text-white" rounded="lg" @click="addToCart(item)"
+                >Buy Now
+                <v-icon class="ml-2">mdi-cart-plus</v-icon>
+              </v-btn>
             </div>
-            <div class="price">
-              <p>{{ vndong.format(item.price) }}</p>
-            </div>
-          </v-card-text>
-
-          <div class="button">
-            <v-btn class="text-white" rounded="lg" @click="addToCart(item)"
-              >Buy Now
-              <v-icon class="ml-2">mdi-cart-plus</v-icon>
-            </v-btn>
           </div>
         </div>
       </div>
@@ -89,28 +100,28 @@
 
 <script lang="ts" setup>
 interface Product {
-  _id: number;
-  name: string;
-  description: string;
-  price: number;
-  image: string;
+  _id: number
+  name: string
+  description: string
+  price: number
+  image: string
 }
 
-const nuxtApp = useNuxtApp();
-const cart = nuxtApp.$store;
-const vndong = nuxtApp.$vietnamdong as any;
-const api = nuxtApp.$api;
+const nuxtApp = useNuxtApp()
+const cart = nuxtApp.$store
+const vndong = nuxtApp.$vietnamdong as any
+const api = nuxtApp.$api
 
-const items = ref([] as Product[]);
-const model = ref(0);
+const items = ref([] as Product[])
+const model = ref(0)
 const fetchProduct = async () => {
   try {
-    const data = await api.get('/product');
-    items.value = data;
+    const data = await api.get('/product')
+    items.value = data.filter((item: any) => item.category === 'Popular')
   } catch (err: any) {
-    console.log(err);
+    console.log(err)
   }
-};
+}
 
 const addToCart = (item: any) => {
   const items: any = {
@@ -119,16 +130,16 @@ const addToCart = (item: any) => {
     price: item.price,
     quantity: 1,
     image: item.image,
-  };
-  cart.addItem(items);
-};
+  }
+  cart.addItem(items)
+}
 
-onMounted(fetchProduct);
+onMounted(fetchProduct)
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .desktop {
-  @media screen and (max-width: 425px) {
+  @media screen and (max-width: 428px) {
     display: none;
   }
 }
@@ -139,6 +150,9 @@ onMounted(fetchProduct);
   display: grid;
   grid-template-columns: repeat(5, auto);
   .card {
+    display: flex;
+    flex-direction: column;
+    height: auto;
     width: 300px;
     cursor: pointer;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -148,8 +162,12 @@ onMounted(fetchProduct);
       box-shadow: 0 0 10px #ffb30e;
       transition: 0.5s;
     }
+    .information {
+      display: flex;
+      flex-direction: column;
+    }
     h4 {
-      font-size: 16px;
+      font-size: 18px;
       font-weight: 700;
       margin: 0;
       text-align: left;
@@ -164,13 +182,14 @@ onMounted(fetchProduct);
     .price {
       margin-top: 10px;
       p {
-        font-size: 16px;
+        font-size: 1.7rem;
         font-weight: 600;
         margin: 0;
         text-align: left;
       }
     }
     .button {
+      margin-top: auto;
       padding: 10px 20px;
       .v-btn {
         width: 100%;
@@ -178,6 +197,7 @@ onMounted(fetchProduct);
     }
   }
 }
+
 .next-icon {
   width: 40px;
   height: 40px;
@@ -219,7 +239,7 @@ onMounted(fetchProduct);
   transition: 0.5s;
 }
 
-@media screen and (max-width: 425px) {
+@media screen and (max-width: 428px) {
   .mobile {
     display: flex;
     flex-direction: row;
@@ -227,16 +247,34 @@ onMounted(fetchProduct);
     justify-content: center;
     flex-wrap: wrap;
     .card {
-      width: 147px;
+      display: flex;
+      flex-direction: column;
+
+      .information {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .button {
+        margin-top: auto;
+      }
+
+      width: 150px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 25px;
       h4 {
-        font-size: 12px;
+        font-size: 14px;
+        font-weight: 600;
+        text-wrap: wrap;
       }
       .des {
+        display: none;
         font-size: 12px;
       }
       .price {
         p {
-          font-size: 14px;
+          font-size: 18px;
+          font-weight: 500;
         }
       }
       .button {
@@ -274,14 +312,14 @@ onMounted(fetchProduct);
     .card {
       width: 132px;
       h4 {
-        font-size: 10px;
+        font-size: 12px;
       }
       .des {
-        font-size: 9px;
+        font-size: 12px;
       }
       .price {
         p {
-          font-size: 10px;
+          font-size: 14px;
         }
       }
       .button {
@@ -316,14 +354,14 @@ onMounted(fetchProduct);
     .card {
       width: 112px;
       h4 {
-        font-size: 8px;
+        font-size: 10px;
       }
       .des {
         font-size: 8px;
       }
       .price {
         p {
-          font-size: 8px;
+          font-size: 14px;
         }
       }
       .button {

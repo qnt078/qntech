@@ -46,11 +46,7 @@
                     color="primary"
                     size="30"
                     class="mr-7"
-                    @click="
-                      () => {
-                        $router.push('/cart');
-                      }
-                    "
+                    @click="goToCart"
                     >mdi-cart-heart</v-icon
                   >
                 </v-badge>
@@ -77,13 +73,23 @@
                     </v-btn>
                   </template>
                   <v-list base-color="primary">
-                    <v-list-item prepend-icon="mdi-hamburger" link @click="() => {
-                      $router.push('/order')
-                    }">
-                      <v-list-item-title v-text="'Order'" ></v-list-item-title>
+                    <v-list-item
+                      prepend-icon="mdi-hamburger"
+                      link
+                      @click="
+                        () => {
+                          $router.push('/order')
+                        }
+                      "
+                    >
+                      <v-list-item-title v-text="'Order'"></v-list-item-title>
                     </v-list-item>
-                    <v-list-item prepend-icon="mdi-logout" link @click="logout()">
-                      <v-list-item-title  v-text="'Logout'"></v-list-item-title>
+                    <v-list-item
+                      prepend-icon="mdi-logout"
+                      link
+                      @click="logout()"
+                    >
+                      <v-list-item-title v-text="'Logout'"></v-list-item-title>
                     </v-list-item>
                   </v-list>
                 </v-menu>
@@ -121,7 +127,7 @@
             >Order</span
           >
         </div>
-        <div class="icon d-flex flex-column align-center" @click="goToCart()">
+        <div class="icon d-flex flex-column align-center" @click="goToCart">
           <v-badge
             location="bottom end"
             color="error"
@@ -145,7 +151,7 @@
             :color="selectedIcon === 'account' ? 'secondary' : 'primary'"
             @click="selectedIcon = 'account'"
             size="small"
-            >{{ isLogin ? "mdi-login" : "mdi-account" }}</v-icon
+            >{{ isLogin ? 'mdi-login' : 'mdi-account' }}</v-icon
           >
           <span
             :style="
@@ -180,16 +186,33 @@
           class="items animate__animated animate__backInRight"
         >
           <div v-for="(item, index) in cart" :key="index" class="item">
-            <v-img :src="item.image" rounded="lg">
+            <v-img
+              :src="item.image"
+              rounded="lg"
+              :aspect-ratio="1"
+              :max-width="80"
+              :max-height="80"
+            >
               <div class="cancle">
                 <v-icon @click="removeItem(item._id)">mdi-close-circle</v-icon>
               </div>
             </v-img>
             <div class="item-info">
-              <h4>{{ item.name }}</h4>
+              <h4>{{ item?.quantity }} x {{ item.name }}</h4>
               <div class="info">
-                <p>Price: {{ vndong.format(item.price) }}</p>
-                <p>Quantity : {{ item?.quantity }}</p>
+                <p>
+                  Price:
+
+                  <span class="text-red">
+                    {{ vndong.format(item.price) }}
+                  </span>
+                </p>
+                <!-- <p>
+                  Quantity :
+                  <span>-</span>
+                  {{ item?.quantity }}
+                  <span>+</span>
+                </p> -->
               </div>
             </div>
           </div>
@@ -205,13 +228,17 @@
             <p>Sub Total</p>
             <p>{{ vndong.format(totalPrice) }}</p>
           </div>
-          <div class="button d-flex flex-row" style="gap: 1rem">
-            <v-btn to="/cart" color="secondary" class="rounded-lg text-white"
-              >Continue</v-btn
+          <div class="button">
+            <v-btn
+              @click="goToCart"
+              color="secondary"
+              block
+              class="rounded-lg text-white"
+              >Go To Cart</v-btn
             >
-            <v-btn color="primary" class="text-white rounded-lg"
+            <!-- <v-btn color="primary" class="text-white rounded-lg"
               >Checkout</v-btn
-            >
+            > -->
           </div>
 
           <p>
@@ -225,7 +252,6 @@
       </div>
     </div>
     <v-main class="pb-0">
-     
       <slot />
     </v-main>
     <footer>
@@ -236,124 +262,131 @@
 
 <script lang="ts" setup>
 interface Item {
-  _id?: number;
-  name?: string;
-  price?: number;
-  quantity?: number;
-  image?: string;
+  _id?: number
+  name?: string
+  price?: number
+  quantity?: number
+  image?: string
 }
 interface User {
-  _id: string;
-  email: string;
-  password: string;
-  isAdmin: boolean;
-  name: string;
-  createdAt: string;
+  _id: string
+  email: string
+  password: string
+  isAdmin: boolean
+  name: string
+  createdAt: string
 }
 
-import footer from "~/components/footer.vue";
-const router = useRouter();
-const { getSession, signOut } = useAuth();
-const drawer = ref(false);
-const selectedIcon = ref("home");
-const isLogin = ref(false);
-const nuxtApp = useNuxtApp();
-const quantity = ref(0);
-const vndong = nuxtApp.$vietnamdong as any;
-const user = ref({} as unknown as User);
-var cart = nuxtApp.$store.rawItems as unknown as Item[];
+import footer from '~/components/footer.vue'
+const router = useRouter()
+const { getSession, signOut } = useAuth()
+const drawer = ref(false)
+const selectedIcon = ref('home')
+const isLogin = ref(false)
+const nuxtApp = useNuxtApp()
+const quantity = ref(0)
+const vndong = nuxtApp.$vietnamdong as any
+const user = ref({} as unknown as User)
+var cart = nuxtApp.$store.rawItems as unknown as Item[]
 
-const totalPrice = ref(0);
+const totalPrice = ref(0)
 
 // FUNCTIONS
 const getSessionData = async () => {
   try {
-    const session: any = await getSession();
+    const session: any = await getSession()
     if (session) {
-      isLogin.value = true;
-      user.value = session;
+      isLogin.value = true
+      user.value = session
     }
   } catch (err) {
-    console.log(err);
+    console.log(err)
   }
-};
+}
 onBeforeMount(() => {
-  getSessionData();
-  quantity.value = nuxtApp.$store.totalQuantity;
-  cart = nuxtApp.$store.rawItems as unknown as Item[];
-  setTotalPrice();
-});
+  getSessionData()
+  quantity.value = nuxtApp.$store.totalQuantity
+  cart = nuxtApp.$store.rawItems as unknown as Item[]
+  setTotalPrice()
+})
 
 const login = () => {
-  router.push("/login");
-};
+  router.push('/login')
+}
 const logout = async () => {
   try {
-    await signOut({ callbackUrl: "/" });
-    isLogin.value = false;
+    await signOut({ callbackUrl: '/' })
+    isLogin.value = false
   } catch (err) {
-    console.log(err);
+    console.log(err)
   }
-};
+}
 
 const goToHome = () => {
-  router.push("/");
-};
+  router.push('/')
+}
 const goToCart = () => {
-  selectedIcon.value = "cart";
-  router.push("/cart");
-};
+  selectedIcon.value = 'cart'
+  router.push('/cart')
+  const sidecart = document.querySelector('.sidecart')
+  sidecart?.classList.add('close')
+  sidecart?.classList.remove('open')
+}
 
 const showCart = () => {
   // Add class opem to sidecart
-  const sidecart = document.querySelector(".sidecart");
-  sidecart?.classList.add("open");
-  sidecart?.classList.remove("close");
-};
+  const sidecart = document.querySelector('.sidecart')
+  sidecart?.classList.add('open')
+  sidecart?.classList.remove('close')
+}
 
 const closeCart = () => {
-  const sidecart = document.querySelector(".sidecart");
-  console.log(sidecart);
-  sidecart?.classList.add("close");
-  sidecart?.classList.remove("open");
-};
+  const sidecart = document.querySelector('.sidecart')
+
+  sidecart?.classList.add('close')
+  sidecart?.classList.remove('open')
+}
 
 const setTotalPrice = () => {
-  let total = 0;
+  let total = 0
   cart.forEach((item: any) => {
-    total += item.price * item.quantity;
-  });
-  totalPrice.value = total;
-};
+    total += item.price * item.quantity
+  })
+  totalPrice.value = total
+}
 const removeItem = (_id: any) => {
   cart.forEach((item, index) => {
     if (item._id === _id) {
-      cart.splice(index, 1);
+      cart.splice(index, 1)
     }
-  });
-  nuxtApp.$store.removeItem(_id);
-};
+  })
+  nuxtApp.$store.removeItem(_id)
+}
 // WATCHERS
-watchEffect(() => {
-});
+watchEffect(() => {})
 watch(
   () => nuxtApp.$store.totalQuantity,
   (newTotalQuantity: any) => {
-    quantity.value = newTotalQuantity;
+    quantity.value = newTotalQuantity
   }
-);
+)
 
 watch(
   () => nuxtApp.$store.rawItems,
   (newCart: any) => {
-    cart = newCart as unknown as Item[];
-    setTotalPrice();
+    const ring = document.querySelector('.cart')
+    ring?.classList.add('ring')
+    setTimeout(() => {
+      ring?.classList.remove('ring')
+    }, 500)
+    cart = newCart as unknown as Item[]
+    setTotalPrice()
   }
-);
+)
 </script>
 
 <style lang="scss" scoped>
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 
 .navbar {
   width: 100%;
@@ -446,6 +479,22 @@ watch(
     }
   }
 }
+.cart.ring {
+  animation: ring 0.5s ease-in-out;
+}
+
+@keyframes ring {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
 .sidecart {
   position: fixed;
   top: 0;
@@ -465,7 +514,7 @@ watch(
     padding: 0 20px;
     h2 {
       font-size: 1.5rem;
-      font-family: "Open Sans", sans-serif;
+      font-family: 'Open Sans', sans-serif;
       font-weight: 500;
       margin: 0;
     }
@@ -486,8 +535,11 @@ watch(
 
       overflow-y: auto;
       scrollbar-width: thin;
-      scrollbar-color: #fff8e9 #faf5ea;
-
+      scrollbar-color: #ffb30e #faf5ea;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
       .item {
         display: flex;
         align-items: center;
@@ -498,11 +550,11 @@ watch(
         border-bottom: 1px solid #000000;
         .v-img {
           position: relative;
-          width: 80px;
-          height: 100px;
+          // width: 100px;
+          // height: 100px;
           object-fit: cover;
           border-radius: 10px;
-          overflow: hidden; /* add this to hide the .cancle div when it's outside of the .v-img div */
+          overflow: hidden;
 
           .cancle {
             position: absolute;
@@ -529,33 +581,35 @@ watch(
             transform: scale(1); /* expand to full size on hover */
           }
         }
-        img {
-          width: 80px;
-          height: 100px;
-          object-fit: cover;
-          border-radius: 10px;
-        }
+        // img {
+        //   // width: 80px;
+        //   // height: 100px;
+        //   object-fit: cover;
+        //   border-radius: 10px;
+        // }
         .item-info {
           display: flex;
           flex-direction: column;
-
-          justify-content: space-between;
+          max-width: 50%;
+          // justify-content: space-around;
           height: 100%;
           padding: 10px 0;
           gap: 1rem;
 
           h4 {
-            font-size: 16px;
-            font-family: "Open Sans", sans-serif;
+            margin-top: 10px;
+            font-size: 14.5px;
+            text-align: start;
             font-weight: 600;
             line-height: normal;
-            margin: 0;
+            // margin: 0;
+            text-wrap: wrap;
           }
 
           .info {
             p {
-              font-size: 14px;
-              font-family: "Open Sans", sans-serif;
+              font-size: 15px;
+              text-align: start;
               font-weight: 600;
             }
           }
@@ -571,14 +625,14 @@ watch(
       .title {
         p:first-child {
           font-size: 22px;
-          font-family: "Open Sans", sans-serif;
+          font-family: 'Open Sans', sans-serif;
           font-weight: 600;
           color: red;
           margin: 0;
         }
         p:last-child {
           font-size: 20px;
-          font-family: "Open Sans", sans-serif;
+          font-family: 'Open Sans', sans-serif;
           font-weight: 600;
           color: #000;
           margin: 0;
@@ -586,7 +640,7 @@ watch(
       }
       p {
         font-size: 12px;
-        font-family: "Open Sans", sans-serif;
+        font-family: 'Open Sans', sans-serif;
         font-weight: 500;
         text-align: center;
         margin: 0;
@@ -638,4 +692,3 @@ watch(
   }
 }
 </style>
-../plugins/vietnamdong

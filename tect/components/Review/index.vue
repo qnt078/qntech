@@ -1,58 +1,55 @@
 <template>
   <div class="carousel">
     <v-carousel hide-delimiters>
-      <v-carousel-item>
-        <div class="item">
-          <div class="image">
-            <img :src="image" alt="" />
+      <div v-for="(item, index) in items" :key="index">
+        <v-carousel-item>
+          <div class="item">
+            <div class="image">
+              <img :src="item.image" alt="" />
+            </div>
+            <div class="review">
+              <h3>👋 {{ item.name }}</h3>
+              <p>
+                {{ item.review }}
+              </p>
+            </div>
           </div>
-          <div class="review">
-            <h3>👋 John Doe</h3>
-            <p>
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua."
-            </p>
-          </div>
-        </div>
-      </v-carousel-item>
-      <v-carousel-item>
-        <div class="item">
-          <div class="image">
-            <img :src="image1" alt="" />
-          </div>
-          <div class="review">
-            <h3>👋 John Doe</h3>
-            <p>
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua."
-            </p>
-          </div>
-        </div>
-      </v-carousel-item>
-      <v-carousel-item>
-        <div class="item">
-          <div class="image">
-            <img :src="image2" alt="" />
-          </div>
-          <div class="review">
-            <h3>👋 John Doe</h3>
-            <p>
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua."
-            </p>
-          </div>
-        </div>
-      </v-carousel-item>
-     
+        </v-carousel-item>
+      </div>
     </v-carousel>
   </div>
 </template>
 
 <script setup lang="ts">
+interface Review {
+  image: string
+  name: string
+  review: string
+}
+
 const image = '_nuxt/assets/img/avatar.jpg'
 const image1 = '_nuxt/assets/img/avatar1.jpg'
 const image2 = '_nuxt/assets/img/avatar2.jpg'
 
+const items: Review[] = [
+  {
+    image: image,
+    name: 'Jane Smith',
+    review: 'This is a great product! I highly recommend it.',
+  },
+  {
+    image: image1,
+    name: 'Alice',
+    review:
+      'I love the quality and the fast delivery. Will definitely buy again!',
+  },
+  {
+    image: image2,
+    name: 'Anna',
+    review:
+      'Excellent service and amazing product. Very satisfied with my purchase.',
+  },
+]
 </script>
 
 <style lang="scss" scoped>
@@ -140,7 +137,7 @@ const image2 = '_nuxt/assets/img/avatar2.jpg'
     }
   }
 }
-@media screen and (max-width: 425px) {
+@media screen and (max-width: 428px) {
   .item {
     display: flex;
     flex-direction: column;

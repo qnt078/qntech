@@ -72,7 +72,7 @@
     </v-container>
   </div>
 
-  <div class="discount">
+  <div class="discount py-5">
     <v-container>
       <v-row>
         <v-col cols="12">
@@ -154,7 +154,34 @@
       </v-row>
     </v-container>
   </div>
-
+  <div class="slide bg-gradient">
+    <v-container>
+      <v-row>
+        <v-col cols="12">
+          <div class="content">
+            <span class="text-gradient">Best Seller</span>
+          </div>
+        </v-col>
+        <v-col cols="12">
+          <BestSeller />
+        </v-col>
+      </v-row>
+    </v-container>
+  </div>
+  <div class="review bg-gradient">
+    <v-row>
+      <v-col cols="12">
+        <div class="content">
+          <span class="text-gradient">Reviews</span>
+        </div>
+      </v-col>
+      <v-col cols="12" class="mb-12">
+        <div class="carousel">
+          <Review />
+        </div>
+      </v-col>
+    </v-row>
+  </div>
   <div class="feature">
     <v-container>
       <v-row>
@@ -168,21 +195,6 @@
         </v-col>
       </v-row>
     </v-container>
-  </div>
-
-  <div class="review bg-gradient">
-    <v-row>
-      <v-col cols="12">
-        <div class="content">
-          <span class="text-gradient">Reviews</span>
-        </div>
-      </v-col>
-      <v-col cols="12">
-        <div class="carousel">
-          <Review />
-        </div>
-      </v-col>
-    </v-row>
   </div>
 
   <div class="poster">
@@ -205,19 +217,19 @@
   </div>
 </template>
 <script setup lang="ts">
-import Loading from "vue-loading-overlay";
-import "vue-loading-overlay/dist/css/index.css";
-const tab = ref(null);
-const isLoading = ref(false);
-const fullPage = ref(true);
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/css/index.css'
+const tab = ref(null)
+const isLoading = ref(false)
+const fullPage = ref(true)
 
 onBeforeMount(() => {
-  isLoading.value = true;
+  isLoading.value = true
 
   setTimeout(() => {
-    isLoading.value = false;
-  }, 1000);
-});
+    isLoading.value = false
+  }, 1000)
+})
 </script>
 <style lang="scss" scoped>
 .main {
@@ -275,6 +287,9 @@ onBeforeMount(() => {
   }
   .card {
     display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
     gap: 1rem;
     padding: 1rem 10rem 0 10rem;
 
@@ -325,7 +340,7 @@ onBeforeMount(() => {
   background-color: #fffefe;
 }
 .review {
-  height: 100vh;
+  // height: 100vh;
 
   .carousel {
     width: 100%;
@@ -334,7 +349,7 @@ onBeforeMount(() => {
 }
 
 .poster {
-  background-image: url("../assets/img/cta-two-bg.png");
+  background-image: url('../assets/img/cta-two-bg.png');
   background-size: cover;
   background-position: center;
   padding: 10rem;
@@ -471,7 +486,7 @@ onBeforeMount(() => {
   }
 }
 
-@media screen and (max-width: 425px) {
+@media screen and (max-width: 428px) {
   .main .content {
     display: flex;
     flex-direction: column;

@@ -4,7 +4,7 @@
       <v-col
         v-for="(item, index) in test"
         :key="index"
-        cols="auto"
+
         lg="3"
         md="6"
         sm="6"
@@ -15,7 +15,7 @@
            
             <v-img :src="item?.image"
             lazy-src="@/assets/img/loading.gif"
-            width="350"  max-height="300" cover
+              max-height="250" cover
             
             ></v-img>
             <p class="discount">{{ item.discount }}
@@ -23,17 +23,19 @@
             <v-icon>mdi-clock-fast</v-icon>
             </p>
           </div>
-          <v-card-title>
-            <h4>{{ item.title }}</h4>
+          <div class="description">
+          <v-card-title class="title pl-0 text-h6 font-weight-bold">
+            <div class="title">{{ item.title }}</div>
         
           </v-card-title>
-          <v-card-text>
+          <v-card-text class="pl-0">
             <div class="des">
               <p>
                 {{ item.description }}
               </p>
             </div>
           </v-card-text>
+        </div>
         </div>
       </v-col>
     </v-row>
@@ -43,50 +45,81 @@
 <script setup>
 
 
-const test = [
+import { ref, onMounted } from 'vue';
+
+const test = ref([
   {
-    title: "Noodles",
-    description: "20 Minuts Remaining",
+    title: "Noodles - Spicy Delight",
+    description: "Savor the spice! Only 20 minutes remaining to grab this fiery deal.",
     image:
       "_nuxt/assets/img/mi5.jpg",
-    discount: "Fast",
+    discount: "Fast Delivery",
+    originalPrice: 25000,
+    salePrice: 18000,
+    rating: 4.5,
+    reviews: 120,
   },
   {
-    title: "Beef noodle",
-    description: "30 Seconds Remaining",
+    title: "Beef Noodle Soup - Authentic Flavor",
+    description: "Hurry! Only 30 seconds left to experience the rich, authentic taste of our beef noodle soup.",
     image:
       "_nuxt/assets/img/mi2.jpg",
-    discount: "Fast",
+    discount: "Flash Sale",
+    originalPrice: 35000,
+    salePrice: 25000,
+    rating: 4.8,
+    reviews: 250,
   },
   {
-    title: "Sauce",
-    description: "15 Minuts Remaining",
+    title: "Special Sauce Noodles - Secret Recipe",
+    description: "Don't miss out! 15 minutes remaining to discover the secret behind our special sauce.",
     image:
       "_nuxt/assets/img/mi3.jpg",
-    discount: "Fast",
+    discount: "Limited Time",
+    originalPrice: 28000,
+    salePrice: 20000,
+    rating: 4.2,
+    reviews: 85,
   },
   {
-    title: "Instant noodles",
-    description: "6 days Remaining",
+    title: "Gourmet Instant Noodles - Premium",
+    description: "Indulge in premium quality! 6 days remaining to enjoy our gourmet instant noodles.",
     image:
       "_nuxt/assets/img/mi4.jpg",
-    discount: "Fast",
+    discount: "Weekly Special",
+    originalPrice: 40000,
+    salePrice: 32000,
+    rating: 4.6,
+    reviews: 180,
   },
-];
+]);
+
+
+onMounted(() => {
+  // You can add any initialization logic here if needed
+  console.log('CardDiscount component mounted');
+});
 </script>
 
 <style lang="scss" scoped>
 .img {
   position: relative;
-  overflow: hidden;
-  border-radius: 10%;
+  
+
+  border-radius: 10% 10% 0 0;
 }
 .v-img {
-  border-radius: 10%;
-}
-.v-img:hover {
-  transform: scale(1.1);
+  border-radius: 10% 10% 0 0;
   transition: 0.5s;
+}
+
+.description {
+  display: flex;
+  flex-direction: column;
+
+}
+.title {
+  margin-bottom: auto;
 }
 .discount {
   position: absolute;
@@ -94,19 +127,13 @@ const test = [
   left: 0;
   background-color: #f44336;
   color: white;
-  padding: 30px 5px;
+  padding: 1rem 5px;
   border-radius: 0% 10% 0 0;
   font-size: 14px;
   font-weight: 700;
   text-align: center;
 }
-.discount:hover {
-  padding: 1.5rem 1.7rem;
-  font-size: 1.5rem;
-  border-radius: 0 10% 0 0;
-  transition: 0.3s;
-  background-color: #ffb30e;
-}
+
 
 .des {
   font-size: 16px;
@@ -122,34 +149,57 @@ const test = [
   animation: gradient 2s linear infinite;
   border-radius: 10px;
   background-color: #fdeadf;
-
+  
   p {
     padding: 10px;
+    margin-bottom: auto;
   }
 }
 
+
+@media (min-width: 1440px) {
+  .v-row {
+    padding: 0 !important;
+  }
+ 
+  .title {
+    font-size: 14px;
+  
+  }
+  .des {
+  
+    font-size: 14px;
+  }
+  
+}
+@media (max-width: 768px) {
+  .title {
+    font-size: 14px;
+  }
+  .des {
+    font-size: 12px;
+  }
+
+}
 @media (max-width: 425px) {
   .v-row {
     padding: 0 !important;
   }
   .img {
-    width: 163%;
+    width: 100%;
   }
+
 }
 @media (max-width: 375px) {
-  .v-row {
-    padding: 0 !important;
+ .title {
+    font-size: 14px;
   }
-  .img {
-    width: 153%;
+  .des {
+    font-size: 12px;
   }
-}
+ }
+
 @media (max-width: 320px) {
-  .v-row {
-    padding: 0 !important;
-  }
-  .img {
-    width: 125%;
-  }
+  
 }
 </style>

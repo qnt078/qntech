@@ -17,12 +17,13 @@ routerProduct.post(
   cloudinaryConfig.single('image'),
   uploadImage,
   asyncHandler(async (req, res) => {
-    const { name, price, description } = req.body;
+    const { name, price, description,category } = req.body;
     const product = await Product.create({
       name,
       price,
       description,
       image: req.file.path,
+      category
     });
     if (product) {
       res.status(201).json({
@@ -31,6 +32,7 @@ routerProduct.post(
         price: product.price,
         description: product.description,
         image: product.image,
+        category: product.category
       });
     } else {
       res.status(400);

@@ -12,6 +12,7 @@ const checkbox = ref(true);
 const login = async () => {
   // handle login
   try {
+   
     await signIn(loginForm.value, { callbackUrl: "/", external: true });
   } catch (err) {
     Swal.fire({

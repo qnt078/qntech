@@ -1,9 +1,9 @@
 export default defineNuxtPlugin((nuxtApp : any) => {
   nuxtApp.provide("vietnamdong", {
     format(value: number) {
-      return new Intl.NumberFormat("vi-VN", {
+      return new Intl.NumberFormat("en-EN", {
         style: "currency",
-        currency: "VND",
+        currency: "USD",
       }).format(value);
     },
   });

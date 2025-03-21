@@ -5,6 +5,7 @@ const productSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please provide a name'],
   },
+
   price: {
     type: Number,
     required: [true, 'Please provide a price'],
@@ -16,6 +17,10 @@ const productSchema = new mongoose.Schema({
   image: {
     type: String,
     required: [true, 'Please provide an image'],
+  },
+  category: {
+    type: String,
+    required: [true, 'Please provide a category'],
   },
   
 });

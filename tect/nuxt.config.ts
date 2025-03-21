@@ -3,6 +3,9 @@ import vuetify, { transformAssetUrls } from "vite-plugin-vuetify";
 export default defineNuxtConfig({
   app: {},
   ssr: false,
+  alias: {
+    "assets": "/<srcDir>/assets",
+  },
   devtools: {
     enabled: false,
 
@@ -65,8 +68,10 @@ export default defineNuxtConfig({
   ],
   runtimeConfig: {
     apiSecret: "",
+    stripeSecretKey: process.env.STRIPE_SECRET_KEY,
     public: {
       apiBase: process.env.API_BASE_URL,
+      stripePublicKey: process.env.STRIPE_PUBLISHABLE_KEY,
     },
   },
 });

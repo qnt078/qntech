@@ -152,6 +152,15 @@
                       />
                     </div>
                   </li>
+                  <li class="list-group-item">
+                    <v-btn
+                      color="secondary"
+                      class="text-white w-100"
+                      :to="`/payment/${order?._id}/${(order?.totalPrice as number) * 100}`"
+                    >
+                      Checkout
+                    </v-btn>
+                  </li>
                 </ul>
               </div>
             </v-col>
@@ -171,65 +180,66 @@
 </template>
 
 <script setup lang="ts">
-import Loading from "vue-loading-overlay";
-import "vue-loading-overlay/dist/css/index.css";
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/css/index.css'
 
 interface Order {
-  _id: string;
-  createdAt: string;
-  updatedAt: string;
+  _id: string
+  createdAt: string
+  updatedAt: string
   shippingAddress: {
-    name: string;
-    phone: string;
-    address: string;
-  };
-  isPaid: boolean;
-  isDelivered: boolean;
-  totalPrice: number;
+    name: string
+    phone: string
+    address: string
+  }
+  isPaid: boolean
+  isDelivered: boolean
+  totalPrice: number
   orderItems: {
-    _id: string;
+    _id: string
     product: {
-      _id: string | number;
-      title: string | any;
-      image: string | any;
-      price: number | any;
-    };
-    quantity: number;
-  }[];
+      _id: string | number
+      title: string | any
+      image: string | any
+      price: number | any
+    }
+    quantity: number
+  }[]
 }
 
-const id = ref(useRoute().params.id as string);
+const router = useRouter()
 
-const nuxtApp = useNuxtApp();
-const api = nuxtApp.$api;
-const vndong = nuxtApp.$vietnamdong as any;
-const order = ref<Order | null>(null);
-const cart = ref([] as any);
-const Information = ref([] as any);
+const id = ref(useRoute().params.id as string)
 
-const isLoading = ref(false);
-const fullPage = ref(true);
+const nuxtApp = useNuxtApp()
+const api = nuxtApp.$api
+const vndong = nuxtApp.$vietnamdong as any
+const order = ref<Order | null>(null)
+const cart = ref([] as any)
+const Information = ref([] as any)
+
+const isLoading = ref(false)
+const fullPage = ref(true)
 
 const fetchProduct = async () => {
   try {
-    const data = await api.get(`/order/${id.value}`);
-    order.value = data;
-    cart.value = data.orderItems;
-    Information.value = data.shippingAddress;
-    console.log(order.value);
+    const data = await api.get(`/order/${id.value}`)
+    order.value = data
+    cart.value = data.orderItems
+    Information.value = data.shippingAddress
+    console.log(order.value)
   } catch (err: any) {
-    order.value = null;
+    order.value = null
   }
-};
+}
 
 onBeforeMount(() => {
-  isLoading.value = true;
-  fetchProduct();
+  isLoading.value = true
+  fetchProduct()
   setTimeout(() => {
-    isLoading.value = false;
-  }, 1000);
-}
-);
+    isLoading.value = false
+  }, 1000)
+})
 </script>
 
 <style lang="scss" scoped>
@@ -293,7 +303,7 @@ onBeforeMount(() => {
         }
       }
       .item-divider {
-        background: url("https://ananas.vn/wp-content/themes/ananas/fe-assets/images/bg_divider.png")
+        background: url('https://ananas.vn/wp-content/themes/ananas/fe-assets/images/bg_divider.png')
           repeat-x 7px;
         height: 1px;
         margin: 20px 0px;
@@ -393,7 +403,8 @@ onBeforeMount(() => {
             color: #000;
             box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
             font-size: 16px;
-            transition: border-color ease-in-out 0.15s,
+            transition:
+              border-color ease-in-out 0.15s,
               box-shadow ease-in-out 0.15s;
             text-transform: uppercase;
           }
@@ -432,7 +443,8 @@ onBeforeMount(() => {
             color: #000;
             box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
             font-size: 16px;
-            transition: border-color ease-in-out 0.15s,
+            transition:
+              border-color ease-in-out 0.15s,
               box-shadow ease-in-out 0.15s;
             text-transform: uppercase;
           }
@@ -468,7 +480,7 @@ onBeforeMount(() => {
         }
 
         .divider-1 {
-          background: url("https://ananas.vn/wp-content/themes/ananas/fe-assets/images/bg_divider.png")
+          background: url('https://ananas.vn/wp-content/themes/ananas/fe-assets/images/bg_divider.png')
             repeat-x 7px;
           height: 2px;
           margin: 5px 20px;

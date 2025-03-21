@@ -26,8 +26,9 @@
                             class="media-quantity"
                             type="number"
                             variant="outlined"
-                            dense
+                            density="compact"
                             min="1"
+                            hide-details
                             @change="addQuantity(item)"
                           >
                           </v-text-field>
@@ -121,83 +122,95 @@
                   </li> -->
                 </ul>
               </div>
-              <div class="cart-right">
-                <ul class="list-group">
-                  <li class="list-group-item title">Information</li>
-                  <li class="list-group-item divider"></li>
+              <v-form v-model="form" @submit.prevent="checkOut">
+                <div class="cart-right">
+                  <ul class="list-group">
+                    <li class="list-group-item title">Information</li>
+                    <li class="list-group-item divider"></li>
 
-                  <li class="list-group-item">
-                    <div class="input-group-1">
-                      <input
-                        v-model="Information.name"
-                        type="text"
-                        placeholder="Name"
-                        class="form-control"
-                      />
-                    </div>
-                  </li>
-                  <li class="list-group-item">
-                    <div class="input-group-1">
-                      <input
-                        v-model="Information.phone"
-                        type="text"
-                        placeholder="Phone"
-                        class="form-control"
-                      />
-                    </div>
-                  </li>
-                  <li class="list-group-item">
-                    <div class="input-group-1">
-                      <input
-                        v-model="Information.address"
-                        type="text"
-                        placeholder="Address"
-                        class="form-control"
-                      />
-                    </div>
-                  </li>
-                  <li class="list-group-item">
-                    <div class="input-group-1">
-                      <input
-                        v-model="Information.note"
-                        type="text"
-                        placeholder="Note"
-                        class="form-control"
-                      />
-                    </div>
-                  </li>
-                  <li class="list-group-item title">Payment Methods</li>
-                  <li class="list-group-item divider"></li>
+                    <li class="list-group-item">
+                      <div class="input-group-1">
+                        <input
+                          v-model="Information.name"
+                          type="text"
+                          placeholder="Name"
+                          class="form-control"
+                        />
+                      </div>
+                    </li>
+                    <li class="list-group-item">
+                      <div class="input-group-1">
+                        <input
+                          v-model="Information.phone"
+                          type="text"
+                          placeholder="Phone"
+                          class="form-control"
+                        />
+                      </div>
+                    </li>
+                    <li class="list-group-item">
+                      <div class="input-group-1">
+                        <input
+                          v-model="Information.address"
+                          type="text"
+                          placeholder="Address"
+                          class="form-control"
+                        />
+                      </div>
+                    </li>
+                    <li class="list-group-item">
+                      <div class="input-group-1">
+                        <input
+                          v-model="Information.note"
+                          type="text"
+                          placeholder="Note"
+                          class="form-control"
+                        />
+                      </div>
+                    </li>
+                    <li class="list-group-item title">Payment Methods</li>
+                    <li class="list-group-item divider"></li>
 
-                  <li class="list-group-item text-1">
-                    <span class="title-3">
-                      <v-radio-group v-model="Information.payment">
-                        <v-radio
-                          color="#000"
-                          label="CASH ON DELIVERY"
-                          value="one"
-                        ></v-radio>
-                        <v-radio
-                          color="#000"
-                          label="INTERNET BANKING"
-                          value="two"
-                          disabled
-                        ></v-radio> </v-radio-group
-                    ></span>
-                  </li>
+                    <li class="list-group-item text-1">
+                      <span class="title-3">
+                        <v-radio-group
+                          v-model="Information.payment"
+                          color="success"
+                        >
+                          <v-radio label="CASH ON DELIVERY" value="one">
+                            <template #label>
+                              <div class="text-black font-weight-bold">
+                                <span>CASH ON DELIVERY</span>
+                              </div>
+                            </template>
+                          </v-radio>
+                          <v-radio label="INTERNET BANKING" value="two">
+                            <template #label>
+                              <div class="text-black font-weight-bold">
+                                <span>INTERNET BANKING</span>
+                              </div>
+                            </template>
+                          </v-radio>
+                        </v-radio-group></span
+                      >
+                    </li>
 
-                  <li class="list-group-item divider-1"></li>
+                    <li class="list-group-item divider-1"></li>
 
-                  <li class="list-group-item">
-                    <v-btn
-                      color="secondary"
-                      class="text-white w-100"
-                      @click="checkOut"
-                      >Checkout</v-btn
-                    >
-                  </li>
-                </ul>
-              </div>
+                    <li class="list-group-item">
+                      <v-btn
+                        color="secondary"
+                        class="text-white w-100"
+                        type="submit"
+                      >
+                        {{
+                          Information.payment === 'one' ? 'Order' : 'Checkout'
+                        }}
+                      </v-btn>
+                    </li>
+                  </ul>
+                </div>
+              </v-form>
             </v-col>
           </v-row>
         </div>
@@ -235,87 +248,108 @@
 </template>
 
 <script setup lang="ts">
-import Swal from "sweetalert2";
-import Loading from "vue-loading-overlay";
-import "vue-loading-overlay/dist/css/index.css";
+import Swal from 'sweetalert2'
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/css/index.css'
 
 interface Item {
-  _id: number;
-  name: string;
-  price: number;
-  quantity: number;
-  image: string;
+  _id: number
+  name: string
+  price: number
+  quantity: number
+  image: string
 }
 
-const nuxtApp = useNuxtApp();
-const { getSession } = useAuth();
-const api = nuxtApp.$api;
-const cart = ref(nuxtApp.$store.rawItems as unknown as Item[]);
-const vndong = nuxtApp.$vietnamdong as any;
-const totalPrice = ref(nuxtApp.$store.totalPrice as number);
-const dialog = ref(false);
-const isLoading = ref(false);
-const fullPage = ref(true);
+interface API {
+  post: (url: string, data: any) => Promise<any>
+  get: (url: string) => Promise<any>
+  put: (url: string, data: any) => Promise<any>
+  delete: (url: string) => Promise<any>
+}
+
+interface Store {
+  rawItems: Item[]
+  totalPrice: number
+  updateItem: (item: Item) => void
+  removeItem: (id: number) => void
+  clearItems: () => void
+}
+
+const nuxtApp = useNuxtApp()
+const { getSession } = useAuth()
+
+const api = nuxtApp.$api
+const cart = ref(nuxtApp.$store.rawItems as unknown as Item[])
+const vndong = nuxtApp.$vietnamdong as any
+const totalPrice = ref(nuxtApp.$store.totalPrice)
+const dialog = ref(false)
+const isLoading = ref(false)
+const fullPage = ref(true)
+const form = ref(null)
 
 const Information = ref({
-  name: "",
-  phone: "",
-  address: "",
-  note: "",
-  payment: "one",
-});
+  name: '',
+  phone: '',
+  address: '',
+  note: '',
+  payment: 'one',
+})
+
 onBeforeMount(() => {
-  isLoading.value = true;
+  isLoading.value = true
 
   setTimeout(() => {
-    isLoading.value = false;
-  }, 2000);
-});
+    isLoading.value = false
+  }, 2000)
+})
 
-watchEffect(() => {});
+watchEffect(() => {})
 
 const addQuantity = (item: Item) => {
-  nuxtApp.$store.updateItem(item as any);
-};
+  nuxtApp.$store.updateItem(item as any)
+}
 
 const setTotalPrice = () => {
-  let total = 0;
-  cart.value.forEach((item) => {
-    total += item.price * item.quantity;
-  });
-  totalPrice.value = total;
-};
+  let total = 0
+  cart.value.forEach((item: any) => {
+    total += item.price * item.quantity
+  })
+  totalPrice.value = total
+}
 
 const removeItem = (_id: number) => {
-  cart.value = cart.value.filter((item) => item._id !== _id);
-  console.log(_id);
-  nuxtApp.$store.removeItem(_id as any);
-};
+  cart.value = cart.value.filter((item) => item._id !== _id)
+
+  nuxtApp.$store.removeItem(_id as any)
+}
 
 const clearItems = () => {
-  nuxtApp.$store.clearItems();
-  cart.value = [];
-};
-const checkOut = () => {
-  Swal.fire({
-    title: "Please check your information before checkout",
-    text: "Are you sure you want to checkout?",
+  nuxtApp.$store.clearItems()
+  cart.value = []
+}
+const checkOut = async () => {
+  const validName = Information.value.name.length >= 5
+  const validPhone = /^(0[0-9]{9})$/.test(Information.value.phone)
+  const validAddress = Information.value.address.length >= 5
+  const valid = validName && validPhone && validAddress
 
-    showCancelButton: true,
-    confirmButtonText: "CHECKOUT",
-
-    customClass: {
-      actions: "my-actions",
-      cancelButton: "order-1 right-gap",
-      confirmButton: "order-2 left-gap bg-success ",
-    },
-  }).then((result) => {
-    if (result.isConfirmed) {
-      order();
-    }
-  });
-};
+  if (!valid) {
+    Swal.fire({
+      toast: true,
+      position: 'top-end',
+      title: 'Please check your information before checkout',
+      text: 'Name, phone and address must be valid',
+      icon: 'error',
+      showConfirmButton: false,
+      timer: 1500,
+    })
+    return
+  } else {
+    order()
+  }
+}
 const order = async () => {
+  let _orderID: string = ''
   try {
     const order = {
       orderItems: cart.value.map((item) => ({
@@ -332,31 +366,54 @@ const order = async () => {
         note: Information.value.note,
       },
       paymentMethod:
-        Information.value.payment === "one" ? "COD" : "Internet Banking",
+        Information.value.payment === 'one' ? 'COD' : 'Internet Banking',
       totalPrice: totalPrice.value,
-    };
-
+    }
+    console.log(JSON.stringify(order))
     if (await getSession()) {
-      await api.post("/order", order);
+      const submitOrder = await api.post('/order', order)
+      console.log(submitOrder)
+      _orderID = submitOrder._id
     } else {
-      await api.post("/order/create", order);
+      const submitOrderwithoutLogin = await api.post('/order/create', order)
+      console.log(submitOrderwithoutLogin)
+      _orderID = submitOrderwithoutLogin._id
+    }
+    if (order.paymentMethod === 'COD') {
+      Swal.fire({
+        toast: true,
+        position: 'top-end',
+        title: 'Order successfully',
+        text: 'Please wait for the confirmation call',
+        icon: 'success',
+        showConfirmButton: false,
+        timer: 1500,
+      })
+    } else {
+      setTimeout(() => {
+        nuxtApp.$router.push(
+          `payment/${_orderID}/${(order.totalPrice as number) * 100}`
+        )
+      }, 1500)
     }
   } catch (err: any) {
-    console.log(err);
+    console.log(err)
+  } finally {
+    clearItems()
   }
-};
+}
 
 watch(
   () => nuxtApp.$store.rawItems as unknown as Item[],
   (newCart: Item[]) => {
-    cart.value = newCart;
-    setTotalPrice();
+    cart.value = newCart
+    setTotalPrice()
   }
-);
+)
 </script>
 <style lang="scss" scoped>
 .main-cart {
-  margin: 5rem auto;
+  margin: auto;
   max-width: 1200px;
   .cart-items {
     .cart-left {
@@ -415,7 +472,7 @@ watch(
         }
       }
       .item-divider {
-        background: url("https://ananas.vn/wp-content/themes/ananas/fe-assets/images/bg_divider.png")
+        background: url('https://ananas.vn/wp-content/themes/ananas/fe-assets/images/bg_divider.png')
           repeat-x 7px;
         height: 1px;
         margin: 20px 0px;
@@ -515,7 +572,8 @@ watch(
             color: #000;
             box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
             font-size: 16px;
-            transition: border-color ease-in-out 0.15s,
+            transition:
+              border-color ease-in-out 0.15s,
               box-shadow ease-in-out 0.15s;
             text-transform: uppercase;
           }
@@ -554,7 +612,8 @@ watch(
             color: #000;
             box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
             font-size: 16px;
-            transition: border-color ease-in-out 0.15s,
+            transition:
+              border-color ease-in-out 0.15s,
               box-shadow ease-in-out 0.15s;
             text-transform: uppercase;
           }
@@ -590,7 +649,7 @@ watch(
         }
 
         .divider-1 {
-          background: url("https://ananas.vn/wp-content/themes/ananas/fe-assets/images/bg_divider.png")
+          background: url('https://ananas.vn/wp-content/themes/ananas/fe-assets/images/bg_divider.png')
             repeat-x 7px;
           height: 2px;
           margin: 5px 20px;
@@ -698,7 +757,7 @@ watch(
           }
           .media-body {
             .media-title {
-              font-size: 16px;
+              font-size: 14px;
             }
             .media-price {
               font-size: 14px;
@@ -737,7 +796,7 @@ watch(
           }
           .media-body {
             .media-title {
-              font-size: 16px;
+              font-size: 14px;
             }
             .media-price {
               font-size: 14px;
@@ -776,10 +835,10 @@ watch(
           }
           .media-body {
             .media-title {
-              font-size: 16px;
+              font-size: 12px;
             }
             .media-price {
-              font-size: 14px;
+              font-size: 12px;
             }
           }
         }
@@ -796,7 +855,9 @@ watch(
             display: flex;
             flex-direction: row;
             justify-content: space-between;
-            width: 150%;
+            align-items: center;
+            gap: 5rem;
+            width: 100%;
           }
         }
       }

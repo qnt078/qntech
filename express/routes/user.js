@@ -1,6 +1,7 @@
 import express from "express";
 import asyncHandler from "express-async-handler";
 import User from "../models/Users.js";
+import Order from "../models/Orders.js";
 import OTP from "../models/OTP.js";
 import generateToken from "../utils/generateToken.js";
 import { protect, admin, seller } from "../middleware/auth.js";
@@ -72,15 +73,13 @@ userRouter.post(
   "/register",
   asyncHandler(async (req, res) => {
     const { name, email, password, isAdmin, isSeller } = req.body;
-    if (!name || !email || !password ) {
-      res.status(400).json({ message: "Please fill all the fields" });
+    if ( !email || !password || !name ) {
+      return res.status(400).json({ message: "Please fill all the fields" });
     }
 
-    const userExists = await User.findOne({
-      email,
-    });
+    const userExists = await User.findOne({ email });
     if (userExists) {
-      res.status(500).json({ message: "User already exists" });
+      return res.status(400).json({ message: "User already exists" });
     }
     const user = await User.create({
       name,
@@ -98,6 +97,7 @@ userRouter.post(
         isAdmin: user.isAdmin,
         isSeller: user.isSeller,
         isVerify: user.isVerify,
+        token: generateToken(user._id),
       });
     } else {
       res.status(400).json({ message: "Invalid user data" });
@@ -149,10 +149,15 @@ userRouter.get(
   protect,
   asyncHandler(async (req, res) => {
     const user = await User.findById(req.user._id);
+    const orderWithUser = await Order.find({ user: req.user._id });
+    const totalPrice =  await Order.aggregate([
+      { $match: { user: req.user._id } },
+      { $group: { _id: req.user._id, totalPrice: { $sum: "$totalPrice" } } },
+    ]);
 
     if (user) {
       const { _id, name, email, isAdmin, createdAt } = user;
-      res.json({ _id, name, email, isAdmin, createdAt });
+      res.json({ _id, name, email, isAdmin, createdAt ,orderWithUser,totalPrice});
     } else {
       res.status(404);
       throw new Error("User not found");

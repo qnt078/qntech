@@ -1,7 +1,7 @@
 <template>
   <footer class="new_footer_area bg_color">
     <div class="new_footer_top">
-      <v-container >
+      <v-container>
         <v-row>
           <v-col cols="auto" lg="3" md="3" sm="12">
             <div
@@ -16,7 +16,7 @@
               <h3 class="f-title f_600 t_color f_size_18">Information</h3>
               <ul class="list-unstyled f_list">
                 <li>
-                  <v-img src="../favicon.ico" width="20%" alt="">
+                  <v-img src="../public/favicon.ico" width="20%" alt="">
                   </v-img>
                 </li>
                 <li>
@@ -163,7 +163,6 @@ body {
 }
 .new_footer_area .footer_bottom {
   padding-top: 5px;
-
 }
 .footer_bottom {
   font-size: 14px;
@@ -242,16 +241,16 @@ button:focus {
   transition: all 0.2s linear;
 }
 .ti-facebook:before {
-  content: "\e741";
+  content: '\e741';
 }
 .ti-twitter-alt:before {
-  content: "\e74b";
+  content: '\e74b';
 }
 .ti-vimeo-alt:before {
-  content: "\e74a";
+  content: '\e74a';
 }
 .ti-pinterest:before {
-  content: "\e731";
+  content: '\e731';
 }
 
 .btn_get_two {
@@ -300,13 +299,13 @@ h6 {
 .new_footer_top .footer_bg {
   position: absolute;
   bottom: 0;
-  background: url("../assets/img/foot.png") no-repeat scroll center 0;
+  background: url('../assets/img/foot.png') no-repeat scroll center 0;
   width: 100%;
   height: 266px;
 }
 
 .new_footer_top .footer_bg .footer_bg_one {
-  background: url("https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEia0PYPxwT5ifToyP3SNZeQWfJEWrUENYA5IXM6sN5vLwAKvaJS1pQVu8mOFFUa_ET4JuHNTFAxKURFerJYHDUWXLXl1vDofYXuij45JZelYOjEFoCOn7E6Vxu0fwV7ACPzArcno1rYuVxGB7JY6G7__e4_KZW4lTYIaHSLVaVLzklZBLZnQw047oq5-Q/s16000/volks.gif")
+  background: url('https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEia0PYPxwT5ifToyP3SNZeQWfJEWrUENYA5IXM6sN5vLwAKvaJS1pQVu8mOFFUa_ET4JuHNTFAxKURFerJYHDUWXLXl1vDofYXuij45JZelYOjEFoCOn7E6Vxu0fwV7ACPzArcno1rYuVxGB7JY6G7__e4_KZW4lTYIaHSLVaVLzklZBLZnQw047oq5-Q/s16000/volks.gif')
     no-repeat center center;
   width: 330px;
   height: 105px;
@@ -319,7 +318,7 @@ h6 {
 }
 
 .new_footer_top .footer_bg .footer_bg_two {
-  background: url("https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhyLGwEUVwPK6Vi8xXMymsc-ZXVwLWyXhogZxbcXQYSY55REw_0D4VTQnsVzCrL7nsyjd0P7RVOI5NKJbQ75koZIalD8mqbMquP20fL3DxsWngKkOLOzoOf9sMuxlbyfkIBTsDw5WFUj-YJiI50yzgVjF8cZPHhEjkOP_PRTQXDHEq8AyWpBiJdN9SfQA/s16000/cyclist.gif")
+  background: url('https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhyLGwEUVwPK6Vi8xXMymsc-ZXVwLWyXhogZxbcXQYSY55REw_0D4VTQnsVzCrL7nsyjd0P7RVOI5NKJbQ75koZIalD8mqbMquP20fL3DxsWngKkOLOzoOf9sMuxlbyfkIBTsDw5WFUj-YJiI50yzgVjF8cZPHhEjkOP_PRTQXDHEq8AyWpBiJdN9SfQA/s16000/cyclist.gif')
     no-repeat center center;
   width: 88px;
   height: 100px;

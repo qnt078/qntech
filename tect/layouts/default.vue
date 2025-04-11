@@ -10,6 +10,7 @@
             <img
               class="inline-block"
               src="https://themewagon.github.io/foodwagon/v1.0.0/assets/img/gallery/logo.svg"
+              alt="logo"
             />
             <span class="text-gradient">foodwaNGon</span>
           </div>
@@ -23,6 +24,7 @@
                 <img
                   class="inline-block"
                   src="https://themewagon.github.io/foodwagon/v1.0.0/assets/img/gallery/logo.svg"
+                  alt="logo"
                 />
                 <span class="text-gradient">foodwaNGon</span>
               </NuxtLink>
@@ -76,11 +78,7 @@
                     <v-list-item
                       prepend-icon="mdi-hamburger"
                       link
-                      @click="
-                        () => {
-                          $router.push('/order')
-                        }
-                      "
+                      @click="() => {}"
                     >
                       <v-list-item-title v-text="'Order'"></v-list-item-title>
                     </v-list-item>
@@ -192,6 +190,7 @@
               :aspect-ratio="1"
               :max-width="80"
               :max-height="80"
+              alt="cart item"
             >
               <div class="cancle">
                 <v-icon @click="removeItem(item._id)">mdi-close-circle</v-icon>
@@ -247,7 +246,7 @@
           </p>
         </div>
         <div v-else class="empty animate__animated animate__bounceIn">
-          <img src="../assets/img/preview.png" />
+          <img src="../assets/img/preview.png" alt="image" />
         </div>
       </div>
     </div>
@@ -297,13 +296,14 @@ const getSessionData = async () => {
     const session: any = await getSession()
     if (session) {
       isLogin.value = true
-      user.value = session
+
+      user.value = session.data
     }
   } catch (err) {
     console.log(err)
   }
 }
-onBeforeMount(() => {
+onMounted(() => {
   getSessionData()
   quantity.value = nuxtApp.$store.totalQuantity
   cart = nuxtApp.$store.rawItems as unknown as Item[]

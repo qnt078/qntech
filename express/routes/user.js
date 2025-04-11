@@ -5,6 +5,7 @@ import Order from "../models/Orders.js";
 import OTP from "../models/OTP.js";
 import generateToken from "../utils/generateToken.js";
 import { protect, admin, seller } from "../middleware/auth.js";
+import responseMessage from "../global/responseMessage.js";
 
 const userRouter = express.Router();
 
@@ -28,7 +29,15 @@ userRouter.get(
       .limit(PAGE_SIZE)
       .skip(PAGE_SIZE * (page - 1));
 
-    res.json({ users, page, pages: Math.ceil(count / PAGE_SIZE) });
+    res.status(200).json({
+      status: responseMessage.SUCCESS,
+      statusCode: 200,
+      data: {
+        users,
+        page,
+        pages: Math.ceil(count / PAGE_SIZE)
+      }
+    });
   })
 );
 
@@ -38,7 +47,11 @@ userRouter.get(
   admin,
   asyncHandler(async (req, res) => {
     const users = await User.find({});
-    res.json(users);
+    res.status(200).json({
+      status: responseMessage.SUCCESS,
+      statusCode: 200,
+      data: users
+    });
   })
 );
 
@@ -52,6 +65,8 @@ userRouter.post(
 
     if (user && (await user.matchPassword(password))) {
       res.status(200).json({
+        status: responseMessage.SUCCESS,
+        statusCode: 200,
         message: "User logged in successfully 🎄",
         _id: user._id,
         name: user.name,
@@ -62,8 +77,11 @@ userRouter.post(
         token: generateToken(user._id),
       });
     } else {
-      res.status(401);
-      throw new Error("Invalid Email or Password");
+      res.status(401).json({
+        status: responseMessage.ERROR,
+        statusCode: 401,
+        message: "Invalid Email or Password"
+      });
     }
   })
 );
@@ -74,12 +92,20 @@ userRouter.post(
   asyncHandler(async (req, res) => {
     const { name, email, password, isAdmin, isSeller } = req.body;
     if ( !email || !password || !name ) {
-      return res.status(400).json({ message: "Please fill all the fields" });
+      return res.status(400).json({
+        status: responseMessage.ERROR,
+        statusCode: 400,
+        message: "Please fill all the fields"
+      });
     }
 
     const userExists = await User.findOne({ email });
     if (userExists) {
-      return res.status(400).json({ message: "User already exists" });
+      return res.status(400).json({
+        status: responseMessage.ERROR,
+        statusCode: 400,
+        message: "User already exists"
+      });
     }
     const user = await User.create({
       name,
@@ -90,6 +116,8 @@ userRouter.post(
     });
     if (user) {
       res.status(201).json({
+        status: responseMessage.SUCCESS,
+        statusCode: 201,
         message: "User created successfully ✌",
         _id: user._id,
         name: user.name,
@@ -100,7 +128,11 @@ userRouter.post(
         token: generateToken(user._id),
       });
     } else {
-      res.status(400).json({ message: "Invalid user data" });
+      res.status(400).json({
+        status: responseMessage.ERROR,
+        statusCode: 400,
+        message: "Invalid user data"
+      });
     }
   })
 );
@@ -109,7 +141,11 @@ userRouter.post(
 userRouter.post(
   "/logout",
   asyncHandler(async (req, res) => {
-    res.json({ message: "User logged out successfully" });
+    res.status(200).json({
+      status: responseMessage.SUCCESS,
+      statusCode: 200,
+      message: "User logged out successfully"
+    });
   })
 );
 
@@ -125,6 +161,8 @@ userRouter.post(
     
      if (otpExists.length === 0 || otp !== otpExists[0].otp) {
       return res.status(400).json({
+        status: responseMessage.ERROR,
+        statusCode: 400,
         success: false,
         message: "The OTP is not valid",
       });
@@ -134,11 +172,16 @@ userRouter.post(
       user.isVerify = true;
       await user.save();
       res.status(200).json({
+        status: responseMessage.SUCCESS,
+        statusCode: 200,
         message: "Email verified successfully",
       });
     } else {
-      res.status(404);
-      throw new Error("User not found");
+      res.status(404).json({
+        status: responseMessage.ERROR,
+        statusCode: 404,
+        message: "User not found"
+      });
     }
   })
 );
@@ -157,10 +200,25 @@ userRouter.get(
 
     if (user) {
       const { _id, name, email, isAdmin, createdAt } = user;
-      res.json({ _id, name, email, isAdmin, createdAt ,orderWithUser,totalPrice});
+      res.status(200).json({
+        status: responseMessage.SUCCESS,
+        statusCode: 200,
+        data: {
+          _id,
+          name,
+          email,
+          isAdmin,
+          createdAt ,
+          orderWithUser,
+          totalPrice
+        }
+      });
     } else {
-      res.status(404);
-      throw new Error("User not found");
+      res.status(404).json({
+        status: responseMessage.ERROR,
+        statusCode: 404,
+        message: "User not found"
+      });
     }
   })
 );
@@ -176,7 +234,9 @@ userRouter.put(
     if (user) {
       user.isSeller = isSeller;
       const updatedUser = await user.save();
-      res.json({
+      res.status(200).json({
+        status: responseMessage.SUCCESS,
+        statusCode: 200,
         message: "User updated successfully",
         _id: updatedUser._id,
         name: updatedUser.name,
@@ -185,8 +245,11 @@ userRouter.put(
         isSeller: updatedUser.isSeller,
       });
     } else {
-      res.status(404);
-      throw new Error("User not found");
+      res.status(404).json({
+        status: responseMessage.ERROR,
+        statusCode: 404,
+        message: "User not found"
+      });
     }
   })
 );

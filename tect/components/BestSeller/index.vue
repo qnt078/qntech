@@ -1,72 +1,58 @@
 <template>
-  <v-container>
-    <v-row>
-      <div class="best-seller">
-        <div v-for="(item, index) in items" :key="index">
-          <div class="pa-2">
-            <div class="card">
-              <div class="img">
-                <v-img
-                  class="rounded-xl"
-                  :src="item.image"
-                  lazy-src="@/assets/img/loading.gif"
-                  width="100%"
-                  max-height="250"
-                  cover
-                >
-                </v-img>
+  <div class="best-seller">
+    <div v-for="(item, index) in store.listBestSeller" :key="index">
+      <div class="pa-2">
+        <div class="card">
+          <div class="img">
+            <v-img
+              class="rounded-xl"
+              :src="item.image"
+              width="100%"
+              max-height="250"
+              alt="Best Seller"
+              cover
+            >
+              <template v-slot:placeholder>
+                <v-row align="center" class="fill-height ma-0" justify="center">
+                  <v-progress-circular
+                    color="grey-lighten-5"
+                    indeterminate
+                  ></v-progress-circular>
+                </v-row>
+              </template>
+            </v-img>
+          </div>
+          <div class="information">
+            <v-card-title class="">
+              <h4>{{ item.name }}</h4>
+            </v-card-title>
+            <v-card-text>
+              <div class="des">
+                <p>{{ item.description }}</p>
               </div>
-              <div class="information">
-                <v-card-title class="">
-                  <h4>{{ item.name }}</h4>
-                </v-card-title>
-                <v-card-text>
-                  <div class="des">
-                    <p>{{ item.description }}</p>
-                  </div>
-                  <div class="price">
-                    <p>{{ vndong.format(item.price) }}</p>
-                  </div>
-                </v-card-text>
+              <div class="price">
+                <p>{{ vndong.format(item.price) }}</p>
               </div>
-              <div class="button">
-                <v-btn class="text-white" rounded="lg" @click="addToCart(item)"
-                  >Buy Now
-                  <v-icon class="ml-2">mdi-cart-plus</v-icon>
-                </v-btn>
-              </div>
-            </div>
+            </v-card-text>
+          </div>
+          <div class="button">
+            <v-btn class="text-white" rounded="lg" @click="addToCart(item)"
+              >Order Now
+              <v-icon class="ml-2">mdi-cart-plus</v-icon>
+            </v-btn>
           </div>
         </div>
       </div>
-    </v-row>
-  </v-container>
+    </div>
+  </div>
 </template>
 
 <script lang="ts" setup>
-interface Product {
-  _id: number
-  name: string
-  description: string
-  price: number
-  image: string
-}
+import { useListProductStore } from '@/store'
 
 const nuxtApp = useNuxtApp()
 const cart = nuxtApp.$store
 const vndong = nuxtApp.$vietnamdong as any
-const api = nuxtApp.$api
-
-const items = ref([] as Product[])
-const model = ref(0)
-const fetchProduct = async () => {
-  try {
-    const data = await api.get('/product')
-    items.value = data.filter((item: any) => item.category === 'best-seller')
-  } catch (err: any) {
-    console.log(err)
-  }
-}
 
 const addToCart = (item: any) => {
   const items: any = {
@@ -79,7 +65,7 @@ const addToCart = (item: any) => {
   cart.addItem(items)
 }
 
-onMounted(fetchProduct)
+const store = useListProductStore()
 </script>
 
 <style lang="scss" scoped>
@@ -87,16 +73,17 @@ onMounted(fetchProduct)
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-
-  gap: 20px;
+  justify-content: center;
+  gap: 16px;
 }
 .card {
   display: flex;
   flex-direction: column;
-
-  height: 500px;
+  flex: 1 1 calc(33.333% - 16px);
+  height: 520px;
 
   width: 400px;
+
   cursor: pointer;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   border-radius: 25px;
@@ -139,6 +126,8 @@ onMounted(fetchProduct)
       width: 100%;
     }
   }
+}
+@media screen and (min-width: 1440px) {
 }
 
 @media screen and (max-width: 1440px) {

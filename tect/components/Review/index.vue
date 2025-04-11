@@ -5,7 +5,7 @@
         <v-carousel-item>
           <div class="item">
             <div class="image">
-              <img :src="item.image" alt="" />
+              <img :src="item.image" alt="Review" />
             </div>
             <div class="review">
               <h3>👋 {{ item.name }}</h3>

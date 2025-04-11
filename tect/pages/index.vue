@@ -1,6 +1,6 @@
 <template>
   <div class="main" style="background-color: #ffb30e">
-    <v-container>
+    <v-container fluid>
       <v-row>
         <v-col cols="auto" lg="7" md="7" sm="12">
           <div class="content animate__animated animate__bounceInLeft">
@@ -141,7 +141,7 @@
   </div>
 
   <div class="slide">
-    <v-container>
+    <v-container fluid>
       <v-row>
         <v-col cols="12">
           <div class="content">
@@ -155,7 +155,7 @@
     </v-container>
   </div>
   <div class="slide bg-gradient">
-    <v-container>
+    <v-container fluid>
       <v-row>
         <v-col cols="12">
           <div class="content">
@@ -169,21 +169,23 @@
     </v-container>
   </div>
   <div class="review bg-gradient">
-    <v-row>
-      <v-col cols="12">
-        <div class="content">
-          <span class="text-gradient">Reviews</span>
-        </div>
-      </v-col>
-      <v-col cols="12" class="mb-12">
-        <div class="carousel">
-          <Review />
-        </div>
-      </v-col>
-    </v-row>
+    <v-container fluid>
+      <v-row>
+        <v-col cols="12">
+          <div class="content">
+            <span class="text-gradient">Reviews</span>
+          </div>
+        </v-col>
+        <v-col cols="12" class="mb-12">
+          <div class="carousel">
+            <Review />
+          </div>
+        </v-col>
+      </v-row>
+    </v-container>
   </div>
   <div class="feature">
-    <v-container>
+    <v-container fluid>
       <v-row>
         <!-- <v-col cols="12">
           <div class="content">
@@ -207,28 +209,58 @@
     </div>
   </div>
 
-  <div>
+  <!-- <div>
     <loading
       v-model:active="isLoading"
       :can-cancel="true"
       color="#FFB30E"
       :is-full-page="fullPage"
     />
-  </div>
+  </div> -->
 </template>
 <script setup lang="ts">
-import Loading from 'vue-loading-overlay'
-import 'vue-loading-overlay/dist/css/index.css'
+// import Loading from 'vue-loading-overlay'
+// import 'vue-loading-overlay/dist/css/index.css'
 const tab = ref(null)
 const isLoading = ref(false)
 const fullPage = ref(true)
 
-onBeforeMount(() => {
-  isLoading.value = true
+definePageMeta({
+  middleware: 'auth',
+})
+useSeoMeta({
+  title: 'FoodWagon - Home',
+  ogTitle: 'Home',
+  description:
+    'Food Delivery is a food delivery service that brings meals from local restaurants to your doorstep.',
+  ogDescription:
+    'Food Delivery is a food delivery service that brings meals from local restaurants to your doorstep.',
+  keywords: 'food, delivery, restaurant, meals, local, service',
+  ogImage:
+    'https://themewagon.github.io/foodwagon/v1.0.0/assets/img/gallery/hero-header.png',
+  ogUrl:
+    'https://themewagon.github.io/foodwagon/v1.0.0/assets/img/gallery/hero-header.png',
+  ogType: 'website',
+  ogSiteName: 'FoodWagon',
+  contentType: 'text/html; charset=utf-8',
+  robots: 'index, follow',
+  twitterTitle: 'FoodWagon - Home',
+  twitterDescription:
+    'Food Delivery is a food delivery service that brings meals from local restaurants to your doorstep.',
+  twitterImage:
+    'https://themewagon.github.io/foodwagon/v1.0.0/assets/img/gallery/hero-header.png',
 
-  setTimeout(() => {
-    isLoading.value = false
-  }, 1000)
+  twitterCard: 'summary_large_image',
+  twitterSite: '@themewagon',
+  twitterCreator: '@themewagon',
+
+  twitterImageAlt: 'FoodWagon',
+})
+onMounted(() => {
+  // isLoading.value = true
+  // setTimeout(() => {
+  //   isLoading.value = false
+  // }, 500)
 })
 </script>
 <style lang="scss" scoped>

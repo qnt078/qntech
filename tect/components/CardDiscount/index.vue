@@ -13,10 +13,21 @@
           <div class="img">
             <v-img
               :src="item?.image"
-              lazy-src="@/assets/img/loading.gif"
+              lazy-src="@/assets/img/loading.jpg"
               max-height="250"
+              class="bg-grey-lighten-2"
+              alt="card discount"
               cover
-            ></v-img>
+            >
+              <template v-slot:placeholder>
+                <v-row align="center" class="fill-height ma-0" justify="center">
+                  <v-progress-circular
+                    color="grey-lighten-5"
+                    indeterminate
+                  ></v-progress-circular>
+                </v-row>
+              </template>
+            </v-img>
             <p class="discount">
               {{ item.discount }}
 
@@ -42,7 +53,6 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
 import image1 from '@/assets/img/mi5.jpg'
 import image2 from '@/assets/img/mi2.jpg'
 import image3 from '@/assets/img/mi3.jpg'
@@ -94,10 +104,7 @@ const test = ref([
   },
 ])
 
-onMounted(() => {
-  // You can add any initialization logic here if needed
-  console.log('CardDiscount component mounted')
-})
+onMounted(() => {})
 </script>
 
 <style lang="scss" scoped>

@@ -25,7 +25,7 @@
               </div>
               <div class="video">
                 <video playsinline autoplay muted loop>
-                  <source :src="video" type="video/mp4" />
+                  <source :src="video" type="video/mp4" alt="video" />
                 </video>
               </div>
             </div>
@@ -167,21 +167,21 @@ import video from '@/assets/video/video1.mp4'
     padding: 0;
 
     .card-span {
-      //   height: 450px;
+      height: 450px;
 
-      //  .card-content {
-      //     padding: 2rem;
-      //     h4 {
-      //       font-size: 24px;
-      //     }
-      //     p {
-      //       font-size: 14px;
-      //     }
-      //     .v-btn {
-      //       margin-top: 10px;
-      //       width: 100%;
-      //     }
-      //  }
+      .card-content {
+        padding: 2rem;
+        h4 {
+          font-size: 24px;
+        }
+        p {
+          font-size: 14px;
+        }
+        .v-btn {
+          margin-top: 10px;
+          width: 100%;
+        }
+      }
     }
 
     .video {

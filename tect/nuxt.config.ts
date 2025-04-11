@@ -1,7 +1,17 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
 export default defineNuxtConfig({
-  app: {},
+  app: {
+    head: {
+      link: [
+        {
+          rel: 'manifest',
+          href: '/manifest.json',
+        },
+      ],
+    },
+  },
+
   ssr: false,
 
   devtools: {
@@ -11,13 +21,16 @@ export default defineNuxtConfig({
       enabled: true,
     },
   },
+
   typescript: {
     typeCheck: true,
     strict: true,
   },
+
   build: {
     transpile: ['vuetify'],
   },
+
   modules: [
     (_options, nuxt) => {
       nuxt.hooks.hook('vite:extendConfig', (config) => {
@@ -29,6 +42,7 @@ export default defineNuxtConfig({
     '@formkit/auto-animate/nuxt',
     '@sidebase/nuxt-auth',
   ],
+
   auth: {
     baseURL: process.env.API_BASE_URL,
     isEnabled: true,
@@ -50,6 +64,7 @@ export default defineNuxtConfig({
       },
     },
   },
+
   vite: {
     vue: {
       template: {
@@ -57,12 +72,16 @@ export default defineNuxtConfig({
       },
     },
   },
-  plugins: ['./plugins/api.ts'],
+
+  plugins: ['./plugins/api.ts', './plugins/locomotive-scroll.client.ts'],
+
   css: [
     '~/assets/css/main.css',
     '~/assets/css/responsive.css',
     'animate.css/animate.min.css',
+    'locomotive-scroll/dist/locomotive-scroll.css',
   ],
+
   runtimeConfig: {
     apiSecret: '',
     stripeSecretKey: process.env.STRIPE_SECRET_KEY,
@@ -71,4 +90,6 @@ export default defineNuxtConfig({
       stripePublicKey: process.env.STRIPE_PUBLISHABLE_KEY,
     },
   },
+
+  compatibilityDate: '2025-03-31',
 })

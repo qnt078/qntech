@@ -16,8 +16,7 @@
               <h3 class="f-title f_600 t_color f_size_18">Information</h3>
               <ul class="list-unstyled f_list">
                 <li>
-                  <v-img src="../public/favicon.ico" width="20%" alt="">
-                  </v-img>
+                  <v-img src="/favicon.ico" width="20%" alt="icon"> </v-img>
                 </li>
                 <li>
                   <a href="#">
@@ -83,12 +82,12 @@
             >
               <h3 class="f-title f_600 t_color f_size_18">Payment</h3>
               <div class="payment">
-                <v-img src="../assets/img/payment1.jpg"></v-img>
-                <v-img src="../assets/img/payment2.jpg"></v-img>
-                <v-img src="../assets/img/payment3.jpg"></v-img>
-                <v-img src="../assets/img/payment4.jpg"></v-img>
-                <v-img src="../assets/img/payment5.jpg"></v-img>
-                <v-img src="../assets/img/payment6.jpg"></v-img>
+                <v-img src="../assets/img/payment1.jpg" alt="payment"></v-img>
+                <v-img src="../assets/img/payment2.jpg" alt="payment"></v-img>
+                <v-img src="../assets/img/payment3.jpg" alt="payment"></v-img>
+                <v-img src="../assets/img/payment4.jpg" alt="payment"></v-img>
+                <v-img src="../assets/img/payment5.jpg" alt="payment"></v-img>
+                <v-img src="../assets/img/payment6.jpg" alt="payment"></v-img>
               </div>
             </div>
           </v-col>

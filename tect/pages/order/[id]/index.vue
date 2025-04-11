@@ -223,10 +223,10 @@ const fullPage = ref(true)
 
 const fetchProduct = async () => {
   try {
-    const data = await api.get(`/order/${id.value}`)
-    order.value = data
-    cart.value = data.orderItems
-    Information.value = data.shippingAddress
+    const response = await api.get(`/order/${id.value}`)
+    order.value = response.data
+    cart.value = response.data.orderItems
+    Information.value = response.data.shippingAddress
     console.log(order.value)
   } catch (err: any) {
     order.value = null

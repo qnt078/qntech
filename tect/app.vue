@@ -7,12 +7,8 @@
 </template>
 
 <script setup>
-onMounted(() => {
-  useHead({
-    title: "foodWaNGon",
-  });
-});
+useHead({
+  title: 'foodWaNGon',
+})
 </script>
-<style>
-
-</style>
+<style></style>

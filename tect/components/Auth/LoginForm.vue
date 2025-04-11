@@ -1,35 +1,37 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import Swal from "sweetalert2";
+import { ref } from 'vue'
+import Swal from 'sweetalert2'
 
 // definePageMeta({
 //   layout: "blank",
 // });
-const { signIn } = useAuth();
-const loginForm = ref({ email: "", password: "" });
-
-const checkbox = ref(true);
+const { signIn } = useAuth()
+const loginForm = ref({ email: '', password: '' })
+const loading = ref(false)
+const checkbox = ref(true)
 const login = async () => {
   // handle login
   try {
-   
-    await signIn(loginForm.value, { callbackUrl: "/", external: true });
+    loading.value = true
+    await signIn(loginForm.value, { callbackUrl: '/', external: true })
   } catch (err) {
     Swal.fire({
       toast: true,
-      position: "top-end",
-      title: "Login Failed",
-      icon: "error",
-      iconColor: "white",
+      position: 'top-end',
+      title: 'Login Failed',
+      icon: 'error',
+      iconColor: 'white',
       customClass: {
-        popup: "colored-toast",
+        popup: 'colored-toast',
       },
       showConfirmButton: false,
       timer: 3000,
       timerProgressBar: true,
-    });
+    })
+  } finally {
+    loading.value = false
   }
-};
+}
 </script>
 
 <template>
@@ -68,7 +70,13 @@ const login = async () => {
       </div>
     </v-col>
     <v-col cols="12" class="pt-0">
-      <v-btn class="text-white" size="large" block flat @click="login"
+      <v-btn
+        class="text-white"
+        size="large"
+        block
+        flat
+        @click="login"
+        :loading="loading"
         >Sign in</v-btn
       >
     </v-col>

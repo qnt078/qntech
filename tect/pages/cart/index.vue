@@ -282,7 +282,7 @@ const api = nuxtApp.$api
 const cart = ref(nuxtApp.$store.rawItems as unknown as Item[])
 const vndong = nuxtApp.$vietnamdong as any
 const totalPrice = ref(nuxtApp.$store.totalPrice)
-const dialog = ref(false)
+
 const isLoading = ref(false)
 const fullPage = ref(true)
 const form = ref(null)
@@ -373,11 +373,11 @@ const order = async () => {
     if (await getSession()) {
       const submitOrder = await api.post('/order', order)
       console.log(submitOrder)
-      _orderID = submitOrder._id
+      _orderID = submitOrder.data._id
     } else {
       const submitOrderwithoutLogin = await api.post('/order/create', order)
       console.log(submitOrderwithoutLogin)
-      _orderID = submitOrderwithoutLogin._id
+      _orderID = submitOrderwithoutLogin.data._id
     }
     if (order.paymentMethod === 'COD') {
       Swal.fire({

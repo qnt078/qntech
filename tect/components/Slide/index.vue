@@ -1,10 +1,10 @@
 <template>
   <div class="">
     <div class="desktop">
-      <v-sheet class="mx-auto">
+      <v-sheet class="">
         <v-slide-group v-model="model" class="pa-4" center-active show-arrows>
           <v-slide-group-item
-            v-for="(item, index) in items"
+            v-for="(item, index) in store.listPopular"
             :key="index"
             v-slot="{ isSelected, toggle }"
           >
@@ -14,9 +14,22 @@
                   <v-img
                     class="rounded-xl"
                     :src="item.image"
-                    lazy-src="@/assets/img/loading.gif"
+                    lazy-src="@/assets/img/loading.jpg"
+                    alt="Product Slide"
                     width="100%"
                     max-height="300"
+                  >
+                    <template v-slot:placeholder>
+                      <v-row
+                        align="center"
+                        class="fill-height ma-0"
+                        justify="center"
+                      >
+                        <v-progress-circular
+                          color="grey-lighten-5"
+                          indeterminate
+                        ></v-progress-circular>
+                      </v-row> </template
                   ></v-img>
                 </div>
                 <div class="information">
@@ -37,7 +50,8 @@
                     class="text-white"
                     rounded="lg"
                     @click="addToCart(item)"
-                    >Buy Now
+                  >
+                    Order
                     <v-icon class="ml-2">mdi-cart-plus</v-icon>
                   </v-btn>
                 </div>
@@ -46,30 +60,41 @@
           </v-slide-group-item>
           <template #next>
             <div class="next-icon">
-              <v-icon>mdi-chevron-right</v-icon>
+              <v-icon color="white">mdi-chevron-right</v-icon>
             </div>
           </template>
           <template #prev>
             <div class="prev-icon">
-              <v-icon>mdi-chevron-left</v-icon>
+              <v-icon color="white">mdi-chevron-left</v-icon>
             </div>
           </template>
         </v-slide-group>
       </v-sheet>
     </div>
     <div class="mobile">
-      <div v-for="(item, index) in items" :key="index">
+      <div v-for="(item, index) in store.listPopular" :key="index">
         <div class="pa-2">
           <div class="card">
             <div class="img">
               <v-img
                 class="rounded-xl"
                 :src="item.image"
-                lazy-src="@/assets/img/loading.gif"
                 width="100%"
                 max-height="150"
                 cover
               >
+                <template v-slot:placeholder>
+                  <v-row
+                    align="center"
+                    class="fill-height ma-0"
+                    justify="center"
+                  >
+                    <v-progress-circular
+                      color="grey-lighten-5"
+                      indeterminate
+                    ></v-progress-circular>
+                  </v-row>
+                </template>
               </v-img>
             </div>
             <div class="information">
@@ -87,7 +112,7 @@
             </div>
             <div class="button">
               <v-btn class="text-white" rounded="lg" @click="addToCart(item)"
-                >Buy Now
+                >Order
                 <v-icon class="ml-2">mdi-cart-plus</v-icon>
               </v-btn>
             </div>
@@ -99,29 +124,15 @@
 </template>
 
 <script lang="ts" setup>
-interface Product {
-  _id: number
-  name: string
-  description: string
-  price: number
-  image: string
-}
+import { useListProductStore } from '@/store'
 
 const nuxtApp = useNuxtApp()
+
 const cart = nuxtApp.$store
 const vndong = nuxtApp.$vietnamdong as any
-const api = nuxtApp.$api
-
-const items = ref([] as Product[])
 const model = ref(0)
-const fetchProduct = async () => {
-  try {
-    const data = await api.get('/product')
-    items.value = data.filter((item: any) => item.category === 'Popular')
-  } catch (err: any) {
-    console.log(err)
-  }
-}
+const store = useListProductStore()
+store.fetchListProduct()
 
 const addToCart = (item: any) => {
   const items: any = {
@@ -133,8 +144,6 @@ const addToCart = (item: any) => {
   }
   cart.addItem(items)
 }
-
-onMounted(fetchProduct)
 </script>
 
 <style lang="scss" scoped>

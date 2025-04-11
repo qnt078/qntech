@@ -1,0 +1,12 @@
+{
+  "name": "qntech",
+  "version": "1.0.0",
+  "description": "qntech project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["qntech", "project"],
+  "author": "qntech",
+  "license": "ISC"
+}

@@ -12,7 +12,7 @@
             <TableCustom :items="item" />
           </v-col>
         </v-row>
-        <div >
+        <div>
           <loading
             v-model:active="isLoading"
             :can-cancel="true"
@@ -26,31 +26,27 @@
 </template>
 
 <script setup>
-import Loading from "vue-loading-overlay";
-import "vue-loading-overlay/dist/css/index.css";
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/css/index.css'
 
-const nuxtApp = useNuxtApp();
+const nuxtApp = useNuxtApp()
 // const { getSession } = useAuth();
-const api = nuxtApp.$api;
+const api = nuxtApp.$api
 // const user = getSession();
-const item = ref([]);
-const isLoading = ref(false);
-const fullPage = ref(true);
+const item = ref([])
+const isLoading = ref(false)
+const fullPage = ref(true)
 
 onBeforeMount(async () => {
-  
-  isLoading.value = true;
+  isLoading.value = true
   try {
-    item.value = await api.get("/order");
-    isLoading.value = false;
+    const response = await api.get('/order')
+    item.value = response.data
+    isLoading.value = false
   } catch (error) {
-    console.log(error);
+    console.log(error)
   }
-});
-
-
-
-
+})
 </script>
 
 <style scoped>

@@ -26,8 +26,18 @@ const uploadImage = async (req, res, next) => {
    
    
     const result = await cloudinary.uploader.upload(req.file.path);
-    req.file.path = result.secure_url;
+   
+ 
+    const optimizedImage = await cloudinary.url(result.public_id, {
+      transformation: [
+        { width: 800, height: 800, crop: "limit" },
+        { quality: "auto" },
+        {fetch_format: "auto"}
+      ],
+    });
+    req.file.path = optimizedImage;
 
+    
     
     next();
   } catch (error) {
@@ -42,7 +52,15 @@ const editImage = async (req, res, next) => {
     return next();
     }    
       const result = await cloudinary.uploader.upload(req.file.path);
-      req.file.path = result.secure_url; 
+      
+    const optimizedImage = await cloudinary.url(result.public_id, {
+      transformation: [
+        { width: 800, height: 800, crop: "limit" },
+        { quality: "auto" },
+        {fetch_format: "auto"}
+      ],
+    });
+    req.file.path = optimizedImage;
 
     
     next();

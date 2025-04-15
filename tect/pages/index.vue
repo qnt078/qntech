@@ -226,7 +226,7 @@ const isLoading = ref(false)
 const fullPage = ref(true)
 
 definePageMeta({
-  middleware: 'auth',
+  middleware: 'authentication',
 })
 useSeoMeta({
   title: 'FoodWagon - Home',

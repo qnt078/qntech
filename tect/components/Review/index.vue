@@ -94,7 +94,7 @@ const items: Review[] = [
   }
 }
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1032px) {
   .item {
     .image {
       width: 400px;
